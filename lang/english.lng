@@ -2,17 +2,14 @@
 # English language file
 
 #GRF name and description
-STR_GRF_NAME        :{TITLE} {VERSION}
-STR_GRF_DESCRIPTION :{GOLD}{TITLE}{}{BLACK}By {ORANGE}embrr{RED}Flare{}{}{BLACK}Adds various modular and highly customizable mechanics to the default industry set.{}Supports the {GREEN}temperate{BLACK}, {LTBLUE}sub-arctic{BLACK}, and {YELLOW}sub-tropical{BLACK} climate types.{}{}{}{GOLD}{TINYFONT}A spiritual expansion of BSPI
+STR_GRF_NAME                  :{TITLE} {VERSION}
+STR_GRF_DESCRIPTION           :{GOLD}{TITLE}{}{BLACK}By {ORANGE}embrr{RED}Flare{}{}{BLACK}Adds various modular and highly customizable mechanics to the default industry set.{}Supports the {GREEN}temperate{BLACK}, {LTBLUE}sub-arctic{BLACK}, and {YELLOW}sub-tropical{BLACK} climate types.{}{}{}{GOLD}{TINYFONT}A spiritual expansion of BSPI
 
 #Param name and description
 
 #Extra Mechanics
 
-STR_PARAM_EXT_SEPERATE    :{ORANGE}--| ADDITIONAL MECHANICS |--
-
-STR_PARAM_CARGOENABLE_NAME:Enable additional cargoes
-STR_PARAM_CARGOENABLE_DESC:If enabled, additional cargoes will appear that have special functions. This will also enable the additional cargo chains, such as steel mills now requiring coal.
+STR_PARAM_EXT_SEPERATE     :{ORANGE}--| ADDITIONAL MECHANICS |--
 
 STR_PARAM_LUBEFF_NAME     :{PUSH_COLOUR}{GREEN}Temperate{POP_COLOUR}/{PUSH_COLOUR}{YELLOW}sub-tropic{POP_COLOUR}: Lubricant efficiency bonus (%)
 STR_PARAM_LUBEFF_DESC     :In {GREEN}temperate{BLACK} and {YELLOW}sub-tropic{BLACK}, lubricants delivered to the factory will increase efficiency by this amount.{}Set this to 0 to disable lubricant production.
@@ -20,36 +17,16 @@ STR_PARAM_LUBEFF_DESC     :In {GREEN}temperate{BLACK} and {YELLOW}sub-tropic{BLA
 STR_PARAM_INDENABLE_NAME  :Enable additional industries
 STR_PARAM_INDENABLE_DESC  :If enabled, additional industries will appear that have special functions.
 
+STR_PARAM_EXT_TEMP_NAME   :Expanded Temperate Mechanics (Centralized Economy)
+STR_PARAM_EXT_TEMP_DESC   :Significantly expands the temperate economy, making it much more centralized: All cargoes eventually lead into the factory, and delivering a variety of cargo drastically increases conversion efficiency. Ultimately, this will make your network have a few "hubs" where vast quantities of cargo are shipped in and out each month.{}{GOLD}Adds new cargoes, chains, and industries. 
+
+STR_PARAM_EXT_ARCTIC_NAME :Expanded Sub-Arctic Mechanics (Hub-based Economy)
+STR_PARAM_EXT_ARCTIC_DESC :Significantly expands the sub-arctic economy, making it much more hub focused: Delivering books and goods to the local town will give funding units that can be delivered to a bank to bring a funding bonus to nearby towns. Ultimately, this allows you to have a singular town you focus on while still being able to give bonuses to others with minimal infrastructure.{}{GOLD}Adds new cargoes, chains, and industries.
+
+STR_PARAM_EXT_TROPIC_NAME :Expanded Sub-Tropic Mechanics (Needs-based Economy)
+STR_PARAM_EXT_TROPIC_DESC :Significantly expands the sub-tropic economy, making it much more needs/town focused: Cargoes such as food and water are a requirement for industries to function, and following a certain chain of needs will be necessary to build your network. Ultimately, your network will be more local, focusing more on servicing the needs of a town before moving onto the next one.{}{GOLD}Adds new cargoes, chains, and industries.
+
 #Bonus Mechanics
-
-STR_PARAM_CARGO_SEPERATE  :{BROWN}--| CARGO SETTINGS |--
-
-STR_PARAM_CARGO_RATES_NAME:Base cargo payment rates
-STR_PARAM_CARGO_RATES_DESC:Change the base cargo payment rates. Relative placement of cargoes is unchanged (Valuables are still the best cargo on temperate, for example).
-
-STR_PARAM_CARGO_RATES_LOW :Minimal
-STR_PARAM_CARGO_RATES_SMA :Lesser
-STR_PARAM_CARGO_RATES_MED :Reduced
-STR_PARAM_CARGO_RATES_VAN :Vanilla
-STR_PARAM_CARGO_RATES_HI  :Boosted
-STR_PARAM_CARGO_RATES_VHI :Excessive
-
-STR_PARAM_CARGO_NEITHER   :Not affected by time or distance
-STR_PARAM_CARGO_TIME      :Only affected by time, not distance
-STR_PARAM_CARGO_DIST      :Only affected by distance, not time
-STR_PARAM_CARGO_BOTH      :Affected by both time and distance (Vanilla)
-
-STR_PARAM_CARGO_FRE_NAME  :Freight cargo behavior
-STR_PARAM_CARGO_FRE_DESC  :Determines the effect of time/distance on freight cargo (Coal, wood, steel, etc.). Base cargo payment will be altered to account for a potential loss in profit.
-
-STR_PARAM_CARGO_PAX_NAME  :Passenger cargo behavior
-STR_PARAM_CARGO_PAX_DESC  :Determines the effect of time/distance on passenger cargo (Passengers and mail). Base cargo payment will be altered to account for a potential loss in profit.
-
-STR_PARAM_CARGO_GOODS_NAME:Goods cargo behavior
-STR_PARAM_CARGO_GOODS_DESC:Determines the effect of time/distance on goods. Base cargo payment will be altered to account for a potential loss in profit.
-
-STR_PARAM_CARGO_ARMOR_NAME:Armored cargo behavior
-STR_PARAM_CARGO_ARMOR_DESC:Determines the effect of time/distance on armored cargo (Valuables, Gold, Diamonds). Base cargo payment will be altered to account for a potential loss in profit.
 
 STR_PARAM_BON_SEPERATE    :{YELLOW}--| BONUS MECHANICS |--
 
@@ -62,16 +39,16 @@ STR_PARAM_POWER_NAME      :{PUSH_COLOUR}{GREEN}Temperate{POP_COLOUR}/{PUSH_COLOU
 STR_PARAM_POWER_DESC      :When enabled, power plants boost the production of industries in the same town, as long as cargo is delivered each month.
 
 STR_PARAM_POWERADV_NAME   :Advanced power mechanics
-STR_PARAM_POWERADV_DESC   :If enabled, power plants will convert coal into power units, which is then consumed by active power bonus eligible industries. Rather than having a fixed target to reach each month, your power requirement scale with your network's size.
+STR_PARAM_POWERADV_DESC   :If enabled, power plants will convert coal into power units, which is then consumed by active power bonus eligible industries. Rather than having a fixed target to reach each month, your power requirement scales with your network's size.
 
 STR_PARAM_POWERSOFT_NAME  :{PUSH_COLOUR}{RED}Advanced Power Only{POP_COLOUR}: Enable power bonus soft cap
-STR_PARAM_POWERSOFT_DESC  :If enabled alongside advanced power mechanics, additional funding beyond the stockpile will still increase the power bonus, but at a drastically reduced rate.
+STR_PARAM_POWERSOFT_DESC  :If enabled alongside advanced power mechanics, additional funding beyond the stockpile will still increase the power bonus, but at a drastically reduced rate. This has no effect on the consumption rate.
 
 STR_PARAM_POWERCONS_NAME  :{PUSH_COLOUR}{RED}Advanced Power Only{POP_COLOUR}: Power consumption rate (%)
 STR_PARAM_POWERCONS_DESC  :Determines the amount of power that industries will consume.
 
 STR_PARAM_POWERCARGO_NAME :Monthly cargo consumption
-STR_PARAM_POWERCARGO_DESC :How many units of cargo a power plant will consume in a month.
+STR_PARAM_POWERCARGO_DESC :How many units of cargo a power plant will process in a month. This determines how much cargo is needed for a full bonus (Basic Power Mechanics) or how much cargo it can convert to power units each month (Advanced Power Mechanics).
 
 STR_PARAM_POWER_STOCK_NAME:Power plant stockpiling multiplier (%)
 STR_PARAM_POWER_STOCK_DESC:How much stockpiled cargo/units of power is required to reach maximum consumption. This works as a multiplier of its monthly consumption: with this setting at 200%, if the power plant can process 1000 cargo units every month, the required cargo stockpile will be 2000 before it reaches maximum consumption, and thus the maximum bonus.
@@ -80,7 +57,7 @@ STR_PARAM_POWEREFF_NAME   :Maximum power bonus (%)
 STR_PARAM_POWEREFF_DESC   :The maximum production bonus that power plants can provide to industries in the town.
 
 STR_PARAM_PETEFF_NAME     :Petroleum extra efficiency bonus (%)
-STR_PARAM_PETEFF_DESC     :Petroleum delivered to the power plant will increase power generation efficiency by this amount.{}Set this to 0 to disable petroleum production.
+STR_PARAM_PETEFF_DESC     :Petroleum delivered to the power plant will increase power generation efficiency by this amount. This only functions if additional cargoes are enabled.{}Set this to 0 to disable petroleum production.
 
 
 STR_PARAM_BANK_NAME       :Enable bank production bonus
@@ -119,7 +96,7 @@ STR_PARAM_BANKMULT_DESC   :The effectiveness of the town production bonus on {GR
 
 
 STR_PARAM_BONUS_MULT_NAME :Multiplicative bonuses
-STR_PARAM_BONUS_MULT_DESC :If enabled, power/bank/town bonuses are multiplicative with each other rather than additive. Multiplicative gives larger benefits overall, especially when stacking multiple bonuses together, and encourages getting all possible bonuses.
+STR_PARAM_BONUS_MULT_DESC :If enabled, power/bank/town bonuses are multiplicative with each other rather than additive. Multiplicative bonuses give larger benefits overall, especially when stacking multiple together.
 
 # Cargo specific parameters
 
@@ -133,7 +110,7 @@ STR_PARAM_PRIM_CLOSE_NAME :Disable primary industry closures
 STR_PARAM_PRIM_CLOSE_DESC :When enabled, primary industries will never close.
 
 STR_PARAM_GROW_NAME       :Enable smooth primary industry growth
-STR_PARAM_GROW_DESC       :If enabled, primary industries grow slowly in smaller steps.
+STR_PARAM_GROW_DESC       :If enabled, primary industries no longer have a random aspect to their production changes. Instead, service ratings directly correspond to production changes. 
 
 STR_PARAM_GROW_DIFF_NAME  :Primary industry growth difficulty
 STR_PARAM_GROW_DIFF_DESC  :Sets the difficulty of growing the base production of primary industries. Setting this to "Vanilla" will leave primary industry growth mechanics alone.{}Lenient: {RED}0-25%{BLACK} to decrease, {YELLOW}26-60%{BLACK}to stabilize, {GREEN}61%+{BLACK} to increase.{}Average: {RED}0-35%{BLACK} to decrease, {YELLOW}36-70%{BLACK} to stabilize, {GREEN}71%+{BLACK} to increase.{}Challenging: {RED}0-50%{BLACK} to decrease, {YELLOW}50-85%{BLACK}to stabilize, {GREEN}86%+{BLACK} to increase.
@@ -144,7 +121,7 @@ STR_PARAM_DIFF_NORM       :Average
 STR_PARAM_DIFF_HARD       :Challenging
 
 STR_PARAM_PRIM_PROB_NAME  :Primary industry production change probability
-STR_PARAM_PRIM_PROB_DESC  :This number determines the probability of a production change event occuring for primary industries each month. Each step of this value is equal to increasing/decreasing changes by ~0.7%, so a value of 6 is around 4.7% per month.
+STR_PARAM_PRIM_PROB_DESC  :This number determines the probability of a production change event occuring for primary industries each month. Each step of this value changes the production change probability by 1/128, or ~0.7%, so a value of 6 is around 4.7% per month.
 
 STR_PARAM_EXRESERVES_NAME :Extractive industries have limited reserves
 STR_PARAM_EXRESERVES_DESC :If enabled, extractive industries (such as mines or oil wells) have limited reserves and will close if they run out.
@@ -171,14 +148,11 @@ STR_PARAM_SECGROWPROB_DESC:This number determines the probability of a productio
 STR_PARAM_POWERREQ_NAME   :{PUSH_COLOUR}{GREEN}Temperate{POP_COLOUR}/{PUSH_COLOUR}{BLUE}sub-arctic{POP_COLOUR}: Secondaries require power
 STR_PARAM_POWERREQ_DESC   :If enabled, secondaries require power from a power plant in order to operate.{}A town has power as long as the power plant either has more than a quarter of its stockpile of either cargo or power units.
 
-STR_PARAM_GROW_SEC_NAME   :Secondary industry growth difficulty
-STR_PARAM_GROW_SEC_DESC   :Determines the difficulty of increasing base consumption of secondary industries.
-
 STR_PARAM_SECINDCONS_NAME :Maximum secondary industry consumption rate (%)
 STR_PARAM_SECINDCONS_DESC :The maximum consumption rate of secondary industries. The higher this is, the more cargo secondaries will consume each month. Useful for those who like a specific primary to secondary industry ratio in their games. {}{}{WHITE}Does not apply to power plant or bank, {BLACK}as they have their own options.
 
 STR_PARAM_STOCKMULT_NAME  :Secondary stockpiling multiplier (%)
-STR_PARAM_STOCKMULT_DESC  :How much stockpiled cargo is required for secondaries to reach their maximum consumption.{}This works as a multipler of their maximum cargo consumption: if a secondary can at most consume 100 units per month, and this setting is at 200%, the secondary will need 200 units of cargo waiting in order to reach maximum consumption.
+STR_PARAM_STOCKMULT_DESC  :How much stockpiled cargo is required for secondaries to reach their maximum consumption, as well as their maximum stockpile.{}This works as a multipler of their maximum cargo consumption: if a secondary can at most consume 100 units per month, and this setting is at 200%, the secondary will need 200 units of cargo waiting in order to reach maximum consumption, and will store 5000 units of cargo (x25 the multiplier) before it refuses to accept any more.
 
 # Minor things, mostly accessibility and qol
 
@@ -193,7 +167,7 @@ STR_PARAM_DETAILED_BONUS  :Show detailed bonus info
 STR_PARAM_DETAILED_BOTH   :Show all detailed info
 
 STR_PARAM_DETAILED_NAME   :Show detailed industry info
-STR_PARAM_DETAILED_DESC   :Determines how detailed certain tooltips are.{}Detailed reserves shows the exact amount remaining in primary industry reserves, if enabled.{}Detailed bonus info gives a breakdown of all the different bonuses that affect industries.
+STR_PARAM_DETAILED_DESC   :Determines how detailed certain tooltips are.{}Detailed reserves shows the exact amount remaining in primary industry reserves, if enabled.{}Detailed bonus info gives a breakdown of all industry bonuses, such as the town or power bonus.
 
 
 
@@ -206,12 +180,12 @@ STR_SKIP3                 :{SKIP}{SKIP}{SKIP}
 
 STR_IND_RESERVES_8        :{GREEN}Overflowing!!
 STR_IND_RESERVES_7        :{GREEN}Fresh!
-STR_IND_RESERVES_6        :{YELLOW}Adequate
+STR_IND_RESERVES_6        :{YELLOW}Average
 STR_IND_RESERVES_5        :{YELLOW}Average
 STR_IND_RESERVES_4        :{ORANGE}Reduced
-STR_IND_RESERVES_3        :{ORANGE}Drained.
+STR_IND_RESERVES_3        :{ORANGE}Reduced.
 STR_IND_RESERVES_2        :{RED}Depleted..
-STR_IND_RESERVES_1        :{RED}Desolate...
+STR_IND_RESERVES_1        :{RED}Depleted...
 
 STR_IND_PRIM_TIP_POWER    :{}{}{WHITE}Deliver cargo to the local town's power plant to gain additional production!
 STR_IND_PRIM_TIP_BANK     :{}{}{WHITE}Deliver cargo to the local town's bank to gain additional production!

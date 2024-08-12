@@ -25,15 +25,6 @@ grf {
         }
     }
     param {
-        // Additional cargoes?
-        param_extra_cargoes_enabled {
-            name: string(STR_PARAM_CARGOENABLE_NAME);
-            desc: string(STR_PARAM_CARGOENABLE_DESC);
-            type: bool;
-            def_value: 1;
-        }
-    }
-    param {
         // TEMPERATE / SUB-TROPIC: Lubricant efficiency bonus
         param_lubricant_bonus {
             name: string(STR_PARAM_LUBEFF_NAME);
@@ -551,25 +542,25 @@ random_switch(FEAT_INDUSTRIES, SELF, random_initial_production) {
 }
 
 switch(FEAT_INDUSTRIES, SELF, switch_production_change_easy, LOAD_TEMP(0)) {
-    0..25: return (param_prim_closures_disabled && production_level == 4) ? CB_RESULT_IND_PROD_NO_CHANGE : CB_RESULT_IND_PROD_DECREMENT_BY_1;
+    0..25: return (param_prim_closures_disabled && production_level == 4) ? CB_RESULT_IND_PROD_RANDOM : CB_RESULT_IND_PROD_DECREMENT_BY_1;
     26..70: return CB_RESULT_IND_PROD_NO_CHANGE;
     71..100: return CB_RESULT_IND_PROD_INCREMENT_BY_1;
 }
 
 switch(FEAT_INDUSTRIES, SELF, switch_production_change_hard, LOAD_TEMP(0)) {
-    0..45: return (param_prim_closures_disabled && production_level == 4) ? CB_RESULT_IND_PROD_NO_CHANGE : CB_RESULT_IND_PROD_DECREMENT_BY_1;
+    0..45: return (param_prim_closures_disabled && production_level == 4) ? CB_RESULT_IND_PROD_RANDOM : CB_RESULT_IND_PROD_DECREMENT_BY_1;
     46..85: return CB_RESULT_IND_PROD_NO_CHANGE;
     86..100: return CB_RESULT_IND_PROD_INCREMENT_BY_1;
 }
 
 switch(FEAT_INDUSTRIES, SELF, switch_production_change_sec_easy, LOAD_TEMP(0)) {
-    0..25: return (production_level == 4) ? CB_RESULT_IND_PROD_NO_CHANGE : CB_RESULT_IND_PROD_DECREMENT_BY_1;
+    0..25: return (production_level == 4) ? CB_RESULT_IND_PROD_RANDOM : CB_RESULT_IND_PROD_DECREMENT_BY_1;
     26..70: return CB_RESULT_IND_PROD_NO_CHANGE;
     71..100: return CB_RESULT_IND_PROD_INCREMENT_BY_1;
 }
 
 switch(FEAT_INDUSTRIES, SELF, switch_production_change_sec_hard, LOAD_TEMP(0)) {
-    0..45: return (production_level == 4) ? CB_RESULT_IND_PROD_NO_CHANGE : CB_RESULT_IND_PROD_DECREMENT_BY_1;
+    0..45: return (production_level == 4) ? CB_RESULT_IND_PROD_RANDOM : CB_RESULT_IND_PROD_DECREMENT_BY_1;
     46..85: return CB_RESULT_IND_PROD_NO_CHANGE;
     86..100: return CB_RESULT_IND_PROD_INCREMENT_BY_1;
 }
