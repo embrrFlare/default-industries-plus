@@ -16,19 +16,48 @@ grf {
     }
 
     param {
-        // Additional industries?
-        param_extra_industries_enabled {
-            name: string(STR_PARAM_INDENABLE_NAME);
-            desc: string(STR_PARAM_INDENABLE_DESC);
+        // Expanded temperate?
+        param_ext_temperate_enabled {
+            name: string(STR_PARAM_EXT_TEMP_NAME);
+            desc: string(STR_PARAM_EXT_TEMP_DESC);
             type: bool;
             def_value: 1;
         }
     }
     param {
+	// Expanded sub-arctic?
+	param_ext_arctic_enabled {
+		name: string(STR_PARAM_EXT_ARCTIC_NAME);
+		desc: string(STR_PARAM_EXT_ARCTIC_DESC);
+		type: bool;
+		def_value: 1;
+	}
+	}
+	param {
+		// Expanded sub-tropic?
+		param_ext_tropic_enabled {
+			name: string(STR_PARAM_EXT_TROPIC_NAME);
+			desc: string(STR_PARAM_EXT_TROPIC_DESC);
+			type: bool;
+			def_value: 1;
+		}
+	}
+	param {
+		// TEMPERATE / SUB-ARCTIC: Petroleum efficiency bonus
+		param_petrol_bonus {
+			name: string(STR_PARAM_PETROL_BOOST_NAME);
+			desc: string(STR_PARAM_PETROL_BOOST_DESC);
+			type: int;
+			min_value: 0;
+			max_value: 1000;
+			def_value: 50;
+		}
+	}
+    param {
         // TEMPERATE / SUB-TROPIC: Lubricant efficiency bonus
         param_lubricant_bonus {
-            name: string(STR_PARAM_LUBEFF_NAME);
-            desc: string(STR_PARAM_LUBEFF_DESC);
+            name: string(STR_PARAM_LUBR_BOOST_NAME);
+            desc: string(STR_PARAM_LUBR_BOOST_DESC);
             type: int;
             min_value: 0;
             max_value: 1000;
@@ -125,20 +154,8 @@ grf {
             max_value: 1000;
             def_value: 100;
         }
-    }
-    param {
-         // TEMPERATE / SUB-ARCTIC: Petroleum bonus power plant efficiency
-         param_petroleum_bonus {
-            name: string(STR_PARAM_PETEFF_NAME);
-            desc: string(STR_PARAM_PETEFF_DESC);
-            type: int;
-            min_value: 0;
-            max_value: 1000;
-            def_value: 50;
-         }
-    }
-
-    param {
+	}
+	param {
         // Banks give a production bonus to industries.
         param_bank_bonus_enabled {
             name: string(STR_PARAM_BANK_NAME);
@@ -375,7 +392,43 @@ grf {
             def_value: 0;
         }
     }
-
+    param {
+	// Advanced secondary mechanics?
+	param_sec_advanced {
+	    name: string(STR_PARAM_ADV_SEC_NAME);
+	    desc: string(STR_PARAM_ADV_SEC_DESC);
+	    type: bool;
+	    def_value: 1;
+	}
+	}
+    param {
+        // Secondary growth difficulty
+        param_sec_growth_diff {
+            name: string(STR_PARAM_GROW_SEC_NAME);
+            desc: string(STR_PARAM_GROW_SEC_DESC);
+            type: int;
+            min_value: 0;
+            max_value: 2;
+            def_value: 1;
+	    names:
+	    {
+	    	0: string(STR_PARAM_DIFF_EASY);
+		1: string(STR_PARAM_DIFF_NORM);
+		2: string(STR_PARAM_DIFF_HARD);
+	    };
+        }
+    }
+    param {
+    	// Secondary growth probability
+	param_sec_grow_prob {
+		name: string(STR_PARAM_SECGROWPROB_NAME);
+		desc: string(STR_PARAM_SECGROWPROB_DESC);
+		type: int;
+		min_value: 0;
+		max_value: 128;
+		def_value: 6;
+	}
+}
     param {
         // Secondaries need power?
         param_sec_power_need {
@@ -385,18 +438,7 @@ grf {
             def_value: 0;
         }
     }
-    param {
-        // Secondary growth difficulty
-        param_sec_growth_diff {
-            name: string(STR_PARAM_GROW_SEC_NAME);
-            desc: string(STR_PARAM_GROW_SEC_DESC);
-            type: int;
-            min_value: 1;
-            max_value: 128;
-            def_value: 6;
-        }
-    }
-    param {
+	param {
         // Maximum secondary industry consumption %.
         param_sec_max_consumption {
             name: string(STR_PARAM_SECINDCONS_NAME);
@@ -482,13 +524,19 @@ switch(FEAT_INDUSTRIES, PARENT, GetPowerProductionBonus, LOAD_PERM(0)) {return;}
 // Get the production bonus that the bank provides.
 switch(FEAT_INDUSTRIES, PARENT, GetBankProductionBonus, LOAD_PERM(1)) {return;}
 
+// Get the power consumption of industries if they're active and they have a production tick
+switch(FEAT_INDUSTRIES, PARENT, GetPowerConsumption, min(GetBaseProduction()*param_power_cons/100,LOAD_PERM(5))) {return;}
+
 // Get the funding consumption of industries if they're active and they have a production tick
 switch(FEAT_INDUSTRIES, PARENT, GetFundingConsumption, min(GetBaseProduction()*param_bank_funding_cons/100,LOAD_PERM(6))) {return;}
 
 // Returns units of bank funding, if advanced bank bonus is enabled.
 switch(FEAT_INDUSTRIES, PARENT, GetBankFunding, STORE_TEMP(min(param_bank_bonus_advanced ? LOAD_PERM(6) : 0x00,20000000),1)) {return LOAD_TEMP(1);}
 
-// Primary industry functions
+// Returns units of power, if advanced bank bonus is enabled.
+switch(FEAT_INDUSTRIES, PARENT, GetPowerUnits, STORE_TEMP(min(param_power_advanced ? LOAD_PERM(5) : 0x00,20000000),1)) {return LOAD_TEMP(1);}
+
+// Industry functions
 
 // Returns total primary production, after all applicable bonuses.
 switch(FEAT_INDUSTRIES, SELF, GetTotalPrimaryProduction, param_mult_bonuses ?
@@ -498,18 +546,26 @@ switch(FEAT_INDUSTRIES, SELF, GetTotalPrimaryProduction, param_mult_bonuses ?
 // Returns the theoretical maximum primary production
 switch(FEAT_INDUSTRIES, SELF, GetMaxPrimaryProduction, param_mult_bonuses ?
     (((128*(((param_power_max_bonus*hasbit(param_power_enabled,0)))+100))/100*((param_bank_max_bonus*hasbit(param_bank_bonus_enabled,0))+100))/100*((param_town_max_bonus*hasbit(param_town_bonus_enabled,0))+100))/100
-  : ((128*(100+((param_power_max_bonus+param_petroleum_bonus)*hasbit(param_power_enabled,0))+(param_bank_max_bonus*hasbit(param_bank_bonus_enabled,0))+(param_town_max_bonus*hasbit(param_town_bonus_enabled,0))))/100))
+  : ((128*(100+((param_power_max_bonus)*hasbit(param_power_enabled,0))+(param_bank_max_bonus*hasbit(param_bank_bonus_enabled,0))+(param_town_max_bonus*hasbit(param_town_bonus_enabled,0))))/100))
 {return;}
 
+// Returns the percentage of reserves remaining 
 switch(FEAT_INDUSTRIES, SELF, GetReservesPerc, max((LOAD_PERM(1)*100)/(LOAD_PERM(2)),0)) {return;}
 
+// Returns the production of a primary as a percentage.
 switch(FEAT_INDUSTRIES, SELF, GetPrimaryProductionPerc, (GetTotalPrimaryProduction()*100)/GetMaxPrimaryProduction()) {return;}
 
+// This is a hell of a function since almost all of these features need to be completely decoupled yet still work together properly in this menu. If statements don't accomplish the logic I'd like, and switch statements seem to lose all local context in the store_temp vars so all of this is done with the a?b:c operator. sorry...
 switch(FEAT_INDUSTRIES, SELF, switch_production_display_primary_composite, [
-    STORE_TEMP((hasbit(param_power_enabled,0) && hasbit(param_ind_detailed_enabled,0)) ? string(STR_IND_PRIM_PROD_POWER) | GetPowerProductionBonus() << 16 : string(STR_SKIP),257),      // Display power bonus
-    STORE_TEMP((hasbit(param_bank_bonus_enabled,0) && hasbit(param_ind_detailed_enabled,0)) ? string(STR_IND_PRIM_PROD_BANK) | GetBankProductionBonus() << 16 : string(STR_SKIP),258),   // Display bank bonus
-    STORE_TEMP((hasbit(param_town_bonus_enabled,0) && hasbit(param_ind_detailed_enabled,0)) ? string(STR_IND_PRIM_PROD_TOWN) | GetTownProductionBonus() << 16 : string(STR_SKIP),259),   // Display town bonus
+    // If enabled, display the power bonus and its accompanying text. If disabled, it shows a skip string which causes the string pointer to skip to the correct spot to read the next register (this goes for all optional mechanics)
+    STORE_TEMP((hasbit(param_power_enabled,0) && hasbit(param_ind_detailed_enabled,0)) ? string(STR_IND_PRIM_PROD_POWER) | GetPowerProductionBonus() << 16 : string(STR_SKIP),257),
+    // If enabled, display the bank bonus and its accompanying text.
+    STORE_TEMP((hasbit(param_bank_bonus_enabled,0) && hasbit(param_ind_detailed_enabled,0)) ? string(STR_IND_PRIM_PROD_BANK) | GetBankProductionBonus() << 16 : string(STR_SKIP),258),
+    // If enabled, display the town bonus and its accompanying text.
+    STORE_TEMP((hasbit(param_town_bonus_enabled,0) && hasbit(param_ind_detailed_enabled,0)) ? string(STR_IND_PRIM_PROD_TOWN) | GetTownProductionBonus() << 16 : string(STR_SKIP),259),
+    // For compression's sake, register 260 both stores the primary production percentage and the necessary text for reserves, if necessary.
     STORE_TEMP(GetPrimaryProductionPerc() | (param_extract_reserves == 1 ? (hasbit(param_ind_detailed_enabled,1) ? string(STR_IND_PRIM_PROD_RESERVE1) : string(STR_IND_PRIM_PROD_RESERVE2)) : string(STR_SKIP)) << 16,260),
+    // If detailed reserves are disabled, show a different text that gives a vague idea of how much reserves are depleted.
     STORE_TEMP((param_extract_reserves == 1 ? (hasbit(param_ind_detailed_enabled,1) ? GetReservesPerc() :
     (((GetReservesPerc() < 13) * string(STR_IND_RESERVES_1)) +
     ((GetReservesPerc() >= 13 && GetReservesPerc() < 25) * string(STR_IND_RESERVES_2)) +
@@ -520,13 +576,19 @@ switch(FEAT_INDUSTRIES, SELF, switch_production_display_primary_composite, [
     ((GetReservesPerc() >= 75 && GetReservesPerc() < 88) * string(STR_IND_RESERVES_7)) +
     ((GetReservesPerc() >= 88) * string(STR_IND_RESERVES_8)))) : string(STR_EMPTY)) |
 
+    // Show tip text. This is also pretty complicated but I've tried to split it so it's understandable.
+    // This first one checks if tips are enabled and, if power is enabled and the power bonus is less than 25% of the maximum, displays a tip about power. Since this is first, it gets priority.
     (param_tips_enabled == 1 ? ((hasbit(param_power_enabled,0) && (GetPowerProductionBonus() < (param_power_max_bonus/4))) ? string(STR_IND_PRIM_TIP_POWER) :
+    // This checks for the bank bonus and shows a tip if the bank bonus is less than 25% of the maximum. This one has the second highest priority.
     (hasbit(param_bank_bonus_enabled,0) && (GetBankProductionBonus() < (param_bank_max_bonus/4))) ? string(STR_IND_PRIM_TIP_BANK) :
+    // This checks for the town bonus and shows a tip if it's below 20% of the maximum. This one has the third highest priority.
     (hasbit(param_town_bonus_enabled,0) && (GetTownProductionBonus() < (param_town_max_bonus/5))) ? string(STR_IND_PRIM_TIP_TOWN) :
+    // This one shows a tip if the industry's base production is below 25% of the maximum. This one only displays after all the above are false.
     (production_level < 32) ? string(STR_IND_PRIM_TIP_BASE) : string(STR_EMPTY)) : string(STR_EMPTY)) << 16,261),
-    STORE_TEMP(string(STR_IND_PRIM_PROD_BASE) | GetBaseProductionPerc() << 16,1),                                                                                              // Store base production.
-    STORE_TEMP(LOAD_TEMP(1),256)                                                                                                                                               // Display base production. It's all the way down here because register 256 is wiped when accessing town storage.
-]) {
+    // So initial base production (normally at the top of the window) is here because register 256 is wiped when accessing town storage. This is also why it's split into two different statements.
+    STORE_TEMP(string(STR_IND_PRIM_PROD_BASE) | GetBaseProductionPerc() << 16,1),
+    STORE_TEMP(LOAD_TEMP(1),256)                                                                                                                                               
+    ]) {
     return string(STR_IND_PRIM_PROD_TOTAL);
 }
 
@@ -541,21 +603,35 @@ random_switch(FEAT_INDUSTRIES, SELF, random_initial_production) {
     1: return 24;
 }
 
+// Below three functions determine production changes based on difficulty, assuming smooth industry growth is enabled.
 switch(FEAT_INDUSTRIES, SELF, switch_production_change_easy, LOAD_TEMP(0)) {
-    0..25: return (param_prim_closures_disabled && production_level == 4) ? CB_RESULT_IND_PROD_RANDOM : CB_RESULT_IND_PROD_DECREMENT_BY_1;
+    0..25: return (param_prim_closures_disabled && production_level == 4) ? CB_RESULT_IND_PROD_NO_CHANGE : CB_RESULT_IND_PROD_DECREMENT_BY_1;
     26..70: return CB_RESULT_IND_PROD_NO_CHANGE;
     71..100: return CB_RESULT_IND_PROD_INCREMENT_BY_1;
 }
 
+switch(FEAT_INDUSTRIES, SELF, switch_production_change_normal, LOAD_TEMP(0)) {
+    0..35: return (param_prim_closures_disabled && production_level == 4) ? CB_RESULT_IND_PROD_NO_CHANGE : CB_RESULT_IND_PROD_DECREMENT_BY_1;
+    36..70: return CB_RESULT_IND_PROD_NO_CHANGE;
+    71..100: return CB_RESULT_IND_PROD_INCREMENT_BY_1;
+}
+
 switch(FEAT_INDUSTRIES, SELF, switch_production_change_hard, LOAD_TEMP(0)) {
-    0..45: return (param_prim_closures_disabled && production_level == 4) ? CB_RESULT_IND_PROD_RANDOM : CB_RESULT_IND_PROD_DECREMENT_BY_1;
+    0..45: return (param_prim_closures_disabled && production_level == 4) ? CB_RESULT_IND_PROD_NO_CHANGE : CB_RESULT_IND_PROD_DECREMENT_BY_1;
     46..85: return CB_RESULT_IND_PROD_NO_CHANGE;
     86..100: return CB_RESULT_IND_PROD_INCREMENT_BY_1;
 }
 
+// These change production changes for secondary industries, assuming advanced secondaries is enabled.
 switch(FEAT_INDUSTRIES, SELF, switch_production_change_sec_easy, LOAD_TEMP(0)) {
     0..25: return (production_level == 4) ? CB_RESULT_IND_PROD_RANDOM : CB_RESULT_IND_PROD_DECREMENT_BY_1;
     26..70: return CB_RESULT_IND_PROD_NO_CHANGE;
+    71..100: return CB_RESULT_IND_PROD_INCREMENT_BY_1;
+}
+
+switch(FEAT_INDUSTRIES, SELF, switch_production_change_sec_normal, LOAD_TEMP(0)) {
+    0..35: return (production_level == 4) ? CB_RESULT_IND_PROD_RANDOM : CB_RESULT_IND_PROD_DECREMENT_BY_1;
+    36..70: return CB_RESULT_IND_PROD_NO_CHANGE;
     71..100: return CB_RESULT_IND_PROD_INCREMENT_BY_1;
 }
 
@@ -565,35 +641,68 @@ switch(FEAT_INDUSTRIES, SELF, switch_production_change_sec_hard, LOAD_TEMP(0)) {
     86..100: return CB_RESULT_IND_PROD_INCREMENT_BY_1;
 }
 
+// This set is exclusively for the temperate bank since it has the quirk of never being able to close, while still acting like a primary/secondary blended into one. It also has a lower minimum production value of 8 rather than 4.
+switch(FEAT_INDUSTRIES, SELF, switch_production_change_spec_easy, LOAD_TEMP(0)) {
+    0..25: return (production_level == 8) ? CB_RESULT_IND_PROD_NO_CHANGE : CB_RESULT_IND_PROD_DECREMENT_BY_1;
+    26..70: return CB_RESULT_IND_PROD_NO_CHANGE;
+    71..100: return CB_RESULT_IND_PROD_INCREMENT_BY_1;
+}
+
+switch(FEAT_INDUSTRIES, SELF, switch_production_change_spec_normal, LOAD_TEMP(0)) {
+    0..35: return (production_level == 8) ? CB_RESULT_IND_PROD_NO_CHANGE : CB_RESULT_IND_PROD_DECREMENT_BY_1;
+    36..70: return CB_RESULT_IND_PROD_NO_CHANGE;
+    71..100: return CB_RESULT_IND_PROD_INCREMENT_BY_1;
+}
+
+switch(FEAT_INDUSTRIES, SELF, switch_production_change_spec_hard, LOAD_TEMP(0)) {
+    0..45: return (production_level == 8) ? CB_RESULT_IND_PROD_NO_CHANGE : CB_RESULT_IND_PROD_DECREMENT_BY_1;
+    46..85: return CB_RESULT_IND_PROD_NO_CHANGE;
+    86..100: return CB_RESULT_IND_PROD_INCREMENT_BY_1;
+}
+
+
 /* COAL MINE */
 
+/* If coal mine isn't active, it won't consume funding or power. */
 switch(FEAT_INDUSTRIES, SELF, coal_mine_is_active, (last_month_transported("COAL") > 0)) {return;}
 
 // Determines the initial production of the coal mine, adding reserves if eligible
 switch(FEAT_INDUSTRIES, SELF, rand_init_coal_mine, param_extract_reserves == 1 ? STORE_PERM(STORE_PERM((128+getbits(random_bits, 0, 7))*2048*param_reserve_size/100,1),2) : 0x00) {random_initial_production;}
 
+/* Production change logic. */
 switch(FEAT_INDUSTRIES, SELF, switch_production_change_coal_mine, STORE_TEMP(transported_last_month_pct("COAL"),0)) {
-    return (param_prim_change_chance >= getbits(extra_callback_info2, 0, 7)) ? ((param_smooth_prim_growth == 1)            // Check for available reserves, if enabled, and get random bits and check if smooth growth is enabled.
-    ? ((param_prim_growth_diff == 0) ? switch_production_change_easy() : switch_production_change_hard())                  // Do the correct diff for production change, if necessary.
-    : CB_RESULT_IND_PROD_RANDOM)                                                                                           // If smooth growth is disabled and a production check is due, do a random change // If random check failed, do no change.
+    // Check for smooth growth and determine whether a growth event can even happen
+    return (param_prim_change_chance >= getbits(extra_callback_info2, 0, 7)) ? ((param_smooth_prim_growth == 1)
+    // Do the correct change logic based on the set difficulty.
+    ? ((param_prim_growth_diff == 0) ? switch_production_change_easy() : ((param_prim_growth_diff == 1) ? switch_production_change_normal() : switch_production_change_hard()))
+    // If smooth growth is disabled, a random change (vanilla) occurs instead
+    : CB_RESULT_IND_PROD_RANDOM)
+    // If reserves are depleted, close. If growth chance failed, do no change.
     : (LOAD_PERM(1) < 0 && param_extract_reserves) ? CB_RESULT_IND_PROD_CLOSE : CB_RESULT_IND_PROD_NO_CHANGE;
 }
 
+// Deplete reserves when doing a production event
 switch(FEAT_INDUSTRIES, SELF, LowerReserves, STORE_PERM(LOAD_PERM(1)-GetTotalPrimaryProduction(),1)) {return;}
 
+// This is part of a long chain leading from switch_production_coal_mine, just so that additional logic can occur every production event.
 produce (produce_coal_mine,
     [],
     [COAL: LOAD_TEMP(0);],
     0
 )
 
+// Does some logic before doing a production event.
 switch(FEAT_INDUSTRIES, PARENT, switch_production_coal_mine,
-    [param_bank_bonus_advanced ? (STORE_PERM(LOAD_PERM(6)-(coal_mine_is_active() ? GetFundingConsumption() : 0x00),6)) : 0x00,
+    // Consume funding if enabled and the industry benefits from it.
+    [param_bank_bonus_advanced ? (STORE_PERM(LOAD_PERM(6)-(coal_mine_is_active() ? (hasbit(param_bank_bonus_enabled,0)*GetFundingConsumption()) : 0x00),6)) : 0x00,
+    // Consume power if enabled and the industry benefits from it.
+     param_power_advanced ? (STORE_PERM(LOAD_PERM(5)-(coal_mine_is_active() ? (hasbit(param_power_enabled,0)*GetPowerConsumption()) : 0x00),5)) : 0x00,
      STORE_TEMP(GetTotalPrimaryProduction(),0),
      param_extract_reserves == 1 && coal_mine_is_active() == 1 ? LowerReserves() : 0x00,
     ])
     {produce_coal_mine;}
 
+// Main block that defines the item. Down here to ensure all functions are defined when needed.
 item(FEAT_INDUSTRIES, coal_mine, INDUSTRYTYPE_COAL_MINE) {
     property {
         substitute: INDUSTRYTYPE_COAL_MINE;
@@ -614,22 +723,27 @@ item(FEAT_INDUSTRIES, coal_mine, INDUSTRYTYPE_COAL_MINE) {
 
 /* TEMPERATE BANK */
 
+// Leads from switch_produce_temperate_bank, so the temp values are from there.
 produce (produce_temperate_bank,
     [VALU: LOAD_TEMP(0);],
     [VALU: LOAD_TEMP(3);],
     0
 )
 
+// Determines consumption. Consumption is based off waiting cargo.
 switch(FEAT_INDUSTRIES, SELF, GetBankConsumption, max((min((incoming_cargo_waiting("VALU")*10000)/(param_bank_bonus_req*param_bank_stockpile_mult),100)*param_bank_bonus_req/100/8),(incoming_cargo_waiting("VALU") > 0))) {return;}
 
+// Determines bank bonus. It's based off either funding consumption or waiting cargo, based on whether you have 
 switch(FEAT_INDUSTRIES, SELF, GetBankBonus, param_bank_bonus_enabled > 0 ?
     param_bank_bonus_advanced ? ((param_bank_bonus_soft_cap == 1) && (STORE_TEMP(LOAD_TEMP(1),1) > (((param_bank_bonus_req*param_bank_stockpile_mult)/100))) ?
     (STORE_TEMP(LOAD_TEMP(1),1)/(200000/5)):0x00)+min(((STORE_TEMP(LOAD_TEMP(1),1)*100/param_bank_bonus_req*100/param_bank_stockpile_mult)*param_bank_max_bonus)/100,param_bank_max_bonus) : ((incoming_cargo_waiting("VALU")*10000)/(param_bank_bonus_req*param_bank_stockpile_mult)*param_bank_max_bonus)/100 :
     0x00)
 {return;}
 
+// IIRC this is seperated so that the parent function GetBankFunding() can be accessed. Honestly I don't remember
 switch(FEAT_INDUSTRIES, PARENT, BankBonus, GetBankFunding()) {GetBankBonus;}
 
+// Like the primary industry display, this is complicated.
 switch(FEAT_INDUSTRIES, SELF, switch_production_display_temp_bank, [
     STORE_TEMP(BankBonus() | (param_bank_bonus_enabled > 0 ?                                                             // Shows the current bonus provided by the bank.
     (param_bank_bonus_enabled == 1 ? string(STR_IND_SEC_BONUS_PRIM) : (param_bank_bonus_enabled == 2 ?
@@ -641,16 +755,20 @@ switch(FEAT_INDUSTRIES, SELF, switch_production_display_temp_bank, [
     STORE_TEMP(string(STR_IND_SEC_BONUS),256)                                                                               // String for bank bonus
 ]) {return string(STR_IND_SEC_TEMP_BANK_TOTAL);}
 
+// This does production changes based of primary industry rules, but with its own twist since obviously it doesn't have any reserves and is incapable of closing no matter what happens.
 switch(FEAT_INDUSTRIES, SELF, switch_production_change_temperate_bank, STORE_TEMP(transported_last_month_pct("VALU"),0)) {
     return ((param_prim_change_chance >= getbits(extra_callback_info2, 0, 7)) ?
     ((param_smooth_prim_growth == 1) ?
-    ((param_sec_growth_diff == 0) ?
-    switch_production_change_sec_easy()
-    : switch_production_change_sec_hard())
+    ((param_prim_growth_diff == 0) ?
+    switch_production_change_spec_easy()
+    : (param_prim_growth_diff == 1) ?
+    switch_production_change_spec_normal()
+    : switch_production_change_spec_hard())
     : CB_RESULT_IND_PROD_RANDOM)
     : CB_RESULT_IND_PROD_NO_CHANGE);
 }
 
+// Seperated from the produce statement for additional logic to take place.
 switch(FEAT_INDUSTRIES, PARENT, switch_produce_temperate_bank, [
     STORE_TEMP(GetBankConsumption(),0),
     STORE_TEMP(1+((GetBaseProduction()*(100+((GetTownProductionBonus()*param_temp_bank_town_bonus_mult)/100)))/100),3),
@@ -658,6 +776,7 @@ switch(FEAT_INDUSTRIES, PARENT, switch_produce_temperate_bank, [
     STORE_PERM(BankBonus(),1)
 ]) {produce_temperate_bank;}
 
+// Main item block.
 item(FEAT_INDUSTRIES, temperate_bank, INDUSTRYTYPE_TEMPERATE_BANK) {
     property {
         substitute: INDUSTRYTYPE_TEMPERATE_BANK;
@@ -673,6 +792,66 @@ item(FEAT_INDUSTRIES, temperate_bank, INDUSTRYTYPE_TEMPERATE_BANK) {
         cargo_subtype_display: CB_RESULT_NO_TEXT;
         produce_256_ticks: switch_produce_temperate_bank;
         monthly_prod_change: switch_production_change_temperate_bank;
+        random_prod_change: CB_RESULT_IND_PROD_NO_CHANGE;
+        build_prod_change: 16;
+    }
+}
+
+/* POWER PLANT */
+
+produce (produce_power_plant,
+	[COAL: LOAD_TEMP(0);],
+	[],
+	0
+)
+
+// Power plant consumption, based on waiting cargo.
+switch(FEAT_INDUSTRIES, SELF, GetPowerPlantConsumption, max((min((incoming_cargo_waiting("COAL")*10000)/(param_power_cargo_req*param_power_stockpile_mult),100)*param_power_cargo_req/100/8),(incoming_cargo_waiting("COAL") > 0))) {return;}
+
+
+// Like the bank bonus, this is based on either waiting cargo in basic power or waiting power units in advanced mode.
+switch(FEAT_INDUSTRIES, SELF, GetPowerBonus, param_power_enabled > 0 ?
+    param_power_advanced ? ((param_power_soft_cap == 1) && (STORE_TEMP(LOAD_TEMP(1),1) > (((param_power_cargo_req*param_power_stockpile_mult)/100))) ?
+    (STORE_TEMP(LOAD_TEMP(1),1)/(200000/5)):0x00)+min(((STORE_TEMP(LOAD_TEMP(1),1)*100/param_power_cargo_req*100/param_power_stockpile_mult)*param_power_max_bonus)/100,param_power_max_bonus) : ((incoming_cargo_waiting("COAL")*10000)/(param_power_cargo_req*param_power_stockpile_mult)*param_power_max_bonus)/100 :
+    0x00)
+{return;}
+
+// again idk why this is seperated but i know it is for a reason
+switch(FEAT_INDUSTRIES, PARENT, PowerBonus, GetPowerUnits()) {GetPowerBonus;}
+
+// This works exactly the same as the bank display but without the production display and power stats instead
+switch(FEAT_INDUSTRIES, SELF, switch_production_display_power_plant, [
+    STORE_TEMP(PowerBonus() | (param_power_enabled > 0 ?                                                             // Shows the current bonus provided by the power plant.
+    (param_power_enabled == 1 ? string(STR_IND_SEC_BONUS_PRIM) : (param_power_enabled == 2 ?
+    string(STR_IND_SEC_BONUS_SEC) : string(STR_EMPTY))): string(STR_EMPTY)) << 16, 257),                                    // Power bonus display (either primary, secondary, or none)
+    STORE_TEMP((param_power_advanced ? string(STR_IND_SEC_POWER_STOCK) : string(STR_SKIP3)), 258),                  // Shows the current amount of power, if applicable.
+    STORE_TEMP(GetPowerUnits()/GetPowerUnits()*STORE_TEMP(LOAD_TEMP(1),1),259),
+    STORE_TEMP(((GetPowerPlantConsumption()*100)/(param_power_cargo_req/8)),260),                                                    // Shows current consumption rate
+    STORE_TEMP(string(STR_IND_SEC_BONUS),256)                                                                               // String for bonus
+]) {return string(STR_IND_SEC_POWER_TOTAL);}
+
+// Seperated for additional logic. Mostly adding power and updating the power bonus when doing a production tick. 
+switch(FEAT_INDUSTRIES, PARENT, switch_produce_power_plant, [
+    STORE_TEMP(GetPowerPlantConsumption(),0),
+    param_power_advanced ? STORE_PERM(LOAD_PERM(5)+GetPowerPlantConsumption()*2,5) : STORE_TEMP(0x00,19),
+    STORE_PERM(PowerBonus(),0)
+]) {produce_power_plant;}
+
+// Main item block.
+item(FEAT_INDUSTRIES, power_plant, INDUSTRYTYPE_POWER_PLANT) {
+    property {
+        substitute: INDUSTRYTYPE_POWER_PLANT;
+        override: INDUSTRYTYPE_POWER_PLANT;
+        cargo_types: [
+            accept_cargo("COAL")
+        ];
+    }
+
+    graphics {
+        extra_text_industry: switch_production_display_power_plant;
+        cargo_subtype_display: CB_RESULT_NO_TEXT;
+        produce_256_ticks: switch_produce_power_plant;
+        monthly_prod_change: CB_RESULT_IND_PROD_NO_CHANGE;
         random_prod_change: CB_RESULT_IND_PROD_NO_CHANGE;
         build_prod_change: 16;
     }
