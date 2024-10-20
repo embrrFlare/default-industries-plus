@@ -21,10 +21,10 @@ STR_PARAM_EXT_TROPIC_NAME :Expanded Sub-Tropic Mechanics (Needs-based Economy)
 STR_PARAM_EXT_TROPIC_DESC :Significantly expands the sub-tropic economy, giving a focus towards the needs of the town: Cargoes such as food and water are a requirement for industries to function, and following a certain chain of needs will be necessary to build your network. Ultimately, your network will be more local, focusing more on servicing the needs of a town before moving onto the next one.{}{GOLD}Adds new cargoes and cargo chains. Only functions on the sub-tropic climate type.
 
 STR_PARAM_PETROL_BOOST_NAME:{PUSH_COLOUR}{GREEN}Temperate{POP_COLOUR}/{PUSH_COLOUR}{BLUE}Sub-arctic{POP_COLOUR}: Petroleum efficiency bonus
-STR_PARAM_PETROL_BOOST_DESC:Determines the efficiency bonus that petroleum gives to the power plant.{}"Efficiency" refers to conversion rate, so a 50% boost changes the conversion ratio from 1 input to 1 output to 1 input to 1.5 power. Only enabled if the expanded mechanics option is enabled for the climate type you're playing on.
+STR_PARAM_PETROL_BOOST_DESC:Determines the efficiency bonus that petroleum gives to the power plant.{}"Efficiency" refers to conversion rate, so a 50% boost changes the conversion ratio from 1 input to 1 power to 1 input to 1.5 power. Only enabled if the expanded mechanics option is enabled for the climate type you're playing on.
 
 STR_PARAM_LUBR_BOOST_NAME :{PUSH_COLOUR}{GREEN}Temperate{POP_COLOUR}/{PUSH_COLOUR}{YELLOW}Sub-tropic{POP_COLOUR}: Lubricant efficiency bonus
-STR_PARAM_LUBR_BOOST_DESC :Determines the efficiency bonus that lubricants give to the factory. "Efficiency" refers to conversion rate, so a 50% boost changes the conversion ratio from 1 input to 1 output to 1 input to 1.5 output. Only enabled if the expanded mechanics option is enabled for the climate type you're playing on.
+STR_PARAM_LUBR_BOOST_DESC :Determines the efficiency bonus that lubricants give to the factory.{}"Efficiency" refers to conversion rate, so a 50% boost changes the conversion ratio from 1 input to 1 output to 1 input to 1.5 output. Only enabled if the expanded mechanics option is enabled for the climate type you're playing on.
 
 #Bonus Mechanics
 
@@ -61,7 +61,7 @@ STR_PARAM_BANK_NAME       :Enable bank production bonus
 STR_PARAM_BANK_DESC       :When enabled, banks will provide a production bonus to industries in the same town, as long as cargo is delivered each month.
 
 STR_PARAM_BANKADV_NAME    :Advanced bank mechanics
-STR_PARAM_BANKADV_DESC    :If enabled, banks will convert valuables/gold/diamonds into funding units, which is then consumed by active bank bonus eligible industries. Rather than having a fixed target to reach each month, your funding requirement scale with your network's size.
+STR_PARAM_BANKADV_DESC    :If enabled, banks will convert valuables/gold/diamonds into funding units, which is then consumed by active bank bonus eligible industries. Rather than having a fixed target to reach each month, your funding requirement scales with your network's size.
 
 STR_PARAM_FUNDSOFT_NAME   :{PUSH_COLOUR}{RED}Advanced Bank Only{POP_COLOUR}: Enable bank bonus soft cap
 STR_PARAM_FUNDSOFT_DESC   :If enabled alongside advanced bank mechanics, additional funding beyond the stockpile will still increase the bank bonus, but at a drastically reduced rate.
@@ -105,7 +105,7 @@ STR_PARAM_PRIM_CLOSE_DESC :When enabled, primary industries will never close.
 STR_PARAM_GROW_NAME       :Enable smooth primary industry growth
 STR_PARAM_GROW_DESC       :If enabled, primary industries no longer have a random aspect to their production changes. Instead, service ratings directly correspond to production changes. Unserviced industries remain unchanged (They have random production) 
 
-STR_PARAM_GROW_DIFF_NAME  :Primary industry growth difficulty
+STR_PARAM_GROW_DIFF_NAME  :{PUSH_COLOUR}{RED}Smooth Primary Growth Only{POP_COLOUR}: Primary industry growth difficulty
 STR_PARAM_GROW_DIFF_DESC  :Sets the difficulty of growing the base production of primary industries. Setting this to "Vanilla" will leave primary industry growth mechanics alone.{}Lenient: {RED}0-25%{BLACK} to decrease, {YELLOW}26-60%{BLACK}to stabilize, {GREEN}61%+{BLACK} to increase.{}Average: {RED}0-35%{BLACK} to decrease, {YELLOW}36-70%{BLACK} to stabilize, {GREEN}71%+{BLACK} to increase.{}Challenging: {RED}0-50%{BLACK} to decrease, {YELLOW}50-85%{BLACK}to stabilize, {GREEN}86%+{BLACK} to increase.
 
 STR_PARAM_DIFF_VANILLA    :Vanilla
@@ -152,7 +152,7 @@ STR_PARAM_STOCKMULT_DESC  :How much stockpiled cargo is required for secondaries
 STR_PARAM_QOL_SEPERATE    :{BLUE}--| VISUAL OPTIONS |--
 
 STR_PARAM_TIPS_NAME       :Show industry tips
-STR_PARAM_TIPS_DESC       :If enabled, industries will show a tip for how to increase their production.
+STR_PARAM_TIPS_DESC       :If enabled, primary industries will show a tip for how to increase their production.
 
 STR_PARAM_DETAILED_NONE   :Show no detailed info
 STR_PARAM_DETAILED_RES    :Show detailed reserve info
@@ -160,7 +160,7 @@ STR_PARAM_DETAILED_BONUS  :Show detailed bonus info
 STR_PARAM_DETAILED_BOTH   :Show all detailed info
 
 STR_PARAM_DETAILED_NAME   :Show detailed industry info
-STR_PARAM_DETAILED_DESC   :Determines how detailed certain tooltips are.{}Detailed reserves shows the exact amount remaining in primary industry reserves, if enabled.{}Detailed bonus info gives a breakdown of all industry bonuses, such as the town or power bonus.
+STR_PARAM_DETAILED_DESC   :Determines how detailed industry tooltips are.{}Detailed reserves shows the exact amount remaining in primary industry reserves, if enabled.{}Detailed bonus info gives a breakdown of all industry bonuses, such as the town or power bonus.
 
 
 
@@ -168,6 +168,10 @@ STR_PARAM_DETAILED_DESC   :Determines how detailed certain tooltips are.{}Detail
 STR_EMPTY                 :
 STR_SKIP                  :{SKIP}
 STR_SKIP3                 :{SKIP}{SKIP}{SKIP}
+
+STR_TEST1                 :Test1
+STR_TEST2                 :Test2
+STR_TEST3                 :Test3
 
 #Industry Production Text
 
@@ -191,7 +195,7 @@ STR_IND_PRIM_PROD_TOWN    :{BLACK}Bonus from town population: {WHITE}+{UNSIGNED_
 STR_IND_PRIM_PROD_POWER   :{BLACK}Bonus from power plant: {WHITE}+{UNSIGNED_WORD}%{}
 STR_IND_PRIM_PROD_RESERVE1:{}{}{GOLD}Reserves Remaining: {WHITE}{UNSIGNED_WORD}%
 STR_IND_PRIM_PROD_RESERVE2:{}{}{GOLD}Estimated Reserves: {STRING}
-STR_IND_PRIM_PROD_TOTAL   :{STRING}{STRING}{STRING}{STRING}{GOLD}Total Production: {WHITE}{UNSIGNED_WORD}%{STRING}{STRING}
+STR_IND_PRIM_PROD_TOTAL   :{STRING}{STRING}{STRING}{STRING}{GOLD}Production Rate: {WHITE}{UNSIGNED_WORD}%{STRING}{STRING}
 
 STR_IND_SEC_BONUS_PRIM    : primary
 STR_IND_SEC_BONUS_SEC     : secondary
@@ -205,8 +209,10 @@ STR_IND_SEC_TEMP_BANK_TOTAL:{STRING}{STRING}{}{}{BLACK}Consumption rate: {WHITE}
 STR_IND_SEC_POWER_STOCK   :{}{BLACK}Units of power available: {WHITE}{SKIP}{COMMA} units
 STR_IND_SEC_POWER_TOTAL   :{STRING}{STRING}{}{}{BLACK}Consumption rate: {WHITE}{UNSIGNED_WORD}%
 
-STR_IND_SEC_PROD_BASE     :{BLACK}Base consumption rate: {WHITE}{UNSIGNED_WORD}%{}
-STR_IND_SEC_PROD_BANK     :{BLACK}Bonus consumption from town bank: {WHITE}+{UNSIGNED_WORD}%{}
-STR_IND_SEC_PROD_TOWN     :{BLACK}Bonus consumption from town population: {WHITE}+{UNSIGNED_WORD}%{}
-STR_IND_SEC_PROD_POWER    :{BLACK}Bonus consumption from power plant: {WHITE}+{UNSIGNED_WORD}%{}
-STR_IND_SEC_PROD_TOTAL    :{SKIP}{SKIP}{STRING}{STRING}{STRING}{STRING}{}{GOLD}Total Efficiency: {WHITE}{UNSIGNED_WORD}%
+STR_IND_SEC_PROD_DISABLED :{RED}Production Disabled!{}{}{WHITE}Deliver cargo to the town's power plant to begin production!
+
+STR_IND_SEC_PROD_BASE     :{BLACK}Base conversion: {WHITE}{UNSIGNED_WORD}%{}
+STR_IND_SEC_PROD_BANK     :{BLACK}Bonus from town bank: {WHITE}+{UNSIGNED_WORD}%{}
+STR_IND_SEC_PROD_TOWN     :{BLACK}Bonus from town population: {WHITE}+{UNSIGNED_WORD}%{}
+STR_IND_SEC_PROD_POWER    :{BLACK}Bonus from power plant: {WHITE}+{UNSIGNED_WORD}%{}
+STR_IND_SEC_PROD_TOTAL    :{STRING}{BLACK}Cargo stockpile: {WHITE}{UNSIGNED_WORD}%{}{SKIP}{STRING}{STRING}{STRING}{}{GOLD}Conversion Rate: {WHITE}{UNSIGNED_WORD}%
