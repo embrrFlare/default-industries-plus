@@ -501,7 +501,50 @@ grf {
 
 cargotable {
     "PASS", "COAL", "MAIL", "OIL_", "LVST", "GOOD", "GRAI", "WOOD", "IORE", "STEL", "VALU",
-    "PAPR", "WHEA", "FOOD", "GOLD", "RUBR", "FRUT", "MAIZ", "CORE", "WATR", "DIAM", "SUGR"
+    "PAPR", "WHEA", "FOOD", "GOLD", "RUBR", "FRUT", "MAIZ", "CORE", "WATR", "DIAM", "SUGR",
+    "LMBR"
+}
+
+item(FEAT_CARGO, lumber, 23) {
+    property {
+        substitute: INDUSTRYTYPE_STEEL_MILL;
+        override: INDUSTRYTYPE_STEEL_MILL;
+        cargo_types: [
+            produce_cargo("STEL", 0),
+	    accept_cargo("COAL"),
+	    accept_cargo("IORE")
+        ];
+	layouts: [industry_layout_steel_mill_1];
+    }
+
+    graphics {
+        extra_text_industry: switch_display_helper_steel_mill;
+        produce_256_ticks: switch_production_helper_steel_mill;
+        random_prod_change: CB_RESULT_IND_PROD_NO_CHANGE;
+        monthly_prod_change: switch_production_change_steel_mill;
+	stop_accept_cargo: switch_stop_accept_steel_mill;
+        build_prod_change: 32;
+    }
+}tem(FEAT_INDUSTRIES, steel_mill, INDUSTRYTYPE_STEEL_MILL) {
+    property {
+        substitute: INDUSTRYTYPE_STEEL_MILL;
+        override: INDUSTRYTYPE_STEEL_MILL;
+        cargo_types: [
+            produce_cargo("STEL", 0),
+	    accept_cargo("COAL"),
+	    accept_cargo("IORE")
+        ];
+	layouts: [industry_layout_steel_mill_1];
+    }
+
+    graphics {
+        extra_text_industry: switch_display_helper_steel_mill;
+        produce_256_ticks: switch_production_helper_steel_mill;
+        random_prod_change: CB_RESULT_IND_PROD_NO_CHANGE;
+        monthly_prod_change: switch_production_change_steel_mill;
+	stop_accept_cargo: switch_stop_accept_steel_mill;
+        build_prod_change: 32;
+    }
 }
 
 // Global Functions
@@ -1069,6 +1112,31 @@ item(FEAT_INDUSTRIES, steel_mill, INDUSTRYTYPE_STEEL_MILL) {
             produce_cargo("STEL", 0),
 	    accept_cargo("COAL"),
 	    accept_cargo("IORE")
+        ];
+	layouts: [industry_layout_steel_mill_1];
+    }
+
+    graphics {
+        extra_text_industry: switch_display_helper_steel_mill;
+        produce_256_ticks: switch_production_helper_steel_mill;
+        random_prod_change: CB_RESULT_IND_PROD_NO_CHANGE;
+        monthly_prod_change: switch_production_change_steel_mill;
+	stop_accept_cargo: switch_stop_accept_steel_mill;
+        build_prod_change: 32;
+    }
+}
+
+// FACTORY
+
+item(FEAT_INDUSTRIES, steel_mill, INDUSTRYTYPE_FACTORY) {
+    property {
+        substitute: INDUSTRYTYPE_FACTORY;
+        override: INDUSTRYTYPE_FACTORY;
+        cargo_types: [
+            produce_cargo("GOOD", 0),
+	    accept_cargo("STEL"),
+	    accept_cargo("LVST"),
+	    accept_cargo("GRAI")
         ];
 	layouts: [industry_layout_steel_mill_1];
     }

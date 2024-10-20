@@ -141,8 +141,8 @@ STR_PARAM_SECGROWPROB_DESC:This number determines the probability of a productio
 STR_PARAM_POWERREQ_NAME   :{PUSH_COLOUR}{GREEN}Temperate{POP_COLOUR}/{PUSH_COLOUR}{BLUE}sub-arctic{POP_COLOUR}: Secondaries require power
 STR_PARAM_POWERREQ_DESC   :If enabled, secondaries require power from a power plant in order to operate.{}A town has power as long as the power plant either has more than a quarter of its stockpile of either cargo or power units.
 
-STR_PARAM_SECINDCONS_NAME :Maximum secondary industry consumption rate (%)
-STR_PARAM_SECINDCONS_DESC :The maximum consumption rate of secondary industries. The higher this is, the more cargo secondaries will consume each month. Useful for those who like a specific primary to secondary industry ratio in their games. {}{}{WHITE}Does not apply to power plant or bank, {BLACK}as they have their own options.
+STR_PARAM_SECINDCONS_NAME :Secondary industry conversion rate (%)
+STR_PARAM_SECINDCONS_DESC :Controls the overall conversion rate of secondary industries. The higher this is, the more cargo secondaries will consume each month. Useful for those who like a specific primary to secondary industry ratio in their games. {}{}{WHITE}Does not apply to power plant or bank, {BLACK}as they have their own options.
 
 STR_PARAM_STOCKMULT_NAME  :Secondary stockpiling multiplier (%)
 STR_PARAM_STOCKMULT_DESC  :How much stockpiled cargo is required for secondaries to reach their maximum consumption, as well as their maximum stockpile.{}This works as a multipler of their maximum cargo consumption: if a secondary can at most consume 100 units per month, and this setting is at 200%, the secondary will need 200 units of cargo waiting in order to reach maximum consumption, and will store 2000 units of cargo (x10 the multiplier, which is 10 months worth of maximum conversion) before it refuses to accept any more.
