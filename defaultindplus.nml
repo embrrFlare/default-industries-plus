@@ -1389,15 +1389,15 @@ switch(FEAT_INDUSTRIES, SELF, switch_stop_accept_oil_refinery, [oil_refinery_sto
 
 item(FEAT_INDUSTRIES, oil_refinery, INDUSTRYTYPE_OIL_REFINERY) {
     property {
-        substitute: INDUSTRYTYPE_TEMPERATE_FACTORY;
-        override: INDUSTRYTYPE_TEMPERATE_FACTORY;
+        substitute: INDUSTRYTYPE_OIL_REFINERY;
+        override: INDUSTRYTYPE_OIL_REFINERY;
         cargo_types: [
             produce_cargo("GOOD", 0),
 	    produce_cargo("PETR", 0),
 	    produce_cargo("LUBR",0),
 	    accept_cargo("OIL_")
         ];
-	layouts: [industry_layout_temp_factory_1];
+	// layouts: [industry_layout_temp_factory_1];
     }
 
     graphics {
