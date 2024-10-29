@@ -162,7 +162,19 @@ STR_PARAM_DETAILED_BOTH   :Show all detailed info
 STR_PARAM_DETAILED_NAME   :Show detailed industry info
 STR_PARAM_DETAILED_DESC   :Determines how detailed industry tooltips are.{}Detailed reserves shows the exact amount remaining in primary industry reserves, if enabled.{}Detailed bonus info gives a breakdown of all industry bonuses, such as the town or power bonus.
 
+#Cargo Strings
 
+STR_LUMBER_NAME           :Lumber
+STR_LUMBER_LONG           :{WEIGHT} of lumber
+STR_LUMBER_ABBREV         :{TINYFONT}LM
+
+STR_LUBRICANT_NAME        :Lubricants
+STR_LUBRICANT_LONG        :Crates of lubricants
+STR_LUBRICANT_ABBREV      :{TINYFONT}LB
+
+STR_PETROL_NAME           :Petrol
+STR_PETROL_LONG           :{VOLUME} of petrol
+STR_PETROL_ABBREV         :{TINYFONT}PT
 
 #Global Strings
 STR_EMPTY                 :

@@ -502,48 +502,78 @@ grf {
 cargotable {
     "PASS", "COAL", "MAIL", "OIL_", "LVST", "GOOD", "GRAI", "WOOD", "IORE", "STEL", "VALU",
     "PAPR", "WHEA", "FOOD", "GOLD", "RUBR", "FRUT", "MAIZ", "CORE", "WATR", "DIAM", "SUGR",
-    "LMBR"
+    "LMBR", "LUBR", "PETR"
 }
 
-item(FEAT_CARGO, lumber, 23) {
+item(FEAT_CARGOS, cargo_lumber, 21) {
     property {
-        substitute: INDUSTRYTYPE_STEEL_MILL;
-        override: INDUSTRYTYPE_STEEL_MILL;
-        cargo_types: [
-            produce_cargo("STEL", 0),
-	    accept_cargo("COAL"),
-	    accept_cargo("IORE")
-        ];
-	layouts: [industry_layout_steel_mill_1];
+	number: 21;
+	type_name: string(STR_LUMBER_NAME);
+	unit_name: string(STR_LUMBER_NAME);
+	units_of_cargo: TTD_STR_TONS;
+	items_of_cargo: string(STR_LUMBER_LONG);
+	type_abbreviation: string(STR_LUMBER_ABBREV);
+	sprite: 4307;
+	weight: 1;
+	is_freight: 1;
+	cargo_classes: bitmask(CC_PIECE_GOODS);
+	cargo_label: "LMBR";
+	town_growth_effect: TOWNGROWTH_NONE;
+	town_growth_multiplier: 1.0;
+	penalty_lowerbound: 18;
+	single_penalty_length: 255;
+	station_list_colour: 58;
+	cargo_payment_list_colour: 58;
+	price_factor: 123;
+	capacity_multiplier: 1;
     }
+}
 
-    graphics {
-        extra_text_industry: switch_display_helper_steel_mill;
-        produce_256_ticks: switch_production_helper_steel_mill;
-        random_prod_change: CB_RESULT_IND_PROD_NO_CHANGE;
-        monthly_prod_change: switch_production_change_steel_mill;
-	stop_accept_cargo: switch_stop_accept_steel_mill;
-        build_prod_change: 32;
-    }
-}tem(FEAT_INDUSTRIES, steel_mill, INDUSTRYTYPE_STEEL_MILL) {
+item(FEAT_CARGOS, cargo_lubricant, 22) {
     property {
-        substitute: INDUSTRYTYPE_STEEL_MILL;
-        override: INDUSTRYTYPE_STEEL_MILL;
-        cargo_types: [
-            produce_cargo("STEL", 0),
-	    accept_cargo("COAL"),
-	    accept_cargo("IORE")
-        ];
-	layouts: [industry_layout_steel_mill_1];
+    	number: 22;
+	type_name: string(STR_LUBRICANT_NAME);
+	unit_name: string(STR_LUBRICANT_NAME);
+	units_of_cargo: TTD_STR_CRATES;
+	items_of_cargo: string(STR_LUBRICANT_LONG);
+	type_abbreviation: string(STR_LUBRICANT_ABBREV);
+	sprite: 4300;
+	weight: 0.1;
+	is_freight: 1;
+	cargo_classes: bitmask(CC_LIQUID);
+	cargo_label: "LUBR";
+	town_growth_effect: TOWNGROWTH_NONE;
+	town_growth_multiplier: 1.0;
+	penalty_lowerbound: 18;
+	single_penalty_length: 255;
+	station_list_colour: 185;
+	cargo_payment_list_colour: 185;
+	price_factor: 82;
+	capacity_multiplier: 2;
     }
+}
 
-    graphics {
-        extra_text_industry: switch_display_helper_steel_mill;
-        produce_256_ticks: switch_production_helper_steel_mill;
-        random_prod_change: CB_RESULT_IND_PROD_NO_CHANGE;
-        monthly_prod_change: switch_production_change_steel_mill;
-	stop_accept_cargo: switch_stop_accept_steel_mill;
-        build_prod_change: 32;
+item(FEAT_CARGOS, cargo_petrol, 23) {
+    property {
+	number: 23;
+	type_name: string(STR_PETROL_NAME);
+	unit_name: string(STR_PETROL_NAME);
+	units_of_cargo: TTD_STR_LITERS;
+	items_of_cargo: string(STR_PETROL_LONG);
+	type_abbreviation: string(STR_PETROL_ABBREV);
+	sprite: 4300;
+	weight: 1;
+	is_freight: 1;
+	cargo_classes: bitmask(CC_LIQUID);
+	cargo_label: "PETR";
+	town_growth_effect: TOWNGROWTH_NONE;
+	town_growth_multiplier: 1.0;
+	penalty_lowerbound: 18;
+	single_penalty_length: 255;
+	station_list_colour: 182;
+	cargo_payment_list_colour: 182;
+	price_factor: 100;
+	capacity_multiplier: 1;
     }
 }
 
@@ -624,6 +654,9 @@ switch(FEAT_INDUSTRIES, PARENT, GetBankFunding, STORE_TEMP(min(param_bank_bonus_
 
 // Returns units of power, if advanced bank bonus is enabled.
 switch(FEAT_INDUSTRIES, PARENT, GetPowerUnits, STORE_TEMP(min(param_power_advanced ? LOAD_PERM(5) : 0x00,20000000),1)) {return LOAD_TEMP(1);}
+
+// Returns 1 if secondary has power and/or doesn't require it, 0 if it does require it and doesn't have it.
+switch(FEAT_INDUSTRIES, SELF, IsSecondaryPowered, (param_sec_power_need ? GetPowerProductionBonus() > (param_power_max_bonus/4) : 0x01)) {return;}
 
 // This is a hell of a function since almost all of these features need to be completely decoupled yet still work together properly in this menu. If statements don't accomplish the logic I'd like, and switch statements seem to lose all local context in the store_temp vars when progressing back down the call stack so all of this is done with ternary operators. sorry...
 switch(FEAT_INDUSTRIES, SELF, switch_production_display_primary_composite, [
@@ -1061,25 +1094,20 @@ switch(FEAT_INDUSTRIES, SELF, steel_mill_max_stockpile_coal, min((GetMaxSecondar
 
 switch(FEAT_INDUSTRIES, SELF, steel_mill_stockpile_modifier, STORE_PERM(min(min((incoming_cargo_waiting("IORE")*100)/steel_mill_max_stockpile_iron(),(incoming_cargo_waiting("COAL")*100)/steel_mill_max_stockpile_coal()),100),0)) {return;}
 
-// Returns 1 if steel mill has power and/or power is disabled, and 0 if it doesn't have power and power is enabled.
-switch(FEAT_INDUSTRIES, SELF, steel_mill_has_power, (param_sec_power_need ? GetPowerProductionBonus() > (param_power_max_bonus/4) : 0x01)) {return;}
-
 switch(FEAT_INDUSTRIES, PARENT, switch_production_steel_mill,
     // Consume funding if enabled and the industry benefits from it.
     [
-    param_bank_bonus_advanced ? (STORE_PERM(LOAD_PERM(6)-(steel_mill_is_active()*steel_mill_has_power() ? (hasbit(param_bank_bonus_enabled,1)*GetFundingConsumptionSec()) : 0x00),6)) : 0x00,
+    param_bank_bonus_advanced ? (STORE_PERM(LOAD_PERM(6)-(steel_mill_is_active()*IsSecondaryPowered() ? (hasbit(param_bank_bonus_enabled,1)*GetFundingConsumptionSec()) : 0x00),6)) : 0x00,
     // Consume power if enabled and the industry benefits from it.
-     param_power_advanced ? (STORE_PERM(LOAD_PERM(5)-(steel_mill_is_active()*steel_mill_has_power() ? (hasbit(param_power_enabled,1)*GetPowerConsumptionSec()) : 0x00),5)) : 0x00,
+     param_power_advanced ? (STORE_PERM(LOAD_PERM(5)-(steel_mill_is_active()*IsSecondaryPowered() ? (hasbit(param_power_enabled,1)*GetPowerConsumptionSec()) : 0x00),5)) : 0x00,
     // Calculate production, but production is always zero if power plant doesn't have power (and secondaries require it).
-     STORE_TEMP((min(min(GetTotalSecondaryProduction(),LOAD_TEMP(1)),LOAD_TEMP(2))+((LOAD_TEMP(1)>0)*(LOAD_TEMP(2)>0)))*steel_mill_has_power(),0) 
+     STORE_TEMP((min(min(GetTotalSecondaryProduction(),LOAD_TEMP(1)),LOAD_TEMP(2))+((LOAD_TEMP(1)>0)*(LOAD_TEMP(2)>0)))*IsSecondaryPowered(),0) 
     ])
     {produce_steel_mill;}
 
 switch(FEAT_INDUSTRIES, SELF, switch_production_helper_steel_mill, [
     STORE_TEMP(incoming_cargo_waiting("IORE"),1),
-    // This is doubled so that the stockpile modifier values coal half as much as iron. True value is in register 10 if needed.
-    STORE_TEMP(incoming_cargo_waiting("COAL")*2,2),
-    STORE_PERM(incoming_cargo_waiting("COAL"),10),
+    STORE_TEMP(incoming_cargo_waiting("COAL"),2),
     steel_mill_stockpile_modifier()
 ]) {switch_production_steel_mill;}
 
@@ -1099,7 +1127,7 @@ switch(FEAT_INDUSTRIES, SELF, switch_production_change_steel_mill, STORE_TEMP(tr
     : CB_RESULT_IND_PROD_NO_CHANGE;
 }
 
-switch(FEAT_INDUSTRIES, SELF, switch_display_helper_steel_mill, steel_mill_has_power()) {
+switch(FEAT_INDUSTRIES, SELF, switch_display_helper_steel_mill, IsSecondaryPowered()) {
     0: return string(STR_IND_SEC_PROD_DISABLED);
     1: return switch_production_display_secondary_composite();
 }
@@ -1126,27 +1154,258 @@ item(FEAT_INDUSTRIES, steel_mill, INDUSTRYTYPE_STEEL_MILL) {
     }
 }
 
-// FACTORY
+// TEMPERATE FACTORY
+// This industry is special in that it's cargo agnostic and doesn't require all cargoes in order to function.
+// 1 unit of input corresponds to 1 unit of output. the stockpile modifier is still calculated as normal but it's no longer clamped to the cargo with the lowest value, each cargo contributes 25% to the overall modifier.
 
-item(FEAT_INDUSTRIES, steel_mill, INDUSTRYTYPE_FACTORY) {
+// Tile and sprite layout code adapted from 2TallTyler
+
+spritelayout sprite_layout_factory_1_N {
+    ground   {sprite:2146;}
+    building {sprite:2150;}
+}
+
+spritelayout sprite_layout_factory_1_E {
+    ground   {sprite:2147;}
+    building {sprite:2151;}
+}
+
+spritelayout sprite_layout_factory_1_W {
+    ground   {sprite:2148;}
+    building {sprite:2152;}
+}
+
+spritelayout sprite_layout_factory_1_S {
+    ground   {sprite:2149;}
+}
+
+item(FEAT_INDUSTRYTILES, ind_tile_factory_1_N) {
     property {
-        substitute: INDUSTRYTYPE_FACTORY;
-        override: INDUSTRYTYPE_FACTORY;
+        substitute: 02;
+	special_flags: bitmask(INDTILE_FLAG_ACCEPT_ALL);
+    }
+    graphics {
+        default: sprite_layout_factory_1_N;
+    }
+}
+
+item(FEAT_INDUSTRYTILES, ind_tile_factory_1_E) {
+    property {
+        substitute: 02;
+	special_flags: bitmask(INDTILE_FLAG_ACCEPT_ALL);
+    }
+    graphics {
+        default: sprite_layout_factory_1_E;
+    }
+}
+
+item(FEAT_INDUSTRYTILES, ind_tile_factory_1_W) {
+    property {
+        substitute: 02;
+	special_flags: bitmask(INDTILE_FLAG_ACCEPT_ALL);
+    }
+    graphics {
+        default: sprite_layout_factory_1_W;
+    }
+}
+
+item(FEAT_INDUSTRYTILES, ind_tile_factory_1_S) {
+    property {
+        substitute: 02;
+	special_flags: bitmask(INDTILE_FLAG_ACCEPT_ALL);
+    }
+    graphics {
+        default: sprite_layout_factory_1_S;
+    }
+}
+
+tilelayout industry_layout_temp_factory_1 {
+    0,0: ind_tile_factory_1_N;
+    0,1: ind_tile_factory_1_E;
+    1,0: ind_tile_factory_1_W;
+    1,1: ind_tile_factory_1_S;
+
+    0,2: ind_tile_factory_1_N;
+    0,3: ind_tile_factory_1_E;
+    1,2: ind_tile_factory_1_W;
+    1,3: ind_tile_factory_1_S;
+
+    2,0: ind_tile_factory_1_N;
+    2,1: ind_tile_factory_1_E;
+    3,0: ind_tile_factory_1_W;
+    3,1: ind_tile_factory_1_S;
+
+    4,0: ind_tile_factory_1_N;
+    4,1: ind_tile_factory_1_E;
+    5,0: ind_tile_factory_1_W;
+    5,1: ind_tile_factory_1_S;
+}
+
+produce(produce_temp_factory,
+    [STEL: (LOAD_TEMP(0)); LVST: LOAD_TEMP(1); GRAI: LOAD_TEMP(2); LMBR: LOAD_TEMP(3);],
+    [GOOD: LOAD_TEMP(0)+LOAD_TEMP(1)+LOAD_TEMP(2)+LOAD_TEMP(3);],
+    0
+)
+
+switch(FEAT_INDUSTRIES, SELF, temp_factory_max_stockpile, min((GetMaxSecondaryProduction()*8*param_sec_max_stockpile_perc)/100,50000))  {return;}
+
+switch(FEAT_INDUSTRIES, SELF, temp_factory_stockpile_modifier_steel, min((incoming_cargo_waiting("STEL")*100)/temp_factory_max_stockpile(),100)) {return;}
+
+switch(FEAT_INDUSTRIES, SELF, temp_factory_stockpile_modifier_livestock, min((incoming_cargo_waiting("LVST")*100)/temp_factory_max_stockpile(),100)) {return;}
+
+switch(FEAT_INDUSTRIES, SELF, temp_factory_stockpile_modifier_grain, min((incoming_cargo_waiting("GRAI")*100)/temp_factory_max_stockpile(),100)) {return;}
+
+switch(FEAT_INDUSTRIES, SELF, temp_factory_stockpile_modifier_lumber, min((incoming_cargo_waiting("LMBR")*100)/temp_factory_max_stockpile(),100)) {return;}
+
+switch(FEAT_INDUSTRIES, SELF, temp_factory_stockpile_modifier, STORE_PERM(min(temp_factory_stockpile_modifier_steel()/4+temp_factory_stockpile_modifier_livestock()/4+temp_factory_stockpile_modifier_grain()/4+temp_factory_stockpile_modifier_lumber()/4,100),0)) {return;}
+
+switch(FEAT_INDUSTRIES, SELF, temp_factory_is_active, (last_month_transported("GOOD") > 0)) {return;}
+
+// Because the factory is cargo agnostic, each input cargo may be consumed at a different rate, according to its stockpile modifier.
+switch(FEAT_INDUSTRIES, PARENT, switch_production_temp_factory,
+    // Consume funding if enabled and the industry benefits from it.
+    [
+    param_bank_bonus_advanced ? (STORE_PERM(LOAD_PERM(6)-(temp_factory_is_active()*IsSecondaryPowered() ? (hasbit(param_bank_bonus_enabled,1)*GetFundingConsumptionSec()) : 0x00),6)) : 0x00,
+    // Consume power if enabled and the industry benefits from it.
+     param_power_advanced ? (STORE_PERM(LOAD_PERM(5)-(temp_factory_is_active()*IsSecondaryPowered() ? (hasbit(param_power_enabled,1)*GetPowerConsumptionSec()) : 0x00),5)) : 0x00,
+    ])
+    {produce_temp_factory;}
+
+switch(FEAT_INDUSTRIES, SELF, switch_production_helper_temp_factory, [
+    // Each cargo has its own stockpile modifier and so is calculated individually.
+    // STEEL
+    STORE_PERM(temp_factory_stockpile_modifier_steel(),0),
+    STORE_TEMP((min(GetTotalSecondaryProduction(),incoming_cargo_waiting("STEL"))+(incoming_cargo_waiting("STEL")>0))*IsSecondaryPowered(),0),
+    // LIVESTOCK
+    STORE_PERM(temp_factory_stockpile_modifier_livestock(),0),
+    STORE_TEMP((min(GetTotalSecondaryProduction(),incoming_cargo_waiting("LVST"))+(incoming_cargo_waiting("LVST")>0))*IsSecondaryPowered(),1),
+    // GRAIN
+    STORE_PERM(temp_factory_stockpile_modifier_grain(),0),
+    STORE_TEMP((min(GetTotalSecondaryProduction(),incoming_cargo_waiting("GRAI"))+(incoming_cargo_waiting("GRAI")>0))*IsSecondaryPowered(),2),
+    // LUMBER
+    STORE_PERM(temp_factory_stockpile_modifier_lumber(),0),
+    STORE_TEMP((min(GetTotalSecondaryProduction(),incoming_cargo_waiting("LMBR"))+(incoming_cargo_waiting("LMBR")>0))*IsSecondaryPowered(),3),
+    temp_factory_stockpile_modifier()
+]) {switch_production_temp_factory;}
+
+switch(FEAT_INDUSTRIES, SELF, switch_display_helper_temp_factory, IsSecondaryPowered()) {
+    0: return string(STR_IND_SEC_PROD_DISABLED);
+    1: return switch_production_display_secondary_composite();
+}
+
+switch(FEAT_INDUSTRIES, SELF, switch_production_change_temp_factory, STORE_TEMP(transported_last_month_pct("GOOD"),0)) {
+    // Check for smooth growth and determine whether a growth event can even happen
+    return (param_sec_grow_prob >= getbits(extra_callback_info2, 0, 7)) ? ((param_sec_advanced == 1)
+    // Do the correct change logic based on the set difficulty.
+    ? ((param_sec_growth_diff == 0) ? switch_production_change_sec_easy() : ((param_sec_growth_diff == 1) ? switch_production_change_sec_normal() : switch_production_change_sec_hard()))
+    // If smooth growth is disabled, a random change (vanilla) occurs instead
+    : CB_RESULT_IND_PROD_NO_CHANGE)
+    // If reserves are depleted, close. If growth chance failed, do no change.
+    : CB_RESULT_IND_PROD_NO_CHANGE;
+}
+
+switch(FEAT_INDUSTRIES, SELF, switch_stop_accept_temp_factory, [temp_factory_stockpile_modifier(),getbits(extra_callback_info2, 0, 8)]) {
+    4: return incoming_cargo_waiting("LVST") <= temp_factory_max_stockpile()*10;
+    6: return incoming_cargo_waiting("GRAI") <= temp_factory_max_stockpile()*10;
+    9: return incoming_cargo_waiting("STEL") <= temp_factory_max_stockpile()*10;
+    21: return incoming_cargo_waiting("LMBR") <= temp_factory_max_stockpile()*10;
+}
+
+item(FEAT_INDUSTRIES, temperate_factory, INDUSTRYTYPE_TEMPERATE_FACTORY) {
+    property {
+        substitute: INDUSTRYTYPE_TEMPERATE_FACTORY;
+        override: INDUSTRYTYPE_TEMPERATE_FACTORY;
         cargo_types: [
             produce_cargo("GOOD", 0),
 	    accept_cargo("STEL"),
 	    accept_cargo("LVST"),
-	    accept_cargo("GRAI")
+	    accept_cargo("GRAI"),
+	    accept_cargo("LMBR")
         ];
-	layouts: [industry_layout_steel_mill_1];
+	layouts: [industry_layout_temp_factory_1];
     }
 
     graphics {
-        extra_text_industry: switch_display_helper_steel_mill;
-        produce_256_ticks: switch_production_helper_steel_mill;
+        extra_text_industry: switch_display_helper_temp_factory;
+        produce_256_ticks: switch_production_helper_temp_factory;
         random_prod_change: CB_RESULT_IND_PROD_NO_CHANGE;
-        monthly_prod_change: switch_production_change_steel_mill;
-	stop_accept_cargo: switch_stop_accept_steel_mill;
+        monthly_prod_change: switch_production_change_temp_factory;
+	stop_accept_cargo: switch_stop_accept_temp_factory;
+        build_prod_change: 32;
+    }
+}
+
+// OIL REFINERY
+// This is essentially a second hub, focused moreso on productivity increases for the rest of your network rather than pure goods.
+// 1 Input = 0.75 Goods, 0.125 petrol, 0.125 lubricants
+
+produce(produce_oil_refinery,
+    [OIL_: (LOAD_TEMP(0));],
+    [GOOD: (LOAD_TEMP(0)*6)/8; PETR: LOAD_TEMP(0)/8; LUBR: LOAD_TEMP(0)/8;],
+    0
+)
+
+switch(FEAT_INDUSTRIES, SELF, oil_refinery_max_stockpile, min((GetMaxSecondaryProduction()*8*param_sec_max_stockpile_perc)/100,50000))  {return;}
+
+switch(FEAT_INDUSTRIES, SELF, oil_refinery_stockpile_modifier, min((incoming_cargo_waiting("OIL_")*100)/oil_refinery_max_stockpile(),100)) {return;}
+
+switch(FEAT_INDUSTRIES, SELF, oil_refinery_is_active, last_month_transported("GOOD") > 0) {return;}
+
+// Because the factory is cargo agnostic, each input cargo may be consumed at a different rate, according to its stockpile modifier.
+switch(FEAT_INDUSTRIES, PARENT, switch_production_oil_refinery,
+    // Consume funding if enabled and the industry benefits from it.
+    [
+    param_bank_bonus_advanced ? (STORE_PERM(LOAD_PERM(6)-(oil_refinery_is_active()*IsSecondaryPowered() ? (hasbit(param_bank_bonus_enabled,1)*GetFundingConsumptionSec()) : 0x00),6)) : 0x00,
+    // Consume power if enabled and the industry benefits from it.
+     param_power_advanced ? (STORE_PERM(LOAD_PERM(5)-(oil_refinery_is_active()*IsSecondaryPowered() ? (hasbit(param_power_enabled,1)*GetPowerConsumptionSec()) : 0x00),5)) : 0x00,
+    ])
+    {produce_oil_refinery;}
+
+switch(FEAT_INDUSTRIES, SELF, switch_production_helper_oil_refinery, [
+    STORE_PERM(oil_refinery_stockpile_modifier(),0),
+    STORE_TEMP((min(GetTotalSecondaryProduction(),incoming_cargo_waiting("OIL_"))+(incoming_cargo_waiting("OIL_")>0))*IsSecondaryPowered(),0),
+    oil_refinery_stockpile_modifier()
+]) {switch_production_oil_refinery;}
+
+switch(FEAT_INDUSTRIES, SELF, switch_display_helper_oil_refinery, IsSecondaryPowered()) {
+    0: return string(STR_IND_SEC_PROD_DISABLED);
+    1: return switch_production_display_secondary_composite();
+}
+
+switch(FEAT_INDUSTRIES, SELF, switch_production_change_oil_refinery, STORE_TEMP(transported_last_month_pct("GOOD"),0)) {
+    // Check for smooth growth and determine whether a growth event can even happen
+    return (param_sec_grow_prob >= getbits(extra_callback_info2, 0, 7)) ? ((param_sec_advanced == 1)
+    // Do the correct change logic based on the set difficulty.
+    ? ((param_sec_growth_diff == 0) ? switch_production_change_sec_easy() : ((param_sec_growth_diff == 1) ? switch_production_change_sec_normal() : switch_production_change_sec_hard()))
+    // If smooth growth is disabled, a random change (vanilla) occurs instead
+    : CB_RESULT_IND_PROD_NO_CHANGE)
+    // If reserves are depleted, close. If growth chance failed, do no change.
+    : CB_RESULT_IND_PROD_NO_CHANGE;
+}
+
+switch(FEAT_INDUSTRIES, SELF, switch_stop_accept_oil_refinery, [oil_refinery_stockpile_modifier()]) {
+    return (incoming_cargo_waiting("OIL_") <= oil_refinery_max_stockpile()*10);
+}
+
+item(FEAT_INDUSTRIES, oil_refinery, INDUSTRYTYPE_OIL_REFINERY) {
+    property {
+        substitute: INDUSTRYTYPE_TEMPERATE_FACTORY;
+        override: INDUSTRYTYPE_TEMPERATE_FACTORY;
+        cargo_types: [
+            produce_cargo("GOOD", 0),
+	    produce_cargo("PETR", 0),
+	    produce_cargo("LUBR",0),
+	    accept_cargo("OIL_")
+        ];
+	layouts: [industry_layout_temp_factory_1];
+    }
+
+    graphics {
+        extra_text_industry: switch_display_helper_oil_refinery;
+        produce_256_ticks: switch_production_helper_oil_refinery;
+        random_prod_change: CB_RESULT_IND_PROD_NO_CHANGE;
+        monthly_prod_change: switch_production_change_oil_refinery;
+	stop_accept_cargo: switch_stop_accept_oil_refinery;
         build_prod_change: 32;
     }
 }
