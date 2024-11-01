@@ -534,11 +534,11 @@ item(FEAT_CARGOS, cargo_lubricant, 22) {
     	number: 22;
 	type_name: string(STR_LUBRICANT_NAME);
 	unit_name: string(STR_LUBRICANT_NAME);
-	units_of_cargo: TTD_STR_CRATES;
+	units_of_cargo: TTD_STR_LITERS;
 	items_of_cargo: string(STR_LUBRICANT_LONG);
 	type_abbreviation: string(STR_LUBRICANT_ABBREV);
 	sprite: 4300;
-	weight: 0.1;
+	weight: 1;
 	is_freight: 1;
 	cargo_classes: bitmask(CC_LIQUID);
 	cargo_label: "LUBR";
@@ -549,7 +549,7 @@ item(FEAT_CARGOS, cargo_lubricant, 22) {
 	station_list_colour: 185;
 	cargo_payment_list_colour: 185;
 	price_factor: 82;
-	capacity_multiplier: 2;
+	capacity_multiplier: 1;
     }
 }
 
@@ -1347,7 +1347,7 @@ produce(produce_oil_refinery,
 
 switch(FEAT_INDUSTRIES, SELF, oil_refinery_max_stockpile, min((GetMaxSecondaryProduction()*8*param_sec_max_stockpile_perc)/100,50000))  {return;}
 
-switch(FEAT_INDUSTRIES, SELF, oil_refinery_stockpile_modifier, min((incoming_cargo_waiting("OIL_")*100)/oil_refinery_max_stockpile(),100)) {return;}
+switch(FEAT_INDUSTRIES, SELF, oil_refinery_stockpile_modifier, STORE_PERM(min((incoming_cargo_waiting("OIL_")*100)/oil_refinery_max_stockpile(),100),0)) {return;}
 
 switch(FEAT_INDUSTRIES, SELF, oil_refinery_is_active, last_month_transported("GOOD") > 0) {return;}
 
@@ -1383,8 +1383,8 @@ switch(FEAT_INDUSTRIES, SELF, switch_production_change_oil_refinery, STORE_TEMP(
     : CB_RESULT_IND_PROD_NO_CHANGE;
 }
 
-switch(FEAT_INDUSTRIES, SELF, switch_stop_accept_oil_refinery, [oil_refinery_stockpile_modifier()]) {
-    return (incoming_cargo_waiting("OIL_") <= oil_refinery_max_stockpile()*10);
+switch(FEAT_INDUSTRIES, SELF, switch_stop_accept_oil_refinery, [oil_refinery_stockpile_modifier(),getbits(extra_callback_info2, 0, 8)]) {
+    3: return incoming_cargo_waiting("OIL_") <= oil_refinery_max_stockpile()*10;
 }
 
 item(FEAT_INDUSTRIES, oil_refinery, INDUSTRYTYPE_OIL_REFINERY) {

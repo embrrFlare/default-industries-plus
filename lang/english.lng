@@ -169,7 +169,7 @@ STR_LUMBER_LONG           :{WEIGHT} of lumber
 STR_LUMBER_ABBREV         :{TINYFONT}LM
 
 STR_LUBRICANT_NAME        :Lubricants
-STR_LUBRICANT_LONG        :Crates of lubricants
+STR_LUBRICANT_LONG        :{VOLUME} of lubricants
 STR_LUBRICANT_ABBREV      :{TINYFONT}LB
 
 STR_PETROL_NAME           :Petrol
