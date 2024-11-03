@@ -20,11 +20,17 @@ STR_PARAM_EXT_ARCTIC_DESC :Significantly expands the sub-arctic economy, adding 
 STR_PARAM_EXT_TROPIC_NAME :Expanded Sub-Tropic Mechanics (Needs-based Economy)
 STR_PARAM_EXT_TROPIC_DESC :Significantly expands the sub-tropic economy, giving a focus towards the needs of the town: Cargoes such as food and water are a requirement for industries to function, and following a certain chain of needs will be necessary to build your network. Ultimately, your network will be more local, focusing more on servicing the needs of a town before moving onto the next one.{}{GOLD}Adds new cargoes and cargo chains. Only functions on the sub-tropic climate type.
 
-STR_PARAM_PETROL_BOOST_NAME:{PUSH_COLOUR}{GREEN}Temperate{POP_COLOUR}/{PUSH_COLOUR}{BLUE}Sub-arctic{POP_COLOUR}: Petroleum efficiency bonus
-STR_PARAM_PETROL_BOOST_DESC:Determines the efficiency bonus that petroleum gives to the power plant.{}"Efficiency" refers to conversion rate, so a 50% boost changes the conversion ratio from 1 input to 1 power to 1 input to 1.5 power. Only enabled if the expanded mechanics option is enabled for the climate type you're playing on.
+STR_PARAM_PETROL_BOOST_NAME:{PUSH_COLOUR}{GREEN}Temperate{POP_COLOUR}/{PUSH_COLOUR}{BLUE}Sub-arctic{POP_COLOUR}: Petrol efficiency bonus
+STR_PARAM_PETROL_BOOST_DESC:Determines the efficiency bonus that petrol gives to the power plant.{}"Efficiency" refers to conversion rate, so a 50% boost changes the conversion ratio from 1 input to 1 power to 1 input to 1.5 power. Only enabled if the expanded mechanics option is enabled for the climate type you're playing on.
+
+STR_PARAM_PETROL_CONS_NAME :{PUSH_COLOUR}{GREEN}Temperate{POP_COLOUR}/{PUSH_COLOUR}{BLUE}Sub-arctic{POP_COLOUR}: Petrol consumption rate
+STR_PARAM_PETROL_CONS_DESC :Determines the consumption rate of petrol at the power plant, relative to coal consumption.
 
 STR_PARAM_LUBR_BOOST_NAME :{PUSH_COLOUR}{GREEN}Temperate{POP_COLOUR}/{PUSH_COLOUR}{YELLOW}Sub-tropic{POP_COLOUR}: Lubricant efficiency bonus
 STR_PARAM_LUBR_BOOST_DESC :Determines the efficiency bonus that lubricants give to the factory.{}"Efficiency" refers to conversion rate, so a 50% boost changes the conversion ratio from 1 input to 1 output to 1 input to 1.5 output. Only enabled if the expanded mechanics option is enabled for the climate type you're playing on.
+
+STR_PARAM_LUBR_CONS_NAME  :{PUSH_COLOUR}{GREEN}Temperate{POP_COLOUR}/{PUSH_COLOUR}{YELLOW}Sub-tropic{POP_COLOUR}: Lubricant consumption rate
+STR_PARAM_LUBR_CONS_DESC  :Determines the consumption rate of petrol at the power plant, relative to cargo consumption. This consumption rate is not affected by bonuses like the town or power bonus.
 
 #Bonus Mechanics
 

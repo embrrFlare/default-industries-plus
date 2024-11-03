@@ -27,32 +27,43 @@ grf {
     param {
 	// Expanded sub-arctic?
 	param_ext_arctic_enabled {
-		name: string(STR_PARAM_EXT_ARCTIC_NAME);
-		desc: string(STR_PARAM_EXT_ARCTIC_DESC);
-		type: bool;
-		def_value: 1;
+	    name: string(STR_PARAM_EXT_ARCTIC_NAME);
+	    desc: string(STR_PARAM_EXT_ARCTIC_DESC);
+	    type: bool;
+	    def_value: 1;
 	}
+    }
+    param {
+	// Expanded sub-tropic?
+	param_ext_tropic_enabled {
+	     name: string(STR_PARAM_EXT_TROPIC_NAME);
+	     desc: string(STR_PARAM_EXT_TROPIC_DESC);
+	     type: bool;
+	     def_value: 1;
 	}
-	param {
-		// Expanded sub-tropic?
-		param_ext_tropic_enabled {
-			name: string(STR_PARAM_EXT_TROPIC_NAME);
-			desc: string(STR_PARAM_EXT_TROPIC_DESC);
-			type: bool;
-			def_value: 1;
-		}
+    }
+    param {
+	// TEMPERATE / SUB-ARCTIC: Petroleum efficiency bonus
+	param_petrol_bonus {
+	    name: string(STR_PARAM_PETROL_BOOST_NAME);
+  	    desc: string(STR_PARAM_PETROL_BOOST_DESC);
+	    type: int;
+	    min_value: 0;
+	    max_value: 1000;
+	    def_value: 50;
 	}
-	param {
-		// TEMPERATE / SUB-ARCTIC: Petroleum efficiency bonus
-		param_petrol_bonus {
-			name: string(STR_PARAM_PETROL_BOOST_NAME);
-			desc: string(STR_PARAM_PETROL_BOOST_DESC);
-			type: int;
-			min_value: 0;
-			max_value: 1000;
-			def_value: 50;
-		}
+    }
+    param {
+	// TEMPERATE / SUB-ARCTIC: Petrol consumption rate
+	param_petrol_cons {
+	    name: string(STR_PARAM_PETROL_CONS_NAME);
+	    desc: string(STR_PARAM_PETROL_CONS_DESC);
+	    type: int;
+	    min_value: 1;
+	    max_value: 500;
+	    def_value: 35;
 	}
+    }
     param {
         // TEMPERATE / SUB-TROPIC: Lubricant efficiency bonus
         param_lubricant_bonus {
@@ -63,6 +74,17 @@ grf {
             max_value: 1000;
             def_value: 50;
         }
+    }
+    param {
+	// TEMPERATE / SUB_TROPIC: Lubricant consumption rate
+	param_lubricant_cons {
+	    name: string(STR_PARAM_LUBR_CONS_NAME);
+	    desc: string(STR_PARAM_LUBR_CONS_DESC);
+	    type: int;
+	    min_value: 1;
+	    max_value: 500;
+	    def_value: 30;
+	}
     }
 
     param {
@@ -546,8 +568,8 @@ item(FEAT_CARGOS, cargo_lubricant, 22) {
 	town_growth_multiplier: 1.0;
 	penalty_lowerbound: 18;
 	single_penalty_length: 255;
-	station_list_colour: 185;
-	cargo_payment_list_colour: 185;
+	station_list_colour: 182;
+	cargo_payment_list_colour: 182;
 	price_factor: 82;
 	capacity_multiplier: 1;
     }
@@ -969,7 +991,8 @@ item(FEAT_INDUSTRIES, power_plant, INDUSTRYTYPE_POWER_PLANT) {
         substitute: INDUSTRYTYPE_POWER_PLANT;
         override: INDUSTRYTYPE_POWER_PLANT;
         cargo_types: [
-            accept_cargo("COAL")
+            accept_cargo("COAL"),
+	    accept_cargo("PETR")
         ];
     }
 
@@ -1156,7 +1179,7 @@ item(FEAT_INDUSTRIES, steel_mill, INDUSTRYTYPE_STEEL_MILL) {
 
 // TEMPERATE FACTORY
 // This industry is special in that it's cargo agnostic and doesn't require all cargoes in order to function.
-// 1 unit of input corresponds to 1 unit of output. the stockpile modifier is still calculated as normal but it's no longer clamped to the cargo with the lowest value, each cargo contributes 25% to the overall modifier.
+// 1 unit of input corresponds to 2 units of output. the stockpile modifier is still calculated as normal but it's no longer clamped to the cargo with the lowest value, each cargo contributes 25% to the overall modifier.
 
 // Tile and sprite layout code adapted from 2TallTyler
 
@@ -1243,7 +1266,7 @@ tilelayout industry_layout_temp_factory_1 {
 
 produce(produce_temp_factory,
     [STEL: (LOAD_TEMP(0)); LVST: LOAD_TEMP(1); GRAI: LOAD_TEMP(2); LMBR: LOAD_TEMP(3);],
-    [GOOD: LOAD_TEMP(0)+LOAD_TEMP(1)+LOAD_TEMP(2)+LOAD_TEMP(3);],
+    [GOOD: 2*(LOAD_TEMP(0)+LOAD_TEMP(1)+LOAD_TEMP(2)+LOAD_TEMP(3));],
     0
 )
 
@@ -1315,12 +1338,14 @@ item(FEAT_INDUSTRIES, temperate_factory, INDUSTRYTYPE_TEMPERATE_FACTORY) {
     property {
         substitute: INDUSTRYTYPE_TEMPERATE_FACTORY;
         override: INDUSTRYTYPE_TEMPERATE_FACTORY;
+	spec_flags: bitmask(IND_FLAG_LONG_CARGO_TYPE_LISTS);
         cargo_types: [
             produce_cargo("GOOD", 0),
 	    accept_cargo("STEL"),
 	    accept_cargo("LVST"),
 	    accept_cargo("GRAI"),
-	    accept_cargo("LMBR")
+	    accept_cargo("LMBR"),
+	    accept_cargo("LUBR")
         ];
 	layouts: [industry_layout_temp_factory_1];
     }
@@ -1331,6 +1356,7 @@ item(FEAT_INDUSTRIES, temperate_factory, INDUSTRYTYPE_TEMPERATE_FACTORY) {
         random_prod_change: CB_RESULT_IND_PROD_NO_CHANGE;
         monthly_prod_change: switch_production_change_temp_factory;
 	stop_accept_cargo: switch_stop_accept_temp_factory;
+	cargo_subtype_display: CB_RESULT_NO_TEXT;
         build_prod_change: 32;
     }
 }
@@ -1406,6 +1432,78 @@ item(FEAT_INDUSTRIES, oil_refinery, INDUSTRYTYPE_OIL_REFINERY) {
         random_prod_change: CB_RESULT_IND_PROD_NO_CHANGE;
         monthly_prod_change: switch_production_change_oil_refinery;
 	stop_accept_cargo: switch_stop_accept_oil_refinery;
+        build_prod_change: 32;
+    }
+}
+
+// SAWMILL
+// Similar to the steel mill, this mostly is a smaller secondary meant to feed into the factory.
+// 1 Unit of input = 1 unit of output.
+
+produce(produce_sawmill,
+    [WOOD: (LOAD_TEMP(0));],
+    [LMBR: (LOAD_TEMP(0));],
+    0
+)
+
+switch(FEAT_INDUSTRIES, SELF, sawmill_max_stockpile, min((GetMaxSecondaryProduction()*8*param_sec_max_stockpile_perc)/100,50000))  {return;}
+
+switch(FEAT_INDUSTRIES, SELF, sawmill_stockpile_modifier, STORE_PERM(min((incoming_cargo_waiting("WOOD")*100)/oil_refinery_max_stockpile(),100),0)) {return;}
+
+switch(FEAT_INDUSTRIES, SELF, sawmill_is_active, last_month_transported("LMBR") > 0) {return;}
+
+switch(FEAT_INDUSTRIES, PARENT, switch_production_sawmill,
+    // Consume funding if enabled and the industry benefits from it.
+    [
+    param_bank_bonus_advanced ? (STORE_PERM(LOAD_PERM(6)-(sawmill_is_active()*IsSecondaryPowered() ? (hasbit(param_bank_bonus_enabled,1)*GetFundingConsumptionSec()) : 0x00),6)) : 0x00,
+    // Consume power if enabled and the industry benefits from it.
+     param_power_advanced ? (STORE_PERM(LOAD_PERM(5)-(sawmill_is_active()*IsSecondaryPowered() ? (hasbit(param_power_enabled,1)*GetPowerConsumptionSec()) : 0x00),5)) : 0x00,
+    ])
+    {produce_sawmill;}
+
+switch(FEAT_INDUSTRIES, SELF, switch_production_helper_sawmill, [
+    STORE_PERM(sawmill_stockpile_modifier(),0),
+    STORE_TEMP((min(GetTotalSecondaryProduction(),incoming_cargo_waiting("WOOD"))+(incoming_cargo_waiting("WOOD")>0))*IsSecondaryPowered(),0),
+    sawmill_stockpile_modifier()
+]) {switch_production_sawmill;}
+
+switch(FEAT_INDUSTRIES, SELF, switch_display_helper_sawmill, IsSecondaryPowered()) {
+    0: return string(STR_IND_SEC_PROD_DISABLED);
+    1: return switch_production_display_secondary_composite();
+}
+
+switch(FEAT_INDUSTRIES, SELF, switch_production_change_sawmill, STORE_TEMP(transported_last_month_pct("LMBR"),0)) {
+    // Check for smooth growth and determine whether a growth event can even happen
+    return (param_sec_grow_prob >= getbits(extra_callback_info2, 0, 7)) ? ((param_sec_advanced == 1)
+    // Do the correct change logic based on the set difficulty.
+    ? ((param_sec_growth_diff == 0) ? switch_production_change_sec_easy() : ((param_sec_growth_diff == 1) ? switch_production_change_sec_normal() : switch_production_change_sec_hard()))
+    // If smooth growth is disabled, a random change (vanilla) occurs instead
+    : CB_RESULT_IND_PROD_NO_CHANGE)
+    // If reserves are depleted, close. If growth chance failed, do no change.
+    : CB_RESULT_IND_PROD_NO_CHANGE;
+}
+
+switch(FEAT_INDUSTRIES, SELF, switch_stop_accept_sawmill, [sawmill_stockpile_modifier(),getbits(extra_callback_info2, 0, 8)]) {
+    7: return incoming_cargo_waiting("WOOD") <= sawmill_max_stockpile()*10;
+}
+
+item(FEAT_INDUSTRIES, sawmill, INDUSTRYTYPE_SAWMILL) {
+    property {
+        substitute: INDUSTRYTYPE_SAWMILL;
+        override: INDUSTRYTYPE_SAWMILL;
+        cargo_types: [
+            produce_cargo("LMBR", 0),
+	    accept_cargo("WOOD")
+        ];
+	// layouts: [industry_layout_temp_factory_1];
+    }
+
+    graphics {
+        extra_text_industry: switch_display_helper_sawmill;
+        produce_256_ticks: switch_production_helper_sawmill;
+        random_prod_change: CB_RESULT_IND_PROD_NO_CHANGE;
+        monthly_prod_change: switch_production_change_sawmill;
+	stop_accept_cargo: switch_stop_accept_sawmill;
         build_prod_change: 32;
     }
 }
