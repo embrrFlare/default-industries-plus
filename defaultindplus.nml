@@ -947,7 +947,7 @@ item(FEAT_INDUSTRIES, temperate_bank, INDUSTRYTYPE_TEMPERATE_BANK) {
 
 
 produce (produce_power_plant,
-	[COAL: LOAD_TEMP(0);],
+	[COAL: LOAD_TEMP(0); PETR: LOAD_TEMP(1);],
 	[],
 	0
 )
@@ -955,6 +955,12 @@ produce (produce_power_plant,
 // Power plant consumption, based on waiting cargo.
 switch(FEAT_INDUSTRIES, SELF, GetPowerPlantConsumption, max((min((incoming_cargo_waiting("COAL")*10000)/(param_power_cargo_req*param_power_stockpile_mult),100)*param_power_cargo_req/100/8),(incoming_cargo_waiting("COAL") > 0))) {return;}
 
+// Power plant maximum stockpile (before cargo stops being accepted
+switch(FEAT_INDUSTRIES, SELF, GetPowerPlantCoalStockpile, param_power_cargo_req) {return;}
+
+switch(FEAT_INDUSTRIES, SELF, GetPowerPlantPetrolStockpile, (param_power_cargo_req*param_petrol_cons)/100) {return;}
+
+// Petrol consumption
 
 // Like the bank bonus, this is based on either waiting cargo in basic power or waiting power units in advanced mode.
 switch(FEAT_INDUSTRIES, SELF, GetPowerBonus, param_power_enabled > 0 ?
@@ -985,6 +991,11 @@ switch(FEAT_INDUSTRIES, PARENT, switch_produce_power_plant, [
     STORE_PERM(PowerBonus(),0)
 ]) {produce_power_plant;}
 
+switch(FEAT_INDUSTRIES, SELF, switch_stop_accept_power_plant, [getbits(extra_callback_info2, 0, 8)]) {
+    1: return incoming_cargo_waiting("COAL") <= GetPowerPlantCoalStockpile()*10;
+    23: return incoming_cargo_waiting("PETR") <= GetPowerPlantPetrolStockpile()*10;
+}
+
 // Main item block.
 item(FEAT_INDUSTRIES, power_plant, INDUSTRYTYPE_POWER_PLANT) {
     property {
@@ -1002,6 +1013,7 @@ item(FEAT_INDUSTRIES, power_plant, INDUSTRYTYPE_POWER_PLANT) {
         produce_256_ticks: switch_produce_power_plant;
         monthly_prod_change: CB_RESULT_IND_PROD_NO_CHANGE;
         random_prod_change: CB_RESULT_IND_PROD_NO_CHANGE;
+	stop_accept_cargo: switch_stop_accept_power_plant;
         build_prod_change: 16;
     }
 }
