@@ -944,7 +944,76 @@ item(FEAT_INDUSTRIES, temperate_bank, INDUSTRYTYPE_TEMPERATE_BANK) {
 
 /* POWER PLANT */
 
+// Code adapted from 2TallTyler's improved town industries 1.0
 
+spritelayout spr_layout_power_plant_1 {
+    ground   {sprite: 1420;}
+    building {sprite: 2050;}
+}
+
+spritelayout spr_layout_power_plant_2 {
+    ground   {sprite: 1420;}
+    building {sprite: 2053;}
+}
+
+spritelayout spr_layout_power_plant_3 {
+    ground   {sprite: 1420;}
+    building {sprite: 2054; yoffset: 2;}
+}
+
+spritelayout spr_layout_power_plant_4 {
+    ground   {sprite: 3981;}
+    building {sprite: 2047;}
+}
+
+item(FEAT_INDUSTRYTILES, ind_tile_power_plant_1) {
+    property {
+        substitute: 08;
+	special_flags: bitmask(INDTILE_FLAG_ACCEPT_ALL);
+    }
+    graphics {
+        default: spr_layout_power_plant_1;
+    }
+}
+
+item(FEAT_INDUSTRYTILES, ind_tile_power_plant_2) {
+    property {
+        substitute: 09;
+	special_flags: bitmask(INDTILE_FLAG_ACCEPT_ALL);
+    }
+    graphics {
+        default: spr_layout_power_plant_2;
+    }
+}
+
+item(FEAT_INDUSTRYTILES, ind_tile_power_plant_3) {
+    property {
+        substitute: 10;
+	special_flags: bitmask(INDTILE_FLAG_ACCEPT_ALL);
+    }
+    graphics {
+        default: spr_layout_power_plant_3;
+    }
+}
+
+item(FEAT_INDUSTRYTILES, ind_tile_power_plant_4) {
+    property {
+        substitute: 07;
+	special_flags: bitmask(INDTILE_FLAG_ACCEPT_ALL);
+    }
+    graphics {
+        default: spr_layout_power_plant_4;
+    }
+}
+
+tilelayout industry_layout_power_plant_1 {
+    0,0: ind_tile_power_plant_1;
+    0,1: ind_tile_power_plant_1;
+    1,0: ind_tile_power_plant_2;
+    1,1: ind_tile_power_plant_2;
+    2,0: ind_tile_power_plant_3;
+    2,1: ind_tile_power_plant_3;
+}
 
 produce (produce_power_plant,
 	[COAL: LOAD_TEMP(0); PETR: LOAD_TEMP(1);],
@@ -961,6 +1030,9 @@ switch(FEAT_INDUSTRIES, SELF, GetPowerPlantCoalStockpile, param_power_cargo_req)
 switch(FEAT_INDUSTRIES, SELF, GetPowerPlantPetrolStockpile, (param_power_cargo_req*param_petrol_cons)/100) {return;}
 
 // Petrol consumption
+
+// Conversion Efficiency
+switch(FEAT_INDUSTRIES, SELF, GetPowerPlantConversionEff, 100+((((incoming_cargo_waiting("PETR")*100)/GetPowerPlantPetrolStockpile())*param_petrol_bonus)/100)) {return;}
 
 // Like the bank bonus, this is based on either waiting cargo in basic power or waiting power units in advanced mode.
 switch(FEAT_INDUSTRIES, SELF, GetPowerBonus, param_power_enabled > 0 ?
@@ -981,6 +1053,7 @@ switch(FEAT_INDUSTRIES, SELF, switch_production_display_power_plant, [
 
     STORE_TEMP(GetPowerUnits()/GetPowerUnits()*STORE_TEMP(LOAD_TEMP(1),1),259),
     STORE_TEMP(((GetPowerPlantConsumption()*100)/(param_power_cargo_req/8)),260),                                                    // Shows current consumption rate
+    STORE_TEMP(GetPowerPlantConversionEff(),261),
     STORE_TEMP(string(STR_IND_SEC_BONUS),256)                                                                               // String for bonus
 ]) {return string(STR_IND_SEC_POWER_TOTAL);}
 
@@ -1005,6 +1078,9 @@ item(FEAT_INDUSTRIES, power_plant, INDUSTRYTYPE_POWER_PLANT) {
             accept_cargo("COAL"),
 	    accept_cargo("PETR")
         ];
+	layouts: [
+            industry_layout_power_plant_1
+	];
     }
 
     graphics {
