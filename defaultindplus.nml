@@ -527,9 +527,9 @@ cargotable {
     "LMBR", "LUBR", "PETR"
 }
 
-item(FEAT_CARGOS, cargo_lumber, 21) {
+item(FEAT_CARGOS, cargo_lumber, 22) {
     property {
-	number: 21;
+	number: 22;
 	type_name: string(STR_LUMBER_NAME);
 	unit_name: string(STR_LUMBER_NAME);
 	units_of_cargo: TTD_STR_TONS;
@@ -551,9 +551,9 @@ item(FEAT_CARGOS, cargo_lumber, 21) {
     }
 }
 
-item(FEAT_CARGOS, cargo_lubricant, 22) {
+item(FEAT_CARGOS, cargo_lubricant, 23) {
     property {
-    	number: 22;
+    	number: 23;
 	type_name: string(STR_LUBRICANT_NAME);
 	unit_name: string(STR_LUBRICANT_NAME);
 	units_of_cargo: TTD_STR_LITERS;
@@ -575,9 +575,9 @@ item(FEAT_CARGOS, cargo_lubricant, 22) {
     }
 }
 
-item(FEAT_CARGOS, cargo_petrol, 23) {
+item(FEAT_CARGOS, cargo_petrol, 24) {
     property {
-	number: 23;
+	number: 24;
 	type_name: string(STR_PETROL_NAME);
 	unit_name: string(STR_PETROL_NAME);
 	units_of_cargo: TTD_STR_LITERS;
@@ -1066,7 +1066,7 @@ switch(FEAT_INDUSTRIES, PARENT, switch_produce_power_plant, [
 
 switch(FEAT_INDUSTRIES, SELF, switch_stop_accept_power_plant, [getbits(extra_callback_info2, 0, 8)]) {
     1: return incoming_cargo_waiting("COAL") <= GetPowerPlantCoalStockpile()*10;
-    23: return incoming_cargo_waiting("PETR") <= GetPowerPlantPetrolStockpile()*10;
+    24: return incoming_cargo_waiting("PETR") <= GetPowerPlantPetrolStockpile()*10;
 }
 
 // Main item block.
@@ -1451,11 +1451,11 @@ item(FEAT_INDUSTRIES, temperate_factory, INDUSTRYTYPE_TEMPERATE_FACTORY) {
 
 // OIL REFINERY
 // This is essentially a second hub, focused moreso on productivity increases for the rest of your network rather than pure goods.
-// 1 Input = 0.75 Goods, 0.125 petrol, 0.125 lubricants
+// 1 Input = 0.5 Goods, 0.25 petrol, 0.25 lubricants
 
 produce(produce_oil_refinery,
     [OIL_: (LOAD_TEMP(0));],
-    [GOOD: (LOAD_TEMP(0)*6)/8; PETR: LOAD_TEMP(0)/8; LUBR: LOAD_TEMP(0)/8;],
+    [GOOD: (LOAD_TEMP(0)/2; PETR: LOAD_TEMP(0)/4; LUBR: LOAD_TEMP(0)/4;],
     0
 )
 
