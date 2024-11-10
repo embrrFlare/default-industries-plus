@@ -43,6 +43,15 @@ grf {
 	}
     }
     param {
+	// TEMPERATE / SUB-ARCTIC: Petrol enabled
+	param_petrol_enabled {
+	    name: string(STR_PARAM_PETROL_ENABL_NAME);
+	    desc: string(STR_PARAM_PETROL_ENABL_DESC);
+	    type: bool;
+	    def_value: 1;
+	}
+    }
+    param {
 	// TEMPERATE / SUB-ARCTIC: Petroleum efficiency bonus
 	param_petrol_bonus {
 	    name: string(STR_PARAM_PETROL_BOOST_NAME);
@@ -62,6 +71,15 @@ grf {
 	    min_value: 1;
 	    max_value: 500;
 	    def_value: 35;
+	}
+    }
+    param {
+	// TEMPERATE / SUB-TROPIC: Lubricants Enabled
+	param_lubricant_enabled {
+	    name: string(STR_PARAM_LUBR_ENABLE_NAME);
+	    desc: string(STR_PARAM_LUBR_ENABLE_DESC);
+	    type: bool;
+	    def_value: 1;
 	}
     }
     param {
@@ -1454,8 +1472,8 @@ item(FEAT_INDUSTRIES, temperate_factory, INDUSTRYTYPE_TEMPERATE_FACTORY) {
 // 1 Input = 0.5 Goods, 0.25 petrol, 0.25 lubricants
 
 produce(produce_oil_refinery,
-    [OIL_: (LOAD_TEMP(0));],
-    [GOOD: (LOAD_TEMP(0)/2; PETR: LOAD_TEMP(0)/4; LUBR: LOAD_TEMP(0)/4;],
+    [OIL_: LOAD_TEMP(0);],
+    [GOOD: LOAD_TEMP(0)/2; PETR: LOAD_TEMP(0)/4; LUBR: LOAD_TEMP(0)/4;],
     0
 )
 
