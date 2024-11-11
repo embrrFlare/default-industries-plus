@@ -47,91 +47,104 @@ STR_PARAM_BONUS_PRIM      :Primary industries only
 STR_PARAM_BONUS_SEC       :Secondary industries only
 STR_PARAM_BONUS_BOTH      :Primary and secondary industries
 
-STR_PARAM_POWER_NAME      :{PUSH_COLOUR}{GREEN}Temperate{POP_COLOUR}/{PUSH_COLOUR}{BLUE}sub-arctic{POP_COLOUR}: Enable power plant production bonus
+STR_PARAM_POWER_NAME      :{PUSH_COLOUR}{GREEN}Temperate{POP_COLOUR}/{PUSH_COLOUR}{BLUE}sub-arctic{POP_COLOUR}: Enable Power Plant Bonus
 STR_PARAM_POWER_DESC      :When enabled, power plants boost the production of industries in the same town, as long as cargo is delivered each month.
 
-STR_PARAM_POWERADV_NAME   :Advanced power mechanics
+STR_PARAM_POWERADV_NAME   :Advanced Power Mechanics
 STR_PARAM_POWERADV_DESC   :If enabled, power plants will convert coal into power units, which is then consumed by active power bonus eligible industries. Rather than having a fixed target to reach each month, your power requirement scales with your network's size.
 
-STR_PARAM_POWERSOFT_NAME  :{PUSH_COLOUR}{RED}Advanced Power Only{POP_COLOUR}: Enable power bonus soft cap
+STR_PARAM_POWERSOFT_NAME  :{PUSH_COLOUR}{RED}Advanced Power Only{POP_COLOUR}: Enable Power Bonus Soft Cap
 STR_PARAM_POWERSOFT_DESC  :If enabled alongside advanced power mechanics, additional funding beyond the stockpile will still increase the power bonus, but at a drastically reduced rate. This has no effect on the consumption rate.
 
-STR_PARAM_POWERCONS_NAME  :{PUSH_COLOUR}{RED}Advanced Power Only{POP_COLOUR}: Power consumption rate (%)
+STR_PARAM_POWERCONS_NAME  :{PUSH_COLOUR}{RED}Advanced Power Only{POP_COLOUR}: Power Consumption Rate (%)
 STR_PARAM_POWERCONS_DESC  :Determines the amount of power that industries will consume.
 
-STR_PARAM_POWERCARGO_NAME :Monthly cargo consumption
+STR_PARAM_POWERCARGO_NAME :Monthly Cargo Consumption
 STR_PARAM_POWERCARGO_DESC :How many units of cargo a power plant will process in a month. This determines how much cargo is needed for a full bonus (Basic Power Mechanics) or how much cargo it can convert to power units each month (Advanced Power Mechanics).
 
-STR_PARAM_POWER_STOCK_NAME:Power plant stockpiling multiplier (%)
+STR_PARAM_POWER_STOCK_NAME:Power Plant Stockpiling Multiplier (%)
 STR_PARAM_POWER_STOCK_DESC:How much stockpiled cargo/units of power is required to reach maximum consumption. This works as a multiplier of its monthly consumption: with this setting at 200%, if the power plant can process 1000 cargo units every month, the required cargo stockpile will be 2000 before it reaches maximum consumption, and thus the maximum bonus.
 
-STR_PARAM_POWEREFF_NAME   :Maximum power bonus (%)
+STR_PARAM_POWEREFF_NAME   :Maximum Power Bonus (%)
 STR_PARAM_POWEREFF_DESC   :The maximum production bonus that power plants can provide to industries in the town.
 
 
-STR_PARAM_BANK_NAME       :Enable bank production bonus
+STR_PARAM_BANK_NAME       :Enable Bank Bonus
 STR_PARAM_BANK_DESC       :When enabled, banks will provide a production bonus to industries in the same town, as long as cargo is delivered each month.
 
-STR_PARAM_BANKADV_NAME    :Advanced bank mechanics
+STR_PARAM_BANKADV_NAME    :Advanced Bank Mechanics
 STR_PARAM_BANKADV_DESC    :If enabled, banks will convert valuables/gold/diamonds into funding units, which is then consumed by active bank bonus eligible industries. Rather than having a fixed target to reach each month, your funding requirement scales with your network's size.
 
-STR_PARAM_FUNDSOFT_NAME   :{PUSH_COLOUR}{RED}Advanced Bank Only{POP_COLOUR}: Enable bank bonus soft cap
+STR_PARAM_FUNDSOFT_NAME   :{PUSH_COLOUR}{RED}Advanced Bank Only{POP_COLOUR}: Enable Bank Bonus Soft Cap
 STR_PARAM_FUNDSOFT_DESC   :If enabled alongside advanced bank mechanics, additional funding beyond the stockpile will still increase the bank bonus, but at a drastically reduced rate.
 
-STR_PARAM_FUNDINGCONS_NAME:{PUSH_COLOUR}{RED}Advanced Bank Only{POP_COLOUR}: Funding consumption rate (%)
+STR_PARAM_FUNDINGCONS_NAME:{PUSH_COLOUR}{RED}Advanced Bank Only{POP_COLOUR}: Funding Consumption Rate (%)
 STR_PARAM_FUNDINGCONS_DESC:Determines the amount of funding that industries will consume.
 
-STR_PARAM_BANKCARGO_NAME  :Monthly cargo consumption
+STR_PARAM_BANKCARGO_NAME  :Monthly Cargo Consumption
 STR_PARAM_BANKCARGO_DESC  :How many units of cargo a bank will consume in a month.
 
-STR_PARAM_BANK_STOCK_NAME :Bank stockpiling multiplier (%)
+STR_PARAM_BANK_STOCK_NAME :Bank Stockpiling Multiplier (%)
 STR_PARAM_BANK_STOCK_DESC :How much stockpiled cargo/units of funding is required to reach maximum consumption. This works as a multiplier of its monthly consumption: with this setting at 200%, if the bank can process 1000 cargo units every month, the required cargo stockpile will be 2000 before it reaches maximum consumption, and thus the maximum bonus.
 
-STR_PARAM_BANKEFF_NAME    :Maximum bank bonus (%)
+STR_PARAM_BANKEFF_NAME    :Maximum Bank Bonus (%)
 STR_PARAM_BANKEFF_DESC    :The maximum production bonus that banks can provide to industries in the town.
 
 
-STR_PARAM_TOWN_NAME       :Enable town production bonus
+STR_PARAM_TOWN_NAME       :Enable Town Bonus
 STR_PARAM_TOWN_DESC       :When enabled, towns will provide a production bonus to industries in the town based on their population. This bonus is extra effective for banks on temperate.
 
 STR_PARAM_TOWNREQ_NAME    :Required Population
 STR_PARAM_TOWNREQ_DESC    :The minimum population needed for a town to contribute its full bonus.
 
-STR_PARAM_TOWNEFF_NAME    :Maximum town bonus (%)
+STR_PARAM_TOWNEFF_NAME    :Maximum Town Bonus (%)
 STR_PARAM_TOWNEFF_DESC    :The maximum bonus a town can provide to industries in the same town.
 
-STR_PARAM_BANKMULT_NAME   :{PUSH_COLOUR}{GREEN}Temperate{POP_COLOUR}: Town bonus multiplier for banks (%)
+STR_PARAM_BANKMULT_NAME   :{PUSH_COLOUR}{GREEN}Temperate{POP_COLOUR}: Town Bonus Multiplier For Banks (%)
 STR_PARAM_BANKMULT_DESC   :The effectiveness of the town production bonus on {GREEN}temperate{BLACK} banks. This makes growing the town much more relevant to getting the maximum bank bonus, as well as making valuables more relevant.
 
 
-STR_PARAM_BONUS_MULT_NAME :Multiplicative bonuses
+STR_PARAM_BONUS_MULT_NAME :Multiplicative Bonuses
 STR_PARAM_BONUS_MULT_DESC :If enabled, power/bank/town bonuses are multiplicative with each other rather than additive. Multiplicative bonuses give larger benefits overall, especially when stacking multiple together.
 
 # Primary specific parameters
 
 STR_PARAM_PRIM_SEPERATE   :{GREEN}--| PRIMARY INDUSTRY OPTIONS |--
 
-STR_PARAM_PRIM_CLOSE_NAME :Disable primary industry closures
-STR_PARAM_PRIM_CLOSE_DESC :When enabled, primary industries will never close.
+STR_PARAM_PRIM_CLOSE_ALL  :All primary closures
+STR_PARAM_PRIM_CLOSE_UNSER:Close unserviced industries only
+STR_PARAM_PRIM_CLOSE_SER  :Close serviced industries only
+STR_PARAM_PRIM_CLOSE_NONE :No industry closures
 
-STR_PARAM_GROW_NAME       :Enable smooth primary industry growth
+STR_PARAM_PRIM_CLOSE_NAME :Primary Industry Closure Rules
+STR_PARAM_PRIM_CLOSE_DESC :Determines whether (un)serviced industries can close or not.
+
+STR_PARAM_GROW_NAME       :Smooth Primary Industry Growth
 STR_PARAM_GROW_DESC       :If enabled, primary industries no longer have a random aspect to their production changes. Instead, service ratings directly correspond to production changes. Unserviced industries remain unchanged (They have random production) 
 
-STR_PARAM_GROW_DIFF_NAME  :{PUSH_COLOUR}{RED}Smooth Primary Growth Only{POP_COLOUR}: Primary industry growth difficulty
+STR_PARAM_GROW_DIFF_NAME  :{PUSH_COLOUR}{RED}Smooth Primary Growth Only{POP_COLOUR}: Primary Growth Difficulty
 STR_PARAM_GROW_DIFF_DESC  :Sets the difficulty of growing the base production of primary industries. Setting this to "Vanilla" will leave primary industry growth mechanics alone.{}Lenient: {RED}0-25%{BLACK} to decrease, {YELLOW}26-60%{BLACK}to stabilize, {GREEN}61%+{BLACK} to increase.{}Average: {RED}0-35%{BLACK} to decrease, {YELLOW}36-70%{BLACK} to stabilize, {GREEN}71%+{BLACK} to increase.{}Challenging: {RED}0-50%{BLACK} to decrease, {YELLOW}50-85%{BLACK}to stabilize, {GREEN}86%+{BLACK} to increase.
+
+STR_PARAM_PRIM_FREEZE_DIS :Unchanged production changes
+STR_PARAM_PRIM_FREEZE_VAN :Average production changes (~4% per month)
+STR_PARAM_PRIM_FREEZE_LOW :Slow production changes (~2% per month)
+STR_PARAM_PRIM_FREEZE_NONE:No production changes (0% per month)
+
+STR_PARAM_PRIM_FREEZE_NAME:Freeze Unserviced Industry Production
+STR_PARAM_PRIM_FREEZE_DESC:If enabled, unserviced primary industries have a lower rate of change for their production changes, or they are freezed altogether.
 
 STR_PARAM_DIFF_VANILLA    :Vanilla
 STR_PARAM_DIFF_EASY       :Lenient
 STR_PARAM_DIFF_NORM       :Average
 STR_PARAM_DIFF_HARD       :Challenging
 
-STR_PARAM_PRIM_PROB_NAME  :Primary industry production change probability
+STR_PARAM_PRIM_PROB_NAME  :Primary Production Growth Chance
 STR_PARAM_PRIM_PROB_DESC  :This number determines the probability of a production change event occuring for primary industries each month. Each step of this value changes the production change probability by 1/128, or ~0.7%, so a value of 6 is around 4.7% per month.
 
-STR_PARAM_EXRESERVES_NAME :Extractive industries have limited reserves
+STR_PARAM_EXRESERVES_NAME :Extractive Industry Reserves
 STR_PARAM_EXRESERVES_DESC :If enabled, extractive industries (such as mines or oil wells) have limited reserves and will close if they run out.
 
-STR_PARAM_ORRESERVES_NAME :Organic industries have limited reserves
+STR_PARAM_ORRESERVES_NAME :Organic Industry Reserves
 STR_PARAM_ORRESERVES_DESC :If enabled, organic industries (such as forests or farms) have limited reserves and will close if they run out.
 
 STR_PARAM_RESERVESIZE_NAME:Reserve size (%)
@@ -141,29 +154,29 @@ STR_PARAM_RESERVESIZE_DESC:Determines the size of industry reserves.
 
 STR_PARAM_SEC_SEPERATE    :{PURPLE}--| SECONDARY INDUSTRY OPTIONS |--
 
-STR_PARAM_ADV_SEC_NAME    :Advanced secondary mechanics
+STR_PARAM_ADV_SEC_NAME    :Advanced Secondary Mechanics
 STR_PARAM_ADV_SEC_DESC    :If enabled, secondaries will have an innate base conversion rate just like primaries. In order to get maximum secondary conversion rate, you will both have to stockpile cargo and deliver excellent service.
 
-STR_PARAM_GROW_SEC_NAME   :{PUSH_COLOUR}{RED}Advanced Secondaries Only{POP_COLOUR}: Secondary industry growth difficulty
+STR_PARAM_GROW_SEC_NAME   :{PUSH_COLOUR}{RED}Advanced Secondaries Only{POP_COLOUR}: Secondary Growth Difficulty
 STR_PARAM_GROW_SEC_DESC   :Determines the difficulty of increasing base consumption of secondary industries. Setting this to "Vanilla" will leave secondary industry growth mechanics alone.{}Lenient: {RED}0-25%{BLACK} to decrease, {YELLOW}26-60%{BLACK}to stabilize, {GREEN}61%+{BLACK} to increase.{}Average: {RED}0-35%{BLACK} to decrease, {YELLOW}36-70%{BLACK} to stabilize, {GREEN}71%+{BLACK} to increase.{}Challenging: {RED}0-50%{BLACK} to decrease, {YELLOW}50-85%{BLACK}to stabilize, {GREEN}86%+{BLACK} to increase.
 
-STR_PARAM_SECGROWPROB_NAME:{PUSH_COLOUR}{RED}Advanced Secondaries Only{POP_COLOUR}: Secondary industry production change probability
+STR_PARAM_SECGROWPROB_NAME:{PUSH_COLOUR}{RED}Advanced Secondaries Only{POP_COLOUR}: Secondary Production Growth Chance
 STR_PARAM_SECGROWPROB_DESC:This number determines the probability of a production change event occuring for secondary industries each month. Each step of this value changes the production change probability by 1/128 or ~0.7%, so a value of 6 is around 4.7% per month.
 
-STR_PARAM_POWERREQ_NAME   :{PUSH_COLOUR}{GREEN}Temperate{POP_COLOUR}/{PUSH_COLOUR}{BLUE}sub-arctic{POP_COLOUR}: Secondaries require power
+STR_PARAM_POWERREQ_NAME   :{PUSH_COLOUR}{GREEN}Temperate{POP_COLOUR}/{PUSH_COLOUR}{BLUE}Sub-arctic{POP_COLOUR}: Secondaries Require Power
 STR_PARAM_POWERREQ_DESC   :If enabled, secondaries require power from a power plant in order to operate.{}A town has power as long as the power plant either has more than a quarter of its stockpile of either cargo or power units.
 
-STR_PARAM_SECINDCONS_NAME :Secondary industry conversion rate (%)
+STR_PARAM_SECINDCONS_NAME :Secondary Conversion Rate (%)
 STR_PARAM_SECINDCONS_DESC :Controls the overall conversion rate of secondary industries. The higher this is, the more cargo secondaries will consume each month. Useful for those who like a specific primary to secondary industry ratio in their games. {}{}{WHITE}Does not apply to power plant or bank, {BLACK}as they have their own options.
 
-STR_PARAM_STOCKMULT_NAME  :Secondary stockpiling multiplier (%)
+STR_PARAM_STOCKMULT_NAME  :Secondary Stockpiling Multiplier (%)
 STR_PARAM_STOCKMULT_DESC  :How much stockpiled cargo is required for secondaries to reach their maximum consumption, as well as their maximum stockpile.{}This works as a multipler of their maximum cargo consumption: if a secondary can at most consume 100 units per month, and this setting is at 200%, the secondary will need 200 units of cargo waiting in order to reach maximum consumption, and will store 2000 units of cargo (x10 the multiplier, which is 10 months worth of maximum conversion) before it refuses to accept any more.
 
 # Minor things, mostly accessibility and qol
 
 STR_PARAM_QOL_SEPERATE    :{BLUE}--| VISUAL OPTIONS |--
 
-STR_PARAM_TIPS_NAME       :Show industry tips
+STR_PARAM_TIPS_NAME       :Show Industry Tips
 STR_PARAM_TIPS_DESC       :If enabled, primary industries will show a tip for how to increase their production.
 
 STR_PARAM_DETAILED_NONE   :Show no detailed info
@@ -171,7 +184,7 @@ STR_PARAM_DETAILED_RES    :Show detailed reserve info
 STR_PARAM_DETAILED_BONUS  :Show detailed bonus info
 STR_PARAM_DETAILED_BOTH   :Show all detailed info
 
-STR_PARAM_DETAILED_NAME   :Show detailed industry info
+STR_PARAM_DETAILED_NAME   :Show Detailed Industry Info
 STR_PARAM_DETAILED_DESC   :Determines how detailed industry tooltips are.{}Detailed reserves shows the exact amount remaining in primary industry reserves, if enabled.{}Detailed bonus info gives a breakdown of all industry bonuses, such as the town or power bonus.
 
 #Cargo Strings
