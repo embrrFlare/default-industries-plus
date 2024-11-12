@@ -150,6 +150,9 @@ STR_PARAM_ORRESERVES_DESC :If enabled, organic industries (such as forests or fa
 STR_PARAM_RESERVESIZE_NAME:Reserve size (%)
 STR_PARAM_RESERVESIZE_DESC:Determines the size of industry reserves.
 
+STR_PARAM_TOTAL_PROD_NAME :Primary Production Rate (%)
+STR_PARAM_TOTAL_PROD_DESC :Determines the overall production rate of all primary industries.
+
 # Secondary specific parameters
 
 STR_PARAM_SEC_SEPERATE    :{PURPLE}--| SECONDARY INDUSTRY OPTIONS |--

@@ -446,6 +446,17 @@ grf {
             def_value: 100;
         }
     }
+    param {
+	// Primary production rate
+	param_prim_prod_rate {
+	    name: string(STR_PARAM_TOTAL_PROD_NAME);
+	    desc: string(STR_PARAM_TOTAL_PROD_DESC);
+	    type: int;
+	    min_value: 10;
+	    max_value: 10000;
+	    def_value: 100;
+	}
+    }
 
     param {
         // SECONDARY MECHANICS SEPERATOR
