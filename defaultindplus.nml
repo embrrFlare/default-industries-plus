@@ -358,10 +358,10 @@ grf {
             def_value: 3;
 	    names: {
 		0: string(STR_PARAM_PRIM_CLOSE_ALL);
-		1: string(STR_PARAM_PRIM_CLOSE_UNSER);
-		2: string(STR_PARAM_PRIM_CLOSE_SER);
+		1: string(STR_PARAM_PRIM_CLOSE_SER);
+		2: string(STR_PARAM_PRIM_CLOSE_UNSER);
 		3: string(STR_PARAM_PRIM_CLOSE_NONE);
-	    }
+	    };
         }
     }
     param {
@@ -403,7 +403,7 @@ grf {
 		1: string(STR_PARAM_PRIM_FREEZE_VAN);
 		2: string(STR_PARAM_PRIM_FREEZE_LOW);
 		3: string(STR_PARAM_PRIM_FREEZE_NONE);
-	    }
+	    };
 	}
     }
     param {
@@ -793,19 +793,19 @@ random_switch(FEAT_INDUSTRIES, SELF, random_initial_production) {
 
 // Below three functions determine production changes based on difficulty, assuming smooth industry growth is enabled.
 switch(FEAT_INDUSTRIES, SELF, switch_production_change_easy, LOAD_TEMP(0)) {
-    0..25: return (param_prim_closures_disabled && production_level == 4) ? CB_RESULT_IND_PROD_NO_CHANGE : CB_RESULT_IND_PROD_DECREMENT_BY_1;
+    0..25: return (hasbit(param_prim_closure_rules,LOAD_TEMP(1)) && production_level == 4) ? CB_RESULT_IND_PROD_NO_CHANGE : CB_RESULT_IND_PROD_DECREMENT_BY_1;
     26..70: return CB_RESULT_IND_PROD_NO_CHANGE;
     71..100: return CB_RESULT_IND_PROD_INCREMENT_BY_1;
 }
 
 switch(FEAT_INDUSTRIES, SELF, switch_production_change_normal, LOAD_TEMP(0)) {
-    0..35: return (param_prim_closures_disabled && production_level == 4) ? CB_RESULT_IND_PROD_NO_CHANGE : CB_RESULT_IND_PROD_DECREMENT_BY_1;
+    0..35: return (hasbit(param_prim_closure_rules,LOAD_TEMP(1))  && production_level == 4) ? CB_RESULT_IND_PROD_NO_CHANGE : CB_RESULT_IND_PROD_DECREMENT_BY_1;
     36..70: return CB_RESULT_IND_PROD_NO_CHANGE;
     71..100: return CB_RESULT_IND_PROD_INCREMENT_BY_1;
 }
 
 switch(FEAT_INDUSTRIES, SELF, switch_production_change_hard, LOAD_TEMP(0)) {
-    0..45: return (param_prim_closures_disabled && production_level == 4) ? CB_RESULT_IND_PROD_NO_CHANGE : CB_RESULT_IND_PROD_DECREMENT_BY_1;
+    0..45: return (hasbit(param_prim_closure_rules,LOAD_TEMP(1)) && production_level == 4) ? CB_RESULT_IND_PROD_NO_CHANGE : CB_RESULT_IND_PROD_DECREMENT_BY_1;
     46..85: return CB_RESULT_IND_PROD_NO_CHANGE;
     86..100: return CB_RESULT_IND_PROD_INCREMENT_BY_1;
 }
@@ -858,7 +858,7 @@ switch(FEAT_INDUSTRIES, SELF, coal_mine_is_active, (last_month_transported("COAL
 switch(FEAT_INDUSTRIES, SELF, rand_init_coal_mine, param_extract_reserves == 1 ? STORE_PERM(STORE_PERM((128+getbits(random_bits, 0, 7))*2048*param_reserve_size/100,1),2) : 0x00) {random_initial_production;}
 
 /* Production change logic. */
-switch(FEAT_INDUSTRIES, SELF, switch_production_change_coal_mine, STORE_TEMP(transported_last_month_pct("COAL"),0)) {
+switch(FEAT_INDUSTRIES, SELF, switch_production_change_coal_mine, [STORE_TEMP(transported_last_month_pct("COAL"),0),STORE_TEMP(coal_mine_is_active(),1)]) {
     // Check for smooth growth and determine whether a growth event can even happen
     return (param_prim_change_chance >= getbits(extra_callback_info2, 0, 7)) ? ((param_smooth_prim_growth == 1)
     // Do the correct change logic based on the set difficulty.
