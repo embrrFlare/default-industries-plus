@@ -348,12 +348,20 @@ grf {
     }
 
     param {
-        // Disable primary closures?
-        param_prim_closures_disabled {
+        // Primary industry closure rules
+        param_prim_closure_rules {
             name: string(STR_PARAM_PRIM_CLOSE_NAME);
             desc: string(STR_PARAM_PRIM_CLOSE_DESC);
-            type: bool;
-            def_value: 1;
+            type: int;
+	    min_value: 0;
+	    max_value: 3;
+            def_value: 3;
+	    names: {
+		0: string(STR_PARAM_PRIM_CLOSE_ALL);
+		1: string(STR_PARAM_PRIM_CLOSE_UNSER);
+		2: string(STR_PARAM_PRIM_CLOSE_SER);
+		3: string(STR_PARAM_PRIM_CLOSE_NONE);
+	    }
         }
     }
     param {
@@ -380,6 +388,23 @@ grf {
                 2: string(STR_PARAM_DIFF_HARD);
             };
         }
+    }
+    param {
+	// Unserviced industry freezing
+	param_prim_unserviced_freeze {
+	    name: string(STR_PARAM_PRIM_FREEZE_NAME);
+	    desc: string(STR_PARAM_PRIM_FREEZE_DESC);
+	    type: int;
+	    min_value: 0;
+	    max_value: 3;
+	    def_value: 3;
+	    names: {
+		0: string(STR_PARAM_PRIM_FREEZE_DIS);
+		1: string(STR_PARAM_PRIM_FREEZE_VAN);
+		2: string(STR_PARAM_PRIM_FREEZE_LOW);
+		3: string(STR_PARAM_PRIM_FREEZE_NONE);
+	    }
+	}
     }
     param {
         // Probability that primaries will increase
