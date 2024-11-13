@@ -126,9 +126,9 @@ STR_PARAM_GROW_DIFF_NAME  :{PUSH_COLOUR}{RED}Smooth Primary Growth Only{POP_COLO
 STR_PARAM_GROW_DIFF_DESC  :Sets the difficulty of growing the base production of primary industries. Setting this to "Vanilla" will leave primary industry growth mechanics alone.{}Lenient: {RED}0-25%{BLACK} to decrease, {YELLOW}26-60%{BLACK}to stabilize, {GREEN}61%+{BLACK} to increase.{}Average: {RED}0-35%{BLACK} to decrease, {YELLOW}36-70%{BLACK} to stabilize, {GREEN}71%+{BLACK} to increase.{}Challenging: {RED}0-50%{BLACK} to decrease, {YELLOW}50-85%{BLACK}to stabilize, {GREEN}86%+{BLACK} to increase.
 
 STR_PARAM_PRIM_FREEZE_DIS :Unchanged production changes
-STR_PARAM_PRIM_FREEZE_VAN :Average production changes (~4% per month)
-STR_PARAM_PRIM_FREEZE_LOW :Slow production changes (~2% per month)
-STR_PARAM_PRIM_FREEZE_NONE:No production changes (0% per month)
+STR_PARAM_PRIM_FREEZE_VAN :Slow production changes (1/2 normal rate)
+STR_PARAM_PRIM_FREEZE_LOW :Very slow production changes (1/4 normal rate)
+STR_PARAM_PRIM_FREEZE_NONE:No production changes
 
 STR_PARAM_PRIM_FREEZE_NAME:Freeze Unserviced Industry Production
 STR_PARAM_PRIM_FREEZE_DESC:If enabled, unserviced primary industries have a lower rate of change for their production changes, or they are freezed altogether.

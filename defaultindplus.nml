@@ -677,13 +677,13 @@ switch(FEAT_INDUSTRIES, PARENT, GetBankProductionBonus, LOAD_PERM(1)) {return;}
 
 // Returns total primary production, after all applicable bonuses.
 switch(FEAT_INDUSTRIES, SELF, GetTotalPrimaryProduction, param_mult_bonuses ?
-    (((production_level*(((GetPowerProductionBonus()*hasbit(param_power_enabled,0)))+100))/100*((GetBankProductionBonus()*hasbit(param_bank_bonus_enabled,0))+100))/100*((GetTownProductionBonus()*hasbit(param_town_bonus_enabled,0))+100))/100
-  : (production_level*((GetPowerProductionBonus()*hasbit(param_power_enabled,0))+(GetTownProductionBonus()*hasbit(param_town_bonus_enabled,0))+(GetBankProductionBonus()*hasbit(param_bank_bonus_enabled,0))+100))/100) {return;}
+    (((param_prim_prod_rate*production_level*(((GetPowerProductionBonus()*hasbit(param_power_enabled,0)))+100))/100*((GetBankProductionBonus()*hasbit(param_bank_bonus_enabled,0))+100))/100*((GetTownProductionBonus()*hasbit(param_town_bonus_enabled,0))+100))/10000
+  : (production_level*param_prim_prod_rate*((GetPowerProductionBonus()*hasbit(param_power_enabled,0))+(GetTownProductionBonus()*hasbit(param_town_bonus_enabled,0))+(GetBankProductionBonus()*hasbit(param_bank_bonus_enabled,0))+100))/10000) {return;}
 
 // Returns the theoretical maximum primary production
 switch(FEAT_INDUSTRIES, SELF, GetMaxPrimaryProduction, param_mult_bonuses ?
-    (((128*(((param_power_max_bonus*hasbit(param_power_enabled,0)))+100))/100*((param_bank_max_bonus*hasbit(param_bank_bonus_enabled,0))+100))/100*((param_town_max_bonus*hasbit(param_town_bonus_enabled,0))+100))/100
-  : ((128*(100+((param_power_max_bonus)*hasbit(param_power_enabled,0))+(param_bank_max_bonus*hasbit(param_bank_bonus_enabled,0))+(param_town_max_bonus*hasbit(param_town_bonus_enabled,0))))/100))
+    (((128*param_prim_prod_rate*(((param_power_max_bonus*hasbit(param_power_enabled,0)))+100))/100*((param_bank_max_bonus*hasbit(param_bank_bonus_enabled,0))+100))/100*((param_town_max_bonus*hasbit(param_town_bonus_enabled,0))+100))/10000
+  : ((128*param_prim_prod_rate*(100+((param_power_max_bonus)*hasbit(param_power_enabled,0))+(param_bank_max_bonus*hasbit(param_bank_bonus_enabled,0))+(param_town_max_bonus*hasbit(param_town_bonus_enabled,0))))/10000))
 {return;}
 
 switch(FEAT_INDUSTRIES, SELF, GetMaxBaseConversion, param_sec_advanced ? 128 : 64) {return;}
