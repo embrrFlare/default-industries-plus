@@ -130,7 +130,7 @@ STR_PARAM_PRIM_FREEZE_VAN :Slow production changes (1/2 normal rate)
 STR_PARAM_PRIM_FREEZE_LOW :Very slow production changes (1/4 normal rate)
 STR_PARAM_PRIM_FREEZE_NONE:No production changes
 
-STR_PARAM_PRIM_FREEZE_NAME:Freeze Unserviced Industry Production
+STR_PARAM_PRIM_FREEZE_NAME:Freeze Unserviced Primary Production Changes
 STR_PARAM_PRIM_FREEZE_DESC:If enabled, unserviced primary industries have a lower rate of change for their production changes, or they are freezed altogether.
 
 STR_PARAM_DIFF_VANILLA    :Vanilla
@@ -141,13 +141,13 @@ STR_PARAM_DIFF_HARD       :Challenging
 STR_PARAM_PRIM_PROB_NAME  :Primary Production Growth Chance
 STR_PARAM_PRIM_PROB_DESC  :This number determines the probability of a production change event occuring for primary industries each month. Each step of this value changes the production change probability by 1/128, or ~0.7%, so a value of 6 is around 4.7% per month.
 
-STR_PARAM_EXRESERVES_NAME :Extractive Industry Reserves
+STR_PARAM_EXRESERVES_NAME :Extractive Primary Industry Reserves
 STR_PARAM_EXRESERVES_DESC :If enabled, extractive industries (such as mines or oil wells) have limited reserves and will close if they run out.
 
-STR_PARAM_ORRESERVES_NAME :Organic Industry Reserves
+STR_PARAM_ORRESERVES_NAME :Organic Primary Industry Reserves
 STR_PARAM_ORRESERVES_DESC :If enabled, organic industries (such as forests or farms) have limited reserves and will close if they run out.
 
-STR_PARAM_RESERVESIZE_NAME:Reserve size (%)
+STR_PARAM_RESERVESIZE_NAME:Primary Reserve Size (%)
 STR_PARAM_RESERVESIZE_DESC:Determines the size of industry reserves.
 
 STR_PARAM_TOTAL_PROD_NAME :Primary Production Rate (%)
@@ -159,6 +159,9 @@ STR_PARAM_SEC_SEPERATE    :{PURPLE}--| SECONDARY INDUSTRY OPTIONS |--
 
 STR_PARAM_ADV_SEC_NAME    :Advanced Secondary Mechanics
 STR_PARAM_ADV_SEC_DESC    :If enabled, secondaries will have an innate base conversion rate just like primaries. In order to get maximum secondary conversion rate, you will both have to stockpile cargo and deliver excellent service.
+
+STR_PARAM_FREEZE_SEC_NAME :{PUSH_COLOUR}{RED}Advanced Secondaries Only{POP_COLOUR}: Freeze Unserviced Secondary Production Changes
+STR_PARAM_FREEZE_SEC_DESC :If enabled, unserviced secondary industries have a lower rate of change for their production changes, or they are freezed altogether.
 
 STR_PARAM_GROW_SEC_NAME   :{PUSH_COLOUR}{RED}Advanced Secondaries Only{POP_COLOUR}: Secondary Growth Difficulty
 STR_PARAM_GROW_SEC_DESC   :Determines the difficulty of increasing base consumption of secondary industries. Setting this to "Vanilla" will leave secondary industry growth mechanics alone.{}Lenient: {RED}0-25%{BLACK} to decrease, {YELLOW}26-60%{BLACK}to stabilize, {GREEN}61%+{BLACK} to increase.{}Average: {RED}0-35%{BLACK} to decrease, {YELLOW}36-70%{BLACK} to stabilize, {GREEN}71%+{BLACK} to increase.{}Challenging: {RED}0-50%{BLACK} to decrease, {YELLOW}50-85%{BLACK}to stabilize, {GREEN}86%+{BLACK} to increase.

@@ -495,6 +495,23 @@ grf {
         }
     }
     param {
+	param_sec_unserviced_freeze {
+	    name: string(STR_PARAM_FREEZE_SEC_NAME);
+	    desc: string(STR_PARAM_FREEZE_SEC_DESC);
+	    type: int;
+	    min_value: 0;
+	    max_value: 3;
+	    def_value: 3;
+	    names:
+	    {
+		0: string(STR_PARAM_PRIM_FREEZE_DIS);
+		1: string(STR_PARAM_PRIM_FREEZE_VAN);
+		2: string(STR_PARAM_PRIM_FREEZE_LOW);
+		3: string(STR_PARAM_PRIM_FREEZE_NONE);
+	    };
+	}
+    }
+    param {
     	// Secondary growth probability
 	param_sec_grow_prob {
 		name: string(STR_PARAM_SECGROWPROB_NAME);
@@ -940,6 +957,8 @@ switch(FEAT_INDUSTRIES, SELF, GetBankBonus, param_bank_bonus_enabled > 0 ?
     0x00)
 {return;}
 
+switch(FEAT_INDUSTRIES, SELF, bank_is_active, (last_month_transported("VALU") > 0)) {return;}
+
 // IIRC this is seperated so that the parent function GetBankFunding() can be accessed. Honestly I don't remember
 switch(FEAT_INDUSTRIES, PARENT, BankBonus, GetBankFunding()) {GetBankBonus;}
 
@@ -957,7 +976,8 @@ switch(FEAT_INDUSTRIES, SELF, switch_production_display_temp_bank, [
 
 // This does production changes based of primary industry rules, but with its own twist since obviously it doesn't have any reserves and is incapable of closing no matter what happens.
 switch(FEAT_INDUSTRIES, SELF, switch_production_change_temperate_bank, STORE_TEMP(transported_last_month_pct("VALU"),0)) {
-    return ((param_prim_change_chance >= getbits(extra_callback_info2, 0, 7)) ?
+    return ((bank_is_active() == 0) ? CB_RESULT_IND_PROD_NO_CHANGE :
+    (param_prim_change_chance >= getbits(extra_callback_info2, 0, 7)) ?
     ((param_smooth_prim_growth == 1) ?
     ((param_prim_growth_diff == 0) ?
     switch_production_change_spec_easy()
@@ -1284,7 +1304,8 @@ switch(FEAT_INDUSTRIES, SELF, switch_stop_accept_steel_mill, [steel_mill_stockpi
 
 switch(FEAT_INDUSTRIES, SELF, switch_production_change_steel_mill, STORE_TEMP(transported_last_month_pct("STEL"),0)) {
     // Check for smooth growth and determine whether a growth event can even happen
-    return (param_sec_grow_prob >= getbits(extra_callback_info2, 0, 7)) ? ((param_sec_advanced == 1)
+    return (param_sec_unserviced_freeze == 3 && (steel_mill_is_active() == 0)) ? CB_RESULT_IND_PROD_NO_CHANGE :
+    (param_sec_grow_prob >= getbits(extra_callback_info2, 0, 7)*(((param_sec_unserviced_freeze >= 1) && (steel_mill_is_active() == 0))+(1+(hasbit(param_sec_unserviced_freeze,1)*(steel_mill_is_active() == 0))))) ? ((param_sec_advanced == 1)
     // Do the correct change logic based on the set difficulty.
     ? ((param_sec_growth_diff == 0) ? switch_production_change_sec_easy() : ((param_sec_growth_diff == 1) ? switch_production_change_sec_normal() : switch_production_change_sec_hard()))
     // If smooth growth is disabled, a random change (vanilla) occurs instead
@@ -1461,7 +1482,8 @@ switch(FEAT_INDUSTRIES, SELF, switch_display_helper_temp_factory, IsSecondaryPow
 
 switch(FEAT_INDUSTRIES, SELF, switch_production_change_temp_factory, STORE_TEMP(transported_last_month_pct("GOOD"),0)) {
     // Check for smooth growth and determine whether a growth event can even happen
-    return (param_sec_grow_prob >= getbits(extra_callback_info2, 0, 7)) ? ((param_sec_advanced == 1)
+    return (param_sec_unserviced_freeze == 3 && (temp_factory_is_active() == 0)) ? CB_RESULT_IND_PROD_NO_CHANGE :
+    (param_sec_grow_prob >= getbits(extra_callback_info2, 0, 7)*(((param_sec_unserviced_freeze >= 1) && (temp_factory_is_active() == 0))+(1+(hasbit(param_sec_unserviced_freeze,1)*(temp_factory_is_active() == 0))))) ? ((param_sec_advanced == 1)
     // Do the correct change logic based on the set difficulty.
     ? ((param_sec_growth_diff == 0) ? switch_production_change_sec_easy() : ((param_sec_growth_diff == 1) ? switch_production_change_sec_normal() : switch_production_change_sec_hard()))
     // If smooth growth is disabled, a random change (vanilla) occurs instead
@@ -1543,7 +1565,8 @@ switch(FEAT_INDUSTRIES, SELF, switch_display_helper_oil_refinery, IsSecondaryPow
 
 switch(FEAT_INDUSTRIES, SELF, switch_production_change_oil_refinery, STORE_TEMP(transported_last_month_pct("GOOD"),0)) {
     // Check for smooth growth and determine whether a growth event can even happen
-    return (param_sec_grow_prob >= getbits(extra_callback_info2, 0, 7)) ? ((param_sec_advanced == 1)
+    return (param_sec_unserviced_freeze == 3 && (oil_refinery_is_active() == 0)) ? CB_RESULT_IND_PROD_NO_CHANGE :
+    (param_sec_grow_prob >= getbits(extra_callback_info2, 0, 7)*(((param_sec_unserviced_freeze >= 1) && (oil_refinery_is_active() == 0))+(1+(hasbit(param_sec_unserviced_freeze,1)*(oil_refinery_is_active() == 0))))) ? ((param_sec_advanced == 1)
     // Do the correct change logic based on the set difficulty.
     ? ((param_sec_growth_diff == 0) ? switch_production_change_sec_easy() : ((param_sec_growth_diff == 1) ? switch_production_change_sec_normal() : switch_production_change_sec_hard()))
     // If smooth growth is disabled, a random change (vanilla) occurs instead
@@ -1617,7 +1640,8 @@ switch(FEAT_INDUSTRIES, SELF, switch_display_helper_sawmill, IsSecondaryPowered(
 
 switch(FEAT_INDUSTRIES, SELF, switch_production_change_sawmill, STORE_TEMP(transported_last_month_pct("LMBR"),0)) {
     // Check for smooth growth and determine whether a growth event can even happen
-    return (param_sec_grow_prob >= getbits(extra_callback_info2, 0, 7)) ? ((param_sec_advanced == 1)
+    return (param_sec_unserviced_freeze == 3 && (sawmill_is_active() == 0)) ? CB_RESULT_IND_PROD_NO_CHANGE :
+    (param_sec_grow_prob >= getbits(extra_callback_info2, 0, 7)*(((param_sec_unserviced_freeze >= 1) && (sawmill_is_active() == 0))+(1+(hasbit(param_sec_unserviced_freeze,1)*(sawmill_is_active() == 0))))) ? ((param_sec_advanced == 1)
     // Do the correct change logic based on the set difficulty.
     ? ((param_sec_growth_diff == 0) ? switch_production_change_sec_easy() : ((param_sec_growth_diff == 1) ? switch_production_change_sec_normal() : switch_production_change_sec_hard()))
     // If smooth growth is disabled, a random change (vanilla) occurs instead
