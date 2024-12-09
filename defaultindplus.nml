@@ -1046,7 +1046,7 @@ tilelayout industry_layout_power_plant_1 {
 }
 
 produce (produce_power_plant,
-	[COAL: LOAD_TEMP(0); PETR: LOAD_TEMP(1);],
+	[COAL: LOAD_TEMP(0); PETR: LOAD_TEMP(6);],
 	[],
 	0
 )
@@ -1060,9 +1060,10 @@ switch(FEAT_INDUSTRIES, SELF, GetPowerPlantCoalStockpile, param_power_cargo_req)
 switch(FEAT_INDUSTRIES, SELF, GetPowerPlantPetrolStockpile, (param_power_cargo_req*param_petrol_cons)/100) {return;}
 
 // Petrol consumption
+switch(FEAT_INDUSTRIES, SELF, GetPowerPlantPetrolCons, ((GetPowerPlantConsumption()*param_petrol_cons)/100)+(incoming_cargo_waiting("PETR") > 0)) {return;}
 
 // Conversion Efficiency
-switch(FEAT_INDUSTRIES, SELF, GetPowerPlantConversionEff, 100+((((incoming_cargo_waiting("PETR")*100)/GetPowerPlantPetrolStockpile())*param_petrol_bonus)/100)) {return;}
+switch(FEAT_INDUSTRIES, SELF, GetPowerPlantConversionEff, 100+min((((incoming_cargo_waiting("PETR")*100)/GetPowerPlantPetrolStockpile())*param_petrol_bonus)/100,param_petrol_bonus)) {return;}
 
 // Like the bank bonus, this is based on either waiting cargo in basic power or waiting power units in advanced mode.
 switch(FEAT_INDUSTRIES, SELF, GetPowerBonus, param_power_enabled > 0 ?
@@ -1089,7 +1090,8 @@ switch(FEAT_INDUSTRIES, SELF, switch_production_display_power_plant, [
 
 // Seperated for additional logic. Mostly adding power and updating the power bonus when doing a production tick. 
 switch(FEAT_INDUSTRIES, PARENT, switch_produce_power_plant, [
-    STORE_TEMP(GetPowerPlantConsumption(),0),
+    STORE_TEMP((GetPowerPlantConsumption()*100)/GetPowerPlantConversionEff(),0),
+    STORE_PERM((STORE_TEMP(GetPowerPlantPetrolCons(),6)),6),
     param_power_advanced ? STORE_PERM(LOAD_PERM(5)+GetPowerPlantConsumption()*2,5) : STORE_TEMP(0x00,19),
     STORE_PERM(PowerBonus(),0)
 ]) {produce_power_plant;}
