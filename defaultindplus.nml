@@ -16,42 +16,6 @@ grf {
     }
 
     param {
-        // Expanded temperate?
-        param_ext_temperate_enabled {
-            name: string(STR_PARAM_EXT_TEMP_NAME);
-            desc: string(STR_PARAM_EXT_TEMP_DESC);
-            type: bool;
-            def_value: 1;
-        }
-    }
-    param {
-	// Expanded sub-arctic?
-	param_ext_arctic_enabled {
-	    name: string(STR_PARAM_EXT_ARCTIC_NAME);
-	    desc: string(STR_PARAM_EXT_ARCTIC_DESC);
-	    type: bool;
-	    def_value: 1;
-	}
-    }
-    param {
-	// Expanded sub-tropic?
-	param_ext_tropic_enabled {
-	     name: string(STR_PARAM_EXT_TROPIC_NAME);
-	     desc: string(STR_PARAM_EXT_TROPIC_DESC);
-	     type: bool;
-	     def_value: 1;
-	}
-    }
-    param {
-	// TEMPERATE / SUB-ARCTIC: Petrol enabled
-	param_petrol_enabled {
-	    name: string(STR_PARAM_PETROL_ENABL_NAME);
-	    desc: string(STR_PARAM_PETROL_ENABL_DESC);
-	    type: bool;
-	    def_value: 1;
-	}
-    }
-    param {
 	// TEMPERATE / SUB-ARCTIC: Petroleum efficiency bonus
 	param_petrol_bonus {
 	    name: string(STR_PARAM_PETROL_BOOST_NAME);
@@ -71,15 +35,6 @@ grf {
 	    min_value: 1;
 	    max_value: 500;
 	    def_value: 35;
-	}
-    }
-    param {
-	// TEMPERATE / SUB-TROPIC: Lubricants Enabled
-	param_lubricant_enabled {
-	    name: string(STR_PARAM_LUBR_ENABLE_NAME);
-	    desc: string(STR_PARAM_LUBR_ENABLE_DESC);
-	    type: bool;
-	    def_value: 1;
 	}
     }
     param {
