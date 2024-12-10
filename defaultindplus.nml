@@ -1385,12 +1385,6 @@ tilelayout industry_layout_temp_factory_1 {
     5,1: ind_tile_factory_1_S;
 }
 
-produce(produce_temp_factory,
-    [STEL: (LOAD_TEMP(0)); LVST: LOAD_TEMP(1); GRAI: LOAD_TEMP(2); LMBR: LOAD_TEMP(3);],
-    [GOOD: 2*(LOAD_TEMP(0)+LOAD_TEMP(1)+LOAD_TEMP(2)+LOAD_TEMP(3));],
-    0
-)
-
 switch(FEAT_INDUSTRIES, SELF, temp_factory_max_stockpile, min((GetMaxSecondaryProduction()*8*param_sec_max_stockpile_perc)/100,50000))  {return;}
 
 switch(FEAT_INDUSTRIES, SELF, temp_factory_stockpile_modifier_steel, min((incoming_cargo_waiting("STEL")*100)/temp_factory_max_stockpile(),100)) {return;}
@@ -1404,6 +1398,20 @@ switch(FEAT_INDUSTRIES, SELF, temp_factory_stockpile_modifier_lumber, min((incom
 switch(FEAT_INDUSTRIES, SELF, temp_factory_stockpile_modifier, STORE_PERM(min(temp_factory_stockpile_modifier_steel()/4+temp_factory_stockpile_modifier_livestock()/4+temp_factory_stockpile_modifier_grain()/4+temp_factory_stockpile_modifier_lumber()/4,100),0)) {return;}
 
 switch(FEAT_INDUSTRIES, SELF, temp_factory_is_active, (last_month_transported("GOOD") > 0)) {return;}
+
+switch(FEAT_INDUSTRIES, SELF, GetTempFactoryLubricantStockpile, (temp_factory_max_stockpile()*param_lubricant_cons)/100) {return;}
+
+// Petrol consumption
+switch(FEAT_INDUSTRIES, SELF, GetTempFactoryLubricantCons, (((GetBaseConversion()*temp_factory_stockpile_modifier())/100*param_lubricant_cons)/100)+(incoming_cargo_waiting("LUBR") > 0)) {return;}
+
+// Conversion Efficiency
+switch(FEAT_INDUSTRIES, SELF, GetTempFactoryConversionEff, 100+min((((incoming_cargo_waiting("LUBR")*100)/GetTempFactoryLubricantStockpile())*param_lubricant_bonus)/100,param_lubricant_bonus)) {return;}
+
+produce(produce_temp_factory,
+    [STEL: (LOAD_TEMP(0)); LVST: LOAD_TEMP(1); GRAI: LOAD_TEMP(2); LMBR: LOAD_TEMP(3); LUBR: LOAD_TEMP(4);],
+    [GOOD: (2*(LOAD_TEMP(0)+LOAD_TEMP(1)+LOAD_TEMP(2)+LOAD_TEMP(3))*GetTempFactoryConversionEff())/100;],
+    0
+)
 
 // Because the factory is cargo agnostic, each input cargo may be consumed at a different rate, according to its stockpile modifier.
 switch(FEAT_INDUSTRIES, PARENT, switch_production_temp_factory,
@@ -1429,12 +1437,34 @@ switch(FEAT_INDUSTRIES, SELF, switch_production_helper_temp_factory, [
     // LUMBER
     STORE_PERM(temp_factory_stockpile_modifier_lumber(),0),
     STORE_TEMP((min(GetTotalSecondaryProduction(),incoming_cargo_waiting("LMBR"))+(incoming_cargo_waiting("LMBR")>0))*IsSecondaryPowered(),3),
+    // LUBRICANTS
+    STORE_TEMP((min(GetTempFactoryLubricantCons(),incoming_cargo_waiting("LUBR"))+(incoming_cargo_waiting("LUBR")>1))*IsSecondaryPowered(),4),
     temp_factory_stockpile_modifier()
 ]) {switch_production_temp_factory;}
 
+switch(FEAT_INDUSTRIES, SELF, switch_production_display_temp_factory_composite, [
+    // If enabled, display the power bonus and its accompanying text. If disabled, it shows a skip string which causes the string pointer to skip to the correct spot to read the next register (this goes for all optional mechanics)
+    STORE_TEMP(GetStockpileModifier(),257),
+    // If enabled, display the bank bonus and its accompanying text.
+    STORE_TEMP((hasbit(param_power_enabled,1) && hasbit(param_ind_detailed_enabled,0)) ? string(STR_IND_SEC_PROD_POWER) | GetPowerProductionBonus() << 16 : string(STR_SKIP),258),
+    // If enabled, display the town bonus and its accompanying text.
+    STORE_TEMP((hasbit(param_bank_bonus_enabled,1) && hasbit(param_ind_detailed_enabled,0)) ? string(STR_IND_SEC_PROD_BANK) | GetBankProductionBonus() << 16 : string(STR_SKIP),259),
+    // For compression's sake, register 260 both stores the primary production percentage and the necessary text for reserves, if necessary.
+    STORE_TEMP((hasbit(param_town_bonus_enabled,1) && hasbit(param_ind_detailed_enabled,0)) ? string(STR_IND_SEC_PROD_TOWN) | GetTownProductionBonus() << 16 : string(STR_SKIP),260),
+
+    // Don't bother implementing tips into secondaries. huge waste of time. took hours for it to just not work. don't. seriously.
+    STORE_TEMP(GetSecondaryProductionPerc() | GetTempFactoryConversionEff() << 16,261),
+    // So initial base production (normally at the top of the window) is here because register 256 is wiped when accessing town storage. This is also why it's split into two different statements.
+    STORE_PERM(GetBaseProductionPerc(),16),
+    STORE_TEMP(param_sec_advanced == 1 ? string(STR_IND_SEC_PROD_BASE) | GetBaseProductionPerc() << 16 : string(STR_SKIP),18),
+    STORE_TEMP(LOAD_TEMP(18),256)                                                                                                                                               
+    ]) {
+    return string(STR_IND_SEC_PROD_FACT);
+}
+
 switch(FEAT_INDUSTRIES, SELF, switch_display_helper_temp_factory, IsSecondaryPowered()) {
     0: return string(STR_IND_SEC_PROD_DISABLED);
-    1: return switch_production_display_secondary_composite();
+    1: return switch_production_display_temp_factory_composite();
 }
 
 switch(FEAT_INDUSTRIES, SELF, switch_production_change_temp_factory, STORE_TEMP(transported_last_month_pct("GOOD"),0)) {
@@ -1454,6 +1484,7 @@ switch(FEAT_INDUSTRIES, SELF, switch_stop_accept_temp_factory, [temp_factory_sto
     6: return incoming_cargo_waiting("GRAI") <= temp_factory_max_stockpile()*10;
     9: return incoming_cargo_waiting("STEL") <= temp_factory_max_stockpile()*10;
     21: return incoming_cargo_waiting("LMBR") <= temp_factory_max_stockpile()*10;
+    23: return incoming_cargo_waiting("LUBR") <= GetTempFactoryLubricantStockpile()*10;
 }
 
 item(FEAT_INDUSTRIES, temperate_factory, INDUSTRYTYPE_TEMPERATE_FACTORY) {
