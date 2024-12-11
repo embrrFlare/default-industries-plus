@@ -673,6 +673,9 @@ switch(FEAT_INDUSTRIES, SELF, GetSecondaryProductionPerc, (GetTotalSecondaryProd
 // Returns the percentage of reserves remaining 
 switch(FEAT_INDUSTRIES, SELF, GetReservesPerc, max((LOAD_PERM(1)*100)/(LOAD_PERM(2)),0)) {return;}
 
+// Deplete reserves when doing a production event
+switch(FEAT_INDUSTRIES, SELF, LowerReserves, STORE_PERM(LOAD_PERM(1)-GetTotalPrimaryProduction(),1)) {return;}
+
 // Returns the production of a primary as a percentage.
 switch(FEAT_INDUSTRIES, SELF, GetPrimaryProductionPerc, (GetTotalPrimaryProduction()*100)/GetMaxPrimaryProduction()) {return;}
 
@@ -834,9 +837,6 @@ switch(FEAT_INDUSTRIES, SELF, switch_production_change_coal_mine, [STORE_TEMP(tr
     : (LOAD_PERM(1) < 0 && param_extract_reserves) ? CB_RESULT_IND_PROD_CLOSE : CB_RESULT_IND_PROD_NO_CHANGE;
 }
 
-// Deplete reserves when doing a production event
-switch(FEAT_INDUSTRIES, SELF, LowerReserves, STORE_PERM(LOAD_PERM(1)-GetTotalPrimaryProduction(),1)) {return;}
-
 // This is part of a long chain leading from switch_production_coal_mine, just so that additional logic can occur every production event.
 produce (produce_coal_mine,
     [],
@@ -871,6 +871,63 @@ item(FEAT_INDUSTRIES, coal_mine, INDUSTRYTYPE_COAL_MINE) {
         random_prod_change: CB_RESULT_IND_PROD_NO_CHANGE;
         monthly_prod_change: switch_production_change_coal_mine;
         build_prod_change: rand_init_coal_mine;
+    }
+}
+
+/* IRON MINE */
+
+/* If iron mine isn't active, it won't consume funding or power. */
+switch(FEAT_INDUSTRIES, SELF, iron_mine_is_active, (last_month_transported("IORE") > 0)) {return;}
+
+// Determines the initial production of the iron mine, adding reserves if eligible
+switch(FEAT_INDUSTRIES, SELF, rand_init_iron_mine, param_extract_reserves == 1 ? STORE_PERM(STORE_PERM((128+getbits(random_bits, 0, 7))*2048*param_reserve_size/100,1),2) : 0x00) {random_initial_production;}
+
+/* Production change logic. */
+switch(FEAT_INDUSTRIES, SELF, switch_production_change_iron_mine, [STORE_TEMP(transported_last_month_pct("IORE"),0),STORE_TEMP(iron_mine_is_active(),1)]) {
+    // Check for smooth growth and determine whether a growth event can even happen
+    return (param_prim_unserviced_freeze == 3 && (iron_mine_is_active() == 0)) ? CB_RESULT_IND_PROD_NO_CHANGE :
+    (param_prim_change_chance >= getbits(extra_callback_info2, 0, 7)*(((param_prim_unserviced_freeze >= 1) && (iron_mine_is_active() == 0))+(1+(hasbit(param_prim_unserviced_freeze,1)*(iron_mine_is_active() == 0))))) ? ((param_smooth_prim_growth == 1)
+    // Do the correct change logic based on the set difficulty.
+    ? ((param_prim_growth_diff == 0) ? switch_production_change_easy() : ((param_prim_growth_diff == 1) ? switch_production_change_normal() : switch_production_change_hard()))
+    // If smooth growth is disabled, a random change (vanilla) occurs instead
+    : CB_RESULT_IND_PROD_RANDOM)
+    // If reserves are depleted, close. If growth chance failed, do no change.
+    : (LOAD_PERM(1) < 0 && param_extract_reserves) ? CB_RESULT_IND_PROD_CLOSE : CB_RESULT_IND_PROD_NO_CHANGE;
+}
+
+produce (produce_iron_mine,
+    [],
+    [IORE: LOAD_TEMP(0);],
+    0
+)
+
+// Does some logic before doing a production event.
+switch(FEAT_INDUSTRIES, PARENT, switch_production_iron_mine,
+    // Consume funding if enabled and the industry benefits from it.
+    [param_bank_bonus_advanced ? (STORE_PERM(LOAD_PERM(6)-(iron_mine_is_active() ? (hasbit(param_bank_bonus_enabled,0)*GetFundingConsumption()) : 0x00),6)) : 0x00,
+    // Consume power if enabled and the industry benefits from it.
+     param_power_advanced ? (STORE_PERM(LOAD_PERM(5)-(iron_mine_is_active() ? (hasbit(param_power_enabled,0)*GetPowerConsumption()) : 0x00),5)) : 0x00,
+     STORE_TEMP(GetTotalPrimaryProduction(),0),
+     param_extract_reserves == 1 && iron_mine_is_active() == 1 ? LowerReserves() : 0x00,
+    ])
+    {produce_iron_mine;}
+
+// Main block that defines the item. Down here to ensure all functions are defined when needed.
+item(FEAT_INDUSTRIES, iron_mine, INDUSTRYTYPE_IRON_ORE_MINE) {
+    property {
+        substitute: INDUSTRYTYPE_IRON_ORE_MINE;
+        override: INDUSTRYTYPE_IRON_ORE_MINE;
+        cargo_types: [
+            produce_cargo("IORE", 0)
+        ];
+    }
+
+    graphics {
+        extra_text_industry: switch_production_display_primary_composite;
+        produce_256_ticks: switch_production_iron_mine;
+        random_prod_change: CB_RESULT_IND_PROD_NO_CHANGE;
+        monthly_prod_change: switch_production_change_iron_mine;
+        build_prod_change: rand_init_iron_mine;
     }
 }
 
