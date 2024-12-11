@@ -937,7 +937,7 @@ item(FEAT_INDUSTRIES, iron_mine, INDUSTRYTYPE_IRON_ORE_MINE) {
 switch(FEAT_INDUSTRIES, SELF, forest_is_active, (last_month_transported("IORE") > 0)) {return;}
 
 // Determines the initial production of the iron mine, adding reserves if eligible
-switch(FEAT_INDUSTRIES, SELF, rand_init_forest, param_extract_reserves == 1 ? STORE_PERM(STORE_PERM((128+getbits(random_bits, 0, 7))*2048*param_reserve_size/100,1),2) : 0x00) {random_initial_production;}
+switch(FEAT_INDUSTRIES, SELF, rand_init_forest, param_organic_reserves == 1 ? STORE_PERM(STORE_PERM((128+getbits(random_bits, 0, 7))*2048*param_reserve_size/100,1),2) : 0x00) {random_initial_production;}
 
 /* Production change logic. */
 switch(FEAT_INDUSTRIES, SELF, switch_production_change_forest, [STORE_TEMP(transported_last_month_pct("IORE"),0),STORE_TEMP(forest_is_active(),1)]) {
@@ -949,7 +949,7 @@ switch(FEAT_INDUSTRIES, SELF, switch_production_change_forest, [STORE_TEMP(trans
     // If smooth growth is disabled, a random change (vanilla) occurs instead
     : CB_RESULT_IND_PROD_RANDOM)
     // If reserves are depleted, close. If growth chance failed, do no change.
-    : (LOAD_PERM(1) < 0 && param_extract_reserves) ? CB_RESULT_IND_PROD_CLOSE : CB_RESULT_IND_PROD_NO_CHANGE;
+    : (LOAD_PERM(1) < 0 && param_organic_reserves) ? CB_RESULT_IND_PROD_CLOSE : CB_RESULT_IND_PROD_NO_CHANGE;
 }
 
 produce (produce_forest,
@@ -1051,7 +1051,7 @@ item(FEAT_INDUSTRIES, oil_wells, INDUSTRYTYPE_OIL_WELLS) {
 switch(FEAT_INDUSTRIES, SELF, farm_is_active, (last_month_transported("IORE") > 0)) {return;}
 
 // Determines the initial production of the iron mine, adding reserves if eligible
-switch(FEAT_INDUSTRIES, SELF, rand_init_farm, param_extract_reserves == 1 ? STORE_PERM(STORE_PERM((128+getbits(random_bits, 0, 7))*2048*param_reserve_size/100,1),2) : 0x00) {random_initial_production;}
+switch(FEAT_INDUSTRIES, SELF, rand_init_farm, param_organic_reserves == 1 ? STORE_PERM(STORE_PERM((128+getbits(random_bits, 0, 7))*2048*param_reserve_size/100,1),2) : 0x00) {random_initial_production;}
 
 /* Production change logic. */
 switch(FEAT_INDUSTRIES, SELF, switch_production_change_farm, [STORE_TEMP(transported_last_month_pct("IORE"),0),STORE_TEMP(farm_is_active(),1)]) {
@@ -1063,7 +1063,7 @@ switch(FEAT_INDUSTRIES, SELF, switch_production_change_farm, [STORE_TEMP(transpo
     // If smooth growth is disabled, a random change (vanilla) occurs instead
     : CB_RESULT_IND_PROD_RANDOM)
     // If reserves are depleted, close. If growth chance failed, do no change.
-    : (LOAD_PERM(1) < 0 && param_extract_reserves) ? CB_RESULT_IND_PROD_CLOSE : CB_RESULT_IND_PROD_NO_CHANGE;
+    : (LOAD_PERM(1) < 0 && param_organic_reserves) ? CB_RESULT_IND_PROD_CLOSE : CB_RESULT_IND_PROD_NO_CHANGE;
 }
 
 produce (produce_farm,
@@ -1079,7 +1079,7 @@ switch(FEAT_INDUSTRIES, PARENT, switch_production_farm,
     // Consume power if enabled and the industry benefits from it.
      param_power_advanced ? (STORE_PERM(LOAD_PERM(5)-(farm_is_active() ? (hasbit(param_power_enabled,0)*GetPowerConsumption()) : 0x00),5)) : 0x00,
      STORE_TEMP(GetTotalPrimaryProduction(),0),
-     param_extract_reserves == 1 && farm_is_active() == 1 ? LowerReserves() : 0x00,
+     param_organic_reserves == 1 && farm_is_active() == 1 ? LowerReserves() : 0x00,
     ])
     {produce_farm;}
 
@@ -1100,6 +1100,69 @@ item(FEAT_INDUSTRIES, farm, INDUSTRYTYPE_TEMPERATE_ARCTIC_FARM) {
         random_prod_change: CB_RESULT_IND_PROD_NO_CHANGE;
         monthly_prod_change: switch_production_change_farm;
         build_prod_change: rand_init_farm;
+    }
+}
+
+/* OIL RIG */
+// Pax/mail production is clamped between 8 units per tick (64/72 per month) and 32 units per tick (256/288 per month). Based partly on base production, but not exact.
+
+/* If iron mine isn't active, it won't consume funding or power. */
+switch(FEAT_INDUSTRIES, SELF, oil_rig_is_active, (last_month_transported("IORE") > 0)) {return;}
+
+// Determines the initial production of the iron mine, adding reserves if eligible
+switch(FEAT_INDUSTRIES, SELF, rand_init_oil_rig, param_extract_reserves == 1 ? STORE_PERM(STORE_PERM((128+getbits(random_bits, 0, 7))*2048*param_reserve_size/100,1),2) : 0x00) {random_initial_production;}
+
+/* Production change logic. */
+switch(FEAT_INDUSTRIES, SELF, switch_production_change_oil_rig, [STORE_TEMP(transported_last_month_pct("IORE"),0),STORE_TEMP(oil_rig_is_active(),1)]) {
+    // Check for smooth growth and determine whether a growth event can even happen
+    return (param_prim_unserviced_freeze == 3 && (oil_rig_is_active() == 0)) ? CB_RESULT_IND_PROD_NO_CHANGE :
+    (param_prim_change_chance >= getbits(extra_callback_info2, 0, 7)*(((param_prim_unserviced_freeze >= 1) && (oil_rig_is_active() == 0))+(1+(hasbit(param_prim_unserviced_freeze,1)*(oil_rig_is_active() == 0))))) ? ((param_smooth_prim_growth == 1)
+    // Do the correct change logic based on the set difficulty.
+    ? ((param_prim_growth_diff == 0) ? switch_production_change_easy() : ((param_prim_growth_diff == 1) ? switch_production_change_normal() : switch_production_change_hard()))
+    // If smooth growth is disabled, a random change (vanilla) occurs instead
+    : CB_RESULT_IND_PROD_RANDOM)
+    // If reserves are depleted, close. If growth chance failed, do no change.
+    : (LOAD_PERM(1) < 0 && param_extract_reserves) ? CB_RESULT_IND_PROD_CLOSE : CB_RESULT_IND_PROD_NO_CHANGE;
+}
+
+produce (produce_oil_rig,
+    [],
+    [IORE: LOAD_TEMP(0);],
+    0
+)
+
+// Does some logic before doing a production event.
+switch(FEAT_INDUSTRIES, PARENT, switch_production_oil_rig,
+    // Consume funding if enabled and the industry benefits from it.
+    [param_bank_bonus_advanced ? (STORE_PERM(LOAD_PERM(6)-(oil_rig_is_active() ? (hasbit(param_bank_bonus_enabled,0)*GetFundingConsumption()) : 0x00),6)) : 0x00,
+    // Consume power if enabled and the industry benefits from it.
+     param_power_advanced ? (STORE_PERM(LOAD_PERM(5)-(oil_rig_is_active() ? (hasbit(param_power_enabled,0)*GetPowerConsumption()) : 0x00),5)) : 0x00,
+     STORE_TEMP(GetTotalPrimaryProduction(),0),
+     STORE_TEMP(min(max(GetBaseProduction(),8),32),1),
+     param_extract_reserves == 1 && oil_rig_is_active() == 1 ? LowerReserves() : 0x00,
+    ])
+    {produce_oil_rig;}
+
+// Main block that defines the item. Down here to ensure all functions are defined when needed.
+item(FEAT_INDUSTRIES, oil_rig, INDUSTRYTYPE_OIL_RIG) {
+    property {
+        substitute: INDUSTRYTYPE_OIL_RIG;
+        override: INDUSTRYTYPE_OIL_RIG;
+        cargo_types: [
+            produce_cargo("IORE", 0),
+	    produce_cargo("PASS", 0),
+	    produce_cargo("MAIL", 0),
+	    accept_cargo("PASS"),
+	    accept_cargo("MAIL")
+        ];
+    }
+
+    graphics {
+        extra_text_industry: switch_production_display_primary_composite;
+        produce_256_ticks: switch_production_oil_rig;
+        random_prod_change: CB_RESULT_IND_PROD_NO_CHANGE;
+        monthly_prod_change: switch_production_change_oil_rig;
+        build_prod_change: rand_init_oil_rig;
     }
 }
 
