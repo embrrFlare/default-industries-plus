@@ -520,15 +520,6 @@ grf {
         }
     }
     param {
-        // Tips enabled?
-        param_tips_enabled {
-            name: string(STR_PARAM_TIPS_NAME);
-            desc: string(STR_PARAM_TIPS_DESC);
-            type: bool;
-            def_value: 1;
-        }
-    }
-    param {
         // Detailed info enabled?
         param_ind_detailed_enabled {
             name: string(STR_PARAM_DETAILED_NAME);
@@ -725,17 +716,7 @@ switch(FEAT_INDUSTRIES, SELF, switch_production_display_primary_composite, [
     ((GetReservesPerc() >= 50 && GetReservesPerc() < 63) * string(STR_IND_RESERVES_5)) +
     ((GetReservesPerc() >= 63 && GetReservesPerc() < 75) * string(STR_IND_RESERVES_6)) +
     ((GetReservesPerc() >= 75 && GetReservesPerc() < 88) * string(STR_IND_RESERVES_7)) +
-    ((GetReservesPerc() >= 88) * string(STR_IND_RESERVES_8)))) : string(STR_EMPTY)) |
-
-    // Show tip text. This is also pretty complicated but I've tried to split it so it's understandable.
-    // This first one checks if tips are enabled and, if power is enabled and the power bonus is less than 25% of the maximum, displays a tip about power. Since this is first, it gets priority.
-    (param_tips_enabled == 1 ? ((hasbit(param_power_enabled,0) && (GetPowerProductionBonus() < (param_power_max_bonus/4))) ? string(STR_IND_PRIM_TIP_POWER) :
-    // This checks for the bank bonus and shows a tip if the bank bonus is less than 25% of the maximum. This one has the second highest priority.
-    (hasbit(param_bank_bonus_enabled,0) && (GetBankProductionBonus() < (param_bank_max_bonus/4))) ? string(STR_IND_PRIM_TIP_BANK) :
-    // This checks for the town bonus and shows a tip if it's below 20% of the maximum. This one has the third highest priority.
-    (hasbit(param_town_bonus_enabled,0) && (GetTownProductionBonus() < (param_town_max_bonus/5))) ? string(STR_IND_PRIM_TIP_TOWN) :
-    // This one shows a tip if the industry's base production is below 25% of the maximum. This one only displays after all the above are false.
-    (production_level < 32) ? string(STR_IND_PRIM_TIP_BASE) : string(STR_EMPTY)) : string(STR_EMPTY)) << 16,261),
+    ((GetReservesPerc() >= 88) * string(STR_IND_RESERVES_8)))) : string(STR_EMPTY)),261),
     // So initial base production (normally at the top of the window) is here because register 256 is wiped when accessing town storage. This is also why it's split into two different statements.
     STORE_TEMP(string(STR_IND_PRIM_PROD_BASE) | GetBaseProductionPerc() << 16,1),
     STORE_TEMP(LOAD_TEMP(1),256)                                                                                                                                               
