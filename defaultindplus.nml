@@ -1127,7 +1127,7 @@ switch(FEAT_INDUSTRIES, SELF, switch_production_change_oil_rig, [STORE_TEMP(tran
 
 produce (produce_oil_rig,
     [],
-    [IORE: LOAD_TEMP(0);],
+    [OIL_: LOAD_TEMP(0); PASS: LOAD_TEMP(1); MAIL: LOAD_TEMP(1);],
     0
 )
 
@@ -1158,6 +1158,7 @@ item(FEAT_INDUSTRIES, oil_rig, INDUSTRYTYPE_OIL_RIG) {
     }
 
     graphics {
+	cargo_subtype_display: CB_RESULT_IND_NO_TEXT_NO_AMOUNT;
         extra_text_industry: switch_production_display_primary_composite;
         produce_256_ticks: switch_production_oil_rig;
         random_prod_change: CB_RESULT_IND_PROD_NO_CHANGE;
