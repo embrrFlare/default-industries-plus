@@ -1179,6 +1179,8 @@ produce (produce_temperate_bank,
 // Determines consumption. Consumption is based off waiting cargo.
 switch(FEAT_INDUSTRIES, SELF, GetBankConsumption, max((min((incoming_cargo_waiting("VALU")*10000)/(param_bank_bonus_req*param_bank_stockpile_mult),100)*param_bank_bonus_req/100/8),(incoming_cargo_waiting("VALU") > 0))) {return;}
 
+switch(FEAT_INDUSTRIES, SELF, GetBankStockpile, (param_bank_bonus_req*param_bank_stockpile_mult)/100) {return;}
+
 // Determines bank bonus. It's based off either funding consumption or waiting cargo, based on whether you have advanced bank mechanics or not. 
 switch(FEAT_INDUSTRIES, SELF, GetBankBonus, param_bank_bonus_enabled > 0 ?
     param_bank_bonus_advanced ? ((param_bank_bonus_soft_cap == 1) && (STORE_TEMP(LOAD_TEMP(1),1) > (((param_bank_bonus_req*param_bank_stockpile_mult)/100))) ?
@@ -1217,6 +1219,10 @@ switch(FEAT_INDUSTRIES, SELF, switch_production_change_temperate_bank, STORE_TEM
     : CB_RESULT_IND_PROD_NO_CHANGE);
 }
 
+switch(FEAT_INDUSTRIES, SELF, switch_stop_accept_temperate_bank, [getbits(extra_callback_info2, 0, 8)]) {
+    10: return incoming_cargo_waiting("VALU") <= GetBankStockpile();
+}
+
 // Seperated from the produce statement for additional logic to take place.
 switch(FEAT_INDUSTRIES, PARENT, switch_produce_temperate_bank, [
     STORE_TEMP(GetBankConsumption(),0),
@@ -1242,6 +1248,7 @@ item(FEAT_INDUSTRIES, temperate_bank, INDUSTRYTYPE_TEMPERATE_BANK) {
         produce_256_ticks: switch_produce_temperate_bank;
         monthly_prod_change: switch_production_change_temperate_bank;
         random_prod_change: CB_RESULT_IND_PROD_NO_CHANGE;
+	stop_accept_cargo: switch_stop_accept_temperate_bank;
         build_prod_change: 16;
     }
 }
@@ -1329,9 +1336,9 @@ produce (produce_power_plant,
 switch(FEAT_INDUSTRIES, SELF, GetPowerPlantConsumption, max((min((incoming_cargo_waiting("COAL")*10000)/(param_power_cargo_req*param_power_stockpile_mult),100)*param_power_cargo_req/100/8),(incoming_cargo_waiting("COAL") > 0))) {return;}
 
 // Power plant maximum stockpile (before cargo stops being accepted
-switch(FEAT_INDUSTRIES, SELF, GetPowerPlantCoalStockpile, param_power_cargo_req) {return;}
+switch(FEAT_INDUSTRIES, SELF, GetPowerPlantCoalStockpile, (param_power_cargo_req*param_power_stockpile_mult)/100) {return;}
 
-switch(FEAT_INDUSTRIES, SELF, GetPowerPlantPetrolStockpile, (param_power_cargo_req*param_petrol_cons)/100) {return;}
+switch(FEAT_INDUSTRIES, SELF, GetPowerPlantPetrolStockpile, (param_power_cargo_req*param_petrol_cons*param_power_stockpile_mult)/10000) {return;}
 
 // Petrol consumption
 switch(FEAT_INDUSTRIES, SELF, GetPowerPlantPetrolCons, ((GetPowerPlantConsumption()*param_petrol_cons)/100)+(incoming_cargo_waiting("PETR") > 0)) {return;}
