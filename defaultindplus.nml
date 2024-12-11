@@ -1258,22 +1258,22 @@ item(FEAT_INDUSTRIES, temperate_bank, INDUSTRYTYPE_TEMPERATE_BANK) {
 // Code adapted from 2TallTyler's improved town industries 1.0
 
 spritelayout spr_layout_power_plant_1 {
-    ground   {sprite: 1420;}
+    ground   {sprite: 2022;}
     building {sprite: 2050;}
 }
 
 spritelayout spr_layout_power_plant_2 {
-    ground   {sprite: 1420;}
+    ground   {sprite: 2022;}
     building {sprite: 2053;}
 }
 
 spritelayout spr_layout_power_plant_3 {
-    ground   {sprite: 1420;}
+    ground   {sprite: 2022;}
     building {sprite: 2054; yoffset: 2;}
 }
 
 spritelayout spr_layout_power_plant_4 {
-    ground   {sprite: 3981;}
+    ground   {sprite: 2022;}
     building {sprite: 2047;}
 }
 
@@ -1318,12 +1318,34 @@ item(FEAT_INDUSTRYTILES, ind_tile_power_plant_4) {
 }
 
 tilelayout industry_layout_power_plant_1 {
-    0,0: ind_tile_power_plant_1;
-    0,1: ind_tile_power_plant_1;
+    0,0: ind_tile_power_plant_4;
+    0,1: ind_tile_power_plant_4;
     1,0: ind_tile_power_plant_2;
-    1,1: ind_tile_power_plant_2;
+    1,1: ind_tile_power_plant_1;
     2,0: ind_tile_power_plant_3;
+    2,1: ind_tile_power_plant_2;
+}
+
+tilelayout industry_layout_power_plant_2 {
+    2,0: ind_tile_power_plant_2;
     2,1: ind_tile_power_plant_3;
+    2,2: ind_tile_power_plant_2;
+    1,0: ind_tile_power_plant_1;
+    1,1: ind_tile_power_plant_1;
+    1,2: ind_tile_power_plant_4;
+    0,1: ind_tile_power_plant_4;
+    0,2: ind_tile_power_plant_4;
+}
+
+tilelayout industry_layout_power_plant_3 {
+    0,0: ind_tile_power_plant_4;
+    0,1: ind_tile_power_plant_2;
+    1,0: ind_tile_power_plant_4;
+    1,1: ind_tile_power_plant_1;
+    2,0: ind_tile_power_plant_4;
+    2,1: ind_tile_power_plant_1;
+    3,0: ind_tile_power_plant_3;
+    3,1: ind_tile_power_plant_3;
 }
 
 produce (produce_power_plant,
@@ -1392,7 +1414,9 @@ item(FEAT_INDUSTRIES, power_plant, INDUSTRYTYPE_POWER_PLANT) {
 	    accept_cargo("PETR")
         ];
 	layouts: [
-            industry_layout_power_plant_1
+            industry_layout_power_plant_1,
+	    industry_layout_power_plant_2,
+	    industry_layout_power_plant_3
 	];
     }
 
