@@ -12,16 +12,16 @@ STR_GRF_DESCRIPTION           :{GOLD}{TITLE}{}{BLACK}By {ORANGE}embrr{RED}Flare{
 STR_PARAM_EXT_SEPERATE     :{ORANGE}--| ADDITIONAL MECHANICS |--
 
 STR_PARAM_PETROL_BOOST_NAME:{PUSH_COLOUR}{GREEN}Temperate{POP_COLOUR}/{PUSH_COLOUR}{BLUE}Sub-arctic{POP_COLOUR}: Petrol Efficiency Bonus (%)
-STR_PARAM_PETROL_BOOST_DESC:Determines the efficiency bonus that petrol gives to the power plant.{}"Efficiency" refers to conversion ratio, so a 50% boost changes the conversion ratio from 1 input to 1 power to 1 input to 1.5 power.{WHITE}{}Only functions if the petrol cargo is enabled.
+STR_PARAM_PETROL_BOOST_DESC:Determines the efficiency bonus that petrol gives to the power plant.{}"Efficiency" refers to conversion ratio, so a 50% boost changes the conversion ratio from 1 input to 1 power to 1 input to 1.5 power.
 
 STR_PARAM_PETROL_CONS_NAME :{PUSH_COLOUR}{GREEN}Temperate{POP_COLOUR}/{PUSH_COLOUR}{BLUE}Sub-arctic{POP_COLOUR}: Petrol Consumption Rate (%)
-STR_PARAM_PETROL_CONS_DESC :Determines the consumption rate of petrol at the power plant, relative to coal consumption.{WHITE}{}Only functions if the petrol cargo is enabled.
+STR_PARAM_PETROL_CONS_DESC :Determines the consumption rate of petrol at the power plant, relative to coal consumption.
 
 STR_PARAM_LUBR_BOOST_NAME :{PUSH_COLOUR}{GREEN}Temperate{POP_COLOUR}/{PUSH_COLOUR}{YELLOW}Sub-tropic{POP_COLOUR}: Lubricant Efficiency Bonus (%)
-STR_PARAM_LUBR_BOOST_DESC :Determines the efficiency bonus that lubricants give to the factory.{}"Efficiency" refers to conversion ratio, so a 50% boost changes the conversion ratio from 1 input to 1 output to 1 input to 1.5 output.{WHITE}{}Only functions if the lubricants cargo is enabled.
+STR_PARAM_LUBR_BOOST_DESC :Determines the efficiency bonus that lubricants give to the factory.{}"Efficiency" refers to conversion ratio, so a 50% boost changes the conversion ratio from 1 input to 1 output to 1 input to 1.5 output.
 
 STR_PARAM_LUBR_CONS_NAME  :{PUSH_COLOUR}{GREEN}Temperate{POP_COLOUR}/{PUSH_COLOUR}{YELLOW}Sub-tropic{POP_COLOUR}: Lubricant Consumption Rate (%)
-STR_PARAM_LUBR_CONS_DESC  :Determines the consumption rate of lubricants at the factory, relative to cargo consumption. This consumption rate is not affected by bonuses like the town or power bonus.{WHITE}{}Only functions if the lubricants cargo is enabled.
+STR_PARAM_LUBR_CONS_DESC  :Determines the consumption rate of lubricants at the factory, relative to cargo consumption. This consumption rate is not affected by bonuses like the town or power bonus.
 
 #Bonus Mechanics
 
@@ -167,9 +167,6 @@ STR_PARAM_STOCKMULT_DESC  :How much stockpiled cargo is required for secondaries
 
 STR_PARAM_QOL_SEPERATE    :{BLUE}--| VISUAL OPTIONS |--
 
-STR_PARAM_TIPS_NAME       :Show Industry Tips
-STR_PARAM_TIPS_DESC       :If enabled, primary industries will show a tip for how to increase their production.
-
 STR_PARAM_DETAILED_NONE   :Show no detailed info
 STR_PARAM_DETAILED_RES    :Show detailed reserve info
 STR_PARAM_DETAILED_BONUS  :Show detailed bonus info
@@ -177,6 +174,9 @@ STR_PARAM_DETAILED_BOTH   :Show all detailed info
 
 STR_PARAM_DETAILED_NAME   :Show Detailed Industry Info
 STR_PARAM_DETAILED_DESC   :Determines how detailed industry tooltips are.{}Detailed reserves shows the exact amount remaining in primary industry reserves, if enabled.{}Detailed bonus info gives a breakdown of all industry bonuses, such as the town or power bonus.
+
+STR_PARAM_TIPS_NAME       :Show industry tips
+STR_PARAM_TIPS_DESC       :Shows tips on how to increase your industry production, if enabled.
 
 #Cargo Strings
 
@@ -212,15 +212,14 @@ STR_IND_RESERVES_3        :{ORANGE}Reduced.
 STR_IND_RESERVES_2        :{RED}Depleted..
 STR_IND_RESERVES_1        :{RED}Depleted...
 
-STR_IND_PRIM_TIP_POWER    :{}{}{WHITE}Deliver cargo to the local town's power plant to gain additional production!
-STR_IND_PRIM_TIP_BANK     :{}{}{WHITE}Deliver cargo to the local town's bank to gain additional production!
-STR_IND_PRIM_TIP_TOWN     :{}{}{WHITE}Grow the local town's population to gain additional production!
-STR_IND_PRIM_TIP_BASE     :{}{}{WHITE}Deliver good service to this industry to gain additional production!
-
 STR_IND_PRIM_PROD_BASE    :{BLACK}Base production: {WHITE}{UNSIGNED_WORD}%{}
+STR_IND_PRIM_PROD_BASET   :{BLACK}Base production: {WHITE}{UNSIGNED_WORD}%{}{YELLOW}Increase production by giving good service!{}
 STR_IND_PRIM_PROD_BANK    :{BLACK}Bonus from town bank: {WHITE}+{UNSIGNED_WORD}%{}
+STR_IND_PRIM_PROD_BANKT   :{BLACK}Bonus from town bank: {WHITE}+{UNSIGNED_WORD}%{}{YELLOW}Increase production by delivering cargo to the local town's bank!{}
 STR_IND_PRIM_PROD_TOWN    :{BLACK}Bonus from town population: {WHITE}+{UNSIGNED_WORD}%{}
+STR_IND_PRIM_PROD_TOWNT   :{BLACK}Bonus from town population: {WHITE}+{UNSIGNED_WORD}%{}{YELLOW}Increase production by increasing the local town's population!{}
 STR_IND_PRIM_PROD_POWER   :{BLACK}Bonus from power plant: {WHITE}+{UNSIGNED_WORD}%{}
+STR_IND_PRIM_PROD_POWERT  :{BLACK}Bonus from power plant: {WHITE}+{UNSIGNED_WORD}%{}{YELLOW}Increase production by delivering cargo to the local town's power plant!{}
 STR_IND_PRIM_PROD_RESERVE1:{}{}{GOLD}Reserves Remaining: {WHITE}{UNSIGNED_WORD}%
 STR_IND_PRIM_PROD_RESERVE2:{}{}{GOLD}Estimated Reserves: {STRING}
 STR_IND_PRIM_PROD_TOTAL   :{STRING}{STRING}{STRING}{STRING}{GOLD}Production Rate: {WHITE}{UNSIGNED_WORD}%{STRING}{STRING}
@@ -236,6 +235,7 @@ STR_IND_SEC_TEMP_BANK_TOTAL:{STRING}{STRING}{}{}{BLACK}Consumption rate: {WHITE}
 
 STR_IND_SEC_POWER_STOCK   :{}{BLACK}Units of power available: {WHITE}{SKIP}{COMMA} units
 STR_IND_SEC_POWER_CON     :{}{GOLD}Conversion Efficiency: {WHITE}{UNSIGNED_WORD}%
+STR_IND_SEC_POWER_CONT    :{}{GOLD}Conversion Efficiency: {WHITE}{UNSIGNED_WORD}%{}{YELLOW}Increase efficiency by delivering Petrol!
 STR_IND_SEC_POWER_TOTAL   :{STRING}{STRING}{}{}{BLACK}Consumption rate: {WHITE}{UNSIGNED_WORD}%{}{SKIP}{GOLD}Conversion Efficiency: {WHITE}{UNSIGNED_WORD}%
 
 STR_IND_SEC_PROD_DISABLED :{RED}Production Disabled!{}{}{WHITE}Deliver cargo to the town's power plant to begin production!

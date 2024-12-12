@@ -536,6 +536,15 @@ grf {
             };
         }
     }
+    param {
+	// Tips enabled?
+	param_tips_enabled {
+	    name: string(STR_PARAM_TIPS_NAME);
+	    desc: string(STR_PARAM_TIPS_DESC);
+	    type: bool;
+	    def_value: 1;
+	}
+    }
 }
 
 cargotable {
@@ -703,11 +712,11 @@ switch(FEAT_INDUSTRIES, SELF, IsSecondaryPowered, (param_sec_power_need ? GetPow
 // This is a hell of a function since almost all of these features need to be completely decoupled yet still work together properly in this menu. If statements don't accomplish the logic I'd like, and switch statements seem to lose all local context in the store_temp vars when progressing back down the call stack so all of this is done with ternary operators. sorry...
 switch(FEAT_INDUSTRIES, SELF, switch_production_display_primary_composite, [
     // If enabled, display the power bonus and its accompanying text. If disabled, it shows a skip string which causes the string pointer to skip to the correct spot to read the next register (this goes for all optional mechanics)
-    STORE_TEMP((hasbit(param_power_enabled,0) && hasbit(param_ind_detailed_enabled,0)) ? string(STR_IND_PRIM_PROD_POWER) | GetPowerProductionBonus() << 16 : string(STR_SKIP),257),
+    STORE_TEMP((hasbit(param_power_enabled,0) && hasbit(param_ind_detailed_enabled,0)) ? ((param_tips_enabled && GetPowerProductionBonus() < param_power_max_bonus/4) ? string(STR_IND_PRIM_PROD_POWERT) : string(STR_IND_PRIM_PROD_POWER)) | GetPowerProductionBonus() << 16 : string(STR_SKIP),257),
     // If enabled, display the bank bonus and its accompanying text.
-    STORE_TEMP((hasbit(param_bank_bonus_enabled,0) && hasbit(param_ind_detailed_enabled,0)) ? string(STR_IND_PRIM_PROD_BANK) | GetBankProductionBonus() << 16 : string(STR_SKIP),258),
+    STORE_TEMP((hasbit(param_bank_bonus_enabled,0) && hasbit(param_ind_detailed_enabled,0)) ? ((param_tips_enabled && GetBankProductionBonus() < param_bank_max_bonus/4) ? string(STR_IND_PRIM_PROD_BANKT) : string(STR_IND_PRIM_PROD_BANK)) | GetBankProductionBonus() << 16 : string(STR_SKIP),258),
     // If enabled, display the town bonus and its accompanying text.
-    STORE_TEMP((hasbit(param_town_bonus_enabled,0) && hasbit(param_ind_detailed_enabled,0)) ? string(STR_IND_PRIM_PROD_TOWN) | GetTownProductionBonus() << 16 : string(STR_SKIP),259),
+    STORE_TEMP((hasbit(param_town_bonus_enabled,0) && hasbit(param_ind_detailed_enabled,0)) ? ((param_tips_enabled && GetTownProductionBonus() < param_town_max_bonus/5) ? string(STR_IND_PRIM_PROD_TOWNT) : string(STR_IND_PRIM_PROD_TOWN)) | GetTownProductionBonus() << 16 : string(STR_SKIP),259),
     // For compression's sake, register 260 both stores the primary production percentage and the necessary text for reserves, if necessary.
     STORE_TEMP(GetPrimaryProductionPerc() | (param_extract_reserves == 1 ? (hasbit(param_ind_detailed_enabled,1) ? string(STR_IND_PRIM_PROD_RESERVE1) : string(STR_IND_PRIM_PROD_RESERVE2)) : string(STR_SKIP)) << 16,260),
     // If detailed reserves are disabled, show a different text that gives a vague idea of how much reserves are depleted.
@@ -721,7 +730,7 @@ switch(FEAT_INDUSTRIES, SELF, switch_production_display_primary_composite, [
     ((GetReservesPerc() >= 75 && GetReservesPerc() < 88) * string(STR_IND_RESERVES_7)) +
     ((GetReservesPerc() >= 88) * string(STR_IND_RESERVES_8)))) : string(STR_EMPTY)),261),
     // So initial base production (normally at the top of the window) is here because register 256 is wiped when accessing town storage. This is also why it's split into two different statements.
-    STORE_TEMP(string(STR_IND_PRIM_PROD_BASE) | GetBaseProductionPerc() << 16,1),
+    STORE_TEMP((param_tips_enabled && GetBaseProductionPerc() < 25 ? string(STR_IND_PRIM_PROD_BASET) : string(STR_IND_PRIM_PROD_BASE)) | GetBaseProductionPerc() << 16,1),
     STORE_TEMP(LOAD_TEMP(1),256)                                                                                                                                               
     ]) {
     return string(STR_IND_PRIM_PROD_TOTAL);
@@ -1481,6 +1490,7 @@ item (FEAT_INDUSTRYTILES, ind_tile_steel_mill_1_W) {
 
 item (FEAT_INDUSTRYTILES, ind_tile_steel_mill_1_S) {
     property {
+
     	substitute: 02;
 	special_flags: bitmask(INDTILE_FLAG_ACCEPT_ALL);
     }
