@@ -3,7 +3,7 @@ grf {
     name: string(STR_GRF_NAME);
     desc: string(STR_GRF_DESCRIPTION);
     version: 1;
-    min_compatible_version: 0;
+    min_compatible_version: 1;
     param {
         // ADDITIONAL MECHANICS SEPERATOR
         param_ext_sep {
@@ -459,10 +459,10 @@ grf {
 	    def_value: 3;
 	    names:
 	    {
-		0: string(STR_PARAM_PRIM_FREEZE_DIS);
-		1: string(STR_PARAM_PRIM_FREEZE_VAN);
-		2: string(STR_PARAM_PRIM_FREEZE_LOW);
-		3: string(STR_PARAM_PRIM_FREEZE_NONE);
+		0: string(STR_PARAM_SEC_FREEZE_DIS);
+		1: string(STR_PARAM_SEC_FREEZE_VAN);
+		2: string(STR_PARAM_SEC_FREEZE_LOW);
+		3: string(STR_PARAM_SEC_FREEZE_NONE);
 	    };
 	}
     }
@@ -806,19 +806,19 @@ switch(FEAT_INDUSTRIES, SELF, switch_production_change_hard, LOAD_TEMP(0)) {
 
 // These change production changes for secondary industries, assuming advanced secondaries is enabled.
 switch(FEAT_INDUSTRIES, SELF, switch_production_change_sec_easy, LOAD_TEMP(0)) {
-    0..25: return (production_level == 4) ? CB_RESULT_IND_PROD_RANDOM : CB_RESULT_IND_PROD_DECREMENT_BY_1;
+    0..25: return (production_level == 4) ? CB_RESULT_IND_PROD_NO_CHANGE : CB_RESULT_IND_PROD_DECREMENT_BY_1;
     26..70: return CB_RESULT_IND_PROD_NO_CHANGE;
     71..100: return CB_RESULT_IND_PROD_INCREMENT_BY_1;
 }
 
 switch(FEAT_INDUSTRIES, SELF, switch_production_change_sec_normal, LOAD_TEMP(0)) {
-    0..35: return (production_level == 4) ? CB_RESULT_IND_PROD_RANDOM : CB_RESULT_IND_PROD_DECREMENT_BY_1;
+    0..35: return (production_level == 4) ? CB_RESULT_IND_PROD_NO_CHANGE : CB_RESULT_IND_PROD_DECREMENT_BY_1;
     36..70: return CB_RESULT_IND_PROD_NO_CHANGE;
     71..100: return CB_RESULT_IND_PROD_INCREMENT_BY_1;
 }
 
 switch(FEAT_INDUSTRIES, SELF, switch_production_change_sec_hard, LOAD_TEMP(0)) {
-    0..45: return (production_level == 4) ? CB_RESULT_IND_PROD_RANDOM : CB_RESULT_IND_PROD_DECREMENT_BY_1;
+    0..45: return (production_level == 4) ? CB_RESULT_IND_PROD_NO_CHANGE : CB_RESULT_IND_PROD_DECREMENT_BY_1;
     46..85: return CB_RESULT_IND_PROD_NO_CHANGE;
     86..100: return CB_RESULT_IND_PROD_INCREMENT_BY_1;
 }
