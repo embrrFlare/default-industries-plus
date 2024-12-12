@@ -1210,7 +1210,7 @@ switch(FEAT_INDUSTRIES, SELF, switch_production_display_temp_bank, [
     STORE_TEMP((param_bank_bonus_advanced ? string(STR_IND_SEC_BANK_STOCK) : string(STR_SKIP3)), 258),// Shows the current amount of funding, if applicable.
     STORE_TEMP(GetBankFunding()/GetBankFunding()*STORE_TEMP(LOAD_TEMP(1),1),259),
     STORE_TEMP(((GetBankConsumption()*100)/(param_bank_bonus_req/8) | (production_level*128/100) << 16),260),                                                    // Shows current consumption rate
-    STORE_TEMP(hasbit(param_town_bonus_enabled,0) ? (string(STR_IND_SEC_BANK_BONUS) | ((GetTownProductionBonus()*param_temp_bank_town_bonus_mult)/100) << 16) : string(STR_SKIP),261),  // Shows current town production bonus
+    STORE_TEMP(hasbit(param_town_bonus_enabled,0) ? (((param_tips_enabled && production_level < 32) ? string(STR_IND_SEC_BANK_BONUST) : string(STR_IND_SEC_BANK_BONUS)) | ((GetTownProductionBonus()*param_temp_bank_town_bonus_mult)/100) << 16) : string(STR_SKIP),261),  // Shows current town production bonus
     STORE_TEMP(string(STR_IND_SEC_BONUS),256)                                                                               // String for bank bonus
 ]) {return string(STR_IND_SEC_TEMP_BANK_TOTAL);}
 

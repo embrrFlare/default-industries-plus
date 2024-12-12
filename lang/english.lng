@@ -230,8 +230,10 @@ STR_IND_SEC_BONUS_SEC     : secondary
 STR_IND_SEC_BONUS         :{GOLD}Granting {WHITE}+{SKIP}{UNSIGNED_WORD}%{GOLD} production for{STRING} industries within the town
 
 STR_IND_SEC_BANK_STOCK    :{}{BLACK}Units of funding available: {WHITE}{SKIP}{COMMA} units
-STR_IND_SEC_BANK_BONUS    :{}{BLACK}Bonus from town population: +{WHITE}{UNSIGNED_WORD}%
+STR_IND_SEC_BANK_BONUS    :{}{BLACK}Bonus from town population: {WHITE}+{UNSIGNED_WORD}%
+STR_IND_SEC_BANK_BONUST   :{}{YELLOW}Increase production by giving good service!{}{BLACK}Bonus from town population: {WHITE}+{UNSIGNED_WORD}%
 STR_IND_SEC_TEMP_BANK_TOTAL:{STRING}{STRING}{}{}{BLACK}Consumption rate: {WHITE}{UNSIGNED_WORD}%{}{BLACK}Production rate: {WHITE}{UNSIGNED_WORD}%{STRING}
+STR_IND_SEC_TEMP_BANK_TOTALT:{STRING}{STRING}{}{}{BLACK}Consumption rate: {WHITE}{UNSIGNED_WORD}%{}{BLACK}Production rate: {WHITE}{UNSIGNED_WORD}%{STRING}
 
 STR_IND_SEC_POWER_STOCK   :{}{BLACK}Units of power available: {WHITE}{SKIP}{COMMA} units
 STR_IND_SEC_POWER_CON     :{}{GOLD}Conversion Efficiency: {WHITE}{UNSIGNED_WORD}%
@@ -241,10 +243,15 @@ STR_IND_SEC_POWER_TOTAL   :{STRING}{STRING}{}{}{BLACK}Consumption rate: {WHITE}{
 STR_IND_SEC_PROD_DISABLED :{RED}Production Disabled!{}{}{WHITE}Deliver cargo to the town's power plant to begin production!
 
 STR_IND_SEC_PROD_BASE     :{BLACK}Base conversion: {WHITE}{UNSIGNED_WORD}%{}
+STR_IND_SEC_PROD_BASET    :{BLACK}Base conversion: {WHITE}{UNSIGNED_WORD}%{}{YELLOW}Increase production by giving good service!{}
 STR_IND_SEC_PROD_BANK     :{BLACK}Bonus from town bank: {WHITE}+{UNSIGNED_WORD}%{}
+STR_IND_SEC_PROD_BANKT    :{BLACK}Bonus from town bank: {WHITE}+{UNSIGNED_WORD}%{}{YELLOW}Increase production by delivering cargo to the local town's bank!{}
 STR_IND_SEC_PROD_TOWN     :{BLACK}Bonus from town population: {WHITE}+{UNSIGNED_WORD}%{}
+STR_IND_SEC_PROD_TOWNT    :{BLACK}Bonus from town population: {WHITE}+{UNSIGNED_WORD}%{}{YELLOW}Incease production by increasing the local town's population!{}
 STR_IND_SEC_PROD_POWER    :{BLACK}Bonus from power plant: {WHITE}+{UNSIGNED_WORD}%{}
+STR_IND_SEC_PROD_POWERT   :{BLACK}Bonus from power plant: {WHITE}+{UNSIGNED_WORD}%{}{YELLOW}Increase production by delivering cargo to the local town's power plant!{}
 STR_IND_SEC_PROD_TOTAL    :{STRING}{BLACK}Cargo stockpile: {WHITE}{UNSIGNED_WORD}%{}{SKIP}{STRING}{STRING}{STRING}{}{GOLD}Conversion Rate: {WHITE}{UNSIGNED_WORD}%
+STR_IND_SEC_PROD_TOTALT   :{STRING}{BLACK}Cargo stockpile: {WHITE}{UNSIGNED_WORD}%{}{YELLOW}Increase production by delivering more cargo!{}{SKIP}{STRING}{STRING}{STRING}{}{GOLD}Conversion Rate: {WHITE}{UNSIGNED_WORD}%
 
 STR_IND_SEC_PROD_FACT     :{STRING}{BLACK}Cargo stockpile: {WHITE}{UNSIGNED_WORD}%{}{SKIP}{STRING}{STRING}{STRING}{}{GOLD}Conversion Rate: {WHITE}{UNSIGNED_WORD}%{}{GOLD}Conversion Efficiency: {WHITE}{UNSIGNED_WORD}%
-
+STR_IND_SEC_PROD_FACTT    :{STRING}{BLACK}Cargo stockpile: {WHITE}{UNSIGNED_WORD}%{}{SKIP}{STRING}{STRING}{STRING}{}{GOLD}Conversion Rate: {WHITE}{UNSIGNED_WORD}%{}{GOLD}Conversion Efficiency: {WHITE}{UNSIGNED_WORD}%{}{YELLOW}Increase production by delivering lubricants!
