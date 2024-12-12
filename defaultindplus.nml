@@ -1318,34 +1318,22 @@ item(FEAT_INDUSTRYTILES, ind_tile_power_plant_4) {
 }
 
 tilelayout industry_layout_power_plant_1 {
-    0,0: ind_tile_power_plant_4;
-    0,1: ind_tile_power_plant_4;
-    1,0: ind_tile_power_plant_2;
-    1,1: ind_tile_power_plant_1;
-    2,0: ind_tile_power_plant_3;
-    2,1: ind_tile_power_plant_2;
+    0,0: ind_tile_power_plant_4; 0,1: ind_tile_power_plant_4;
+    1,0: ind_tile_power_plant_2; 1,1: ind_tile_power_plant_1;
+    2,0: ind_tile_power_plant_3; 2,1: ind_tile_power_plant_2;
 }
 
 tilelayout industry_layout_power_plant_2 {
-    2,0: ind_tile_power_plant_2;
-    2,1: ind_tile_power_plant_3;
-    2,2: ind_tile_power_plant_2;
-    1,0: ind_tile_power_plant_1;
-    1,1: ind_tile_power_plant_1;
-    1,2: ind_tile_power_plant_4;
-    0,1: ind_tile_power_plant_4;
-    0,2: ind_tile_power_plant_4;
+    2,0: ind_tile_power_plant_2; 2,1: ind_tile_power_plant_3; 2,2: ind_tile_power_plant_2;
+    1,0: ind_tile_power_plant_1; 1,1: ind_tile_power_plant_1; 1,2: ind_tile_power_plant_4;
+                                 0,1: ind_tile_power_plant_4; 0,2: ind_tile_power_plant_4;
 }
 
 tilelayout industry_layout_power_plant_3 {
-    0,0: ind_tile_power_plant_4;
-    0,1: ind_tile_power_plant_2;
-    1,0: ind_tile_power_plant_4;
-    1,1: ind_tile_power_plant_1;
-    2,0: ind_tile_power_plant_4;
-    2,1: ind_tile_power_plant_1;
-    3,0: ind_tile_power_plant_3;
-    3,1: ind_tile_power_plant_3;
+    0,0: ind_tile_power_plant_4; 0,1: ind_tile_power_plant_2;
+    1,0: ind_tile_power_plant_4; 1,1: ind_tile_power_plant_1;
+    2,0: ind_tile_power_plant_4; 2,1: ind_tile_power_plant_1;
+    3,0: ind_tile_power_plant_3; 3,1: ind_tile_power_plant_3;
 }
 
 produce (produce_power_plant,
@@ -1515,16 +1503,18 @@ item (FEAT_INDUSTRYTILES, ind_tile_steel_mill_2_W) {
     graphics { default: spr_layout_steel_mill_2_W;}
 }
 
-// Code taken from 2TallTyler and their newGRF, improved town industries.
 tilelayout industry_layout_steel_mill_1 {
-    0,0: ind_tile_steel_mill_2_N; 0,1: ind_tile_steel_mill_2_N; 0,2: ind_tile_steel_mill_2_N; 0,3: ind_tile_steel_mill_2_N;
-    1,0: ind_tile_steel_mill_2_W; 1,1: ind_tile_steel_mill_2_W; 1,2: ind_tile_steel_mill_2_W; 1,3: ind_tile_steel_mill_2_W;
-    
-    2,0: ind_tile_steel_mill_2_N; 2,1: ind_tile_steel_mill_2_N; 2,2: ind_tile_steel_mill_1_N; 2,3: ind_tile_steel_mill_1_E;
+    0,0: ind_tile_steel_mill_2_N; 0,1: ind_tile_steel_mill_2_N; 0,2: ind_tile_steel_mill_2_N;
+    1,0: ind_tile_steel_mill_2_W; 1,1: ind_tile_steel_mill_2_W; 1,2: ind_tile_steel_mill_2_W;
+    2,0: ind_tile_steel_mill_2_N; 2,1: ind_tile_steel_mill_1_N; 2,2: ind_tile_steel_mill_1_E;
+    3,0: ind_tile_steel_mill_2_W; 3,1: ind_tile_steel_mill_1_W; 3,2: ind_tile_steel_mill_1_S;
+}
 
-    3,0: ind_tile_steel_mill_2_W; 3,1: ind_tile_steel_mill_2_W; 3,2: ind_tile_steel_mill_1_W; 3,3: ind_tile_steel_mill_1_S;   
-    4,0: ind_tile_steel_mill_1_W; 4,1: ind_tile_steel_mill_1_E; 4,2: ind_tile_steel_mill_1_N; 4,3: ind_tile_steel_mill_1_E;
-    5,0: ind_tile_steel_mill_1_W; 5,1: ind_tile_steel_mill_1_S; 5,2: ind_tile_steel_mill_1_W; 5,3: ind_tile_steel_mill_1_S; 
+tilelayout industry_layout_steel_mill_2 {
+    0,0: ind_tile_steel_mill_1_N; 0,1: ind_tile_steel_mill_1_E; 0,2: ind_tile_steel_mill_2_N;
+    1,0: ind_tile_steel_mill_1_W; 1,1: ind_tile_steel_mill_1_S; 1,2: ind_tile_steel_mill_2_W; 1,3: ind_tile_steel_mill_2_N;
+    2,0: ind_tile_steel_mill_1_N; 2,1: ind_tile_steel_mill_1_E; 2,2: ind_tile_steel_mill_2_N; 2,3: ind_tile_steel_mill_2_W;
+    3,0: ind_tile_steel_mill_1_W; 3,1: ind_tile_steel_mill_1_S; 3,2: ind_tile_steel_mill_2_W;
 }
 
 produce(produce_steel_mill,
@@ -1590,7 +1580,7 @@ item(FEAT_INDUSTRIES, steel_mill, INDUSTRYTYPE_STEEL_MILL) {
 	    accept_cargo("COAL"),
 	    accept_cargo("IORE")
         ];
-	layouts: [industry_layout_steel_mill_1];
+	layouts: [industry_layout_steel_mill_1, industry_layout_steel_mill_2];
     }
 
     graphics {
