@@ -141,6 +141,14 @@ STR_PARAM_TOTAL_PROD_DESC :Determines the overall production rate of all primary
 
 STR_PARAM_SEC_SEPERATE    :{PURPLE}--| SECONDARY INDUSTRY OPTIONS |--
 
+STR_PARAM_SEC_CLOSE_ALL   :All secondary closures
+STR_PARAM_SEC_CLOSE_UNSER :Close unserviced industries only
+STR_PARAM_SEC_CLOSE_SER   :Close serviced industries only
+STR_PARAM_SEC_CLOSE_NONE  :No secondary closures
+
+STR_PARAM_SEC_CLOSE_NAME  :Secondary Industry Closure Rules
+STR_PARAM_SEC_CLOSE_DESC  :Determines whether (un)serviced secondary industries can close or not.
+
 STR_PARAM_ADV_SEC_NAME    :Advanced Secondary Mechanics
 STR_PARAM_ADV_SEC_DESC    :If enabled, secondaries will have an innate base conversion rate just like primaries. In order to get maximum secondary conversion rate, you will both have to stockpile cargo and deliver excellent service.
 

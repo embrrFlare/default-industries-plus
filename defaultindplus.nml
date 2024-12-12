@@ -424,6 +424,22 @@ grf {
         }
     }
     param {
+	param_sec_closures {
+	    name: string(STR_PARAM_SEC_CLOSE_NAME);
+	    desc: string(STR_PARAM_SEC_CLOSE_DESC);
+	    type: int;
+	    min_value: 0;
+	    max_value: 3;
+	    def_value: 2;
+	    names: {
+		0: string(STR_PARAM_SEC_CLOSE_ALL);
+		1: string(STR_PARAM_SEC_CLOSE_SER);
+		2: string(STR_PARAM_SEC_CLOSE_UNSER);
+		3: string(STR_PARAM_SEC_CLOSE_NONE);
+	    };
+	}
+    }
+    param {
 	// Advanced secondary mechanics?
 	param_sec_advanced {
 	    name: string(STR_PARAM_ADV_SEC_NAME);
@@ -806,19 +822,19 @@ switch(FEAT_INDUSTRIES, SELF, switch_production_change_hard, LOAD_TEMP(0)) {
 
 // These change production changes for secondary industries, assuming advanced secondaries is enabled.
 switch(FEAT_INDUSTRIES, SELF, switch_production_change_sec_easy, LOAD_TEMP(0)) {
-    0..25: return (production_level == 4) ? CB_RESULT_IND_PROD_NO_CHANGE : CB_RESULT_IND_PROD_DECREMENT_BY_1;
+    0..25: return (hasbit(param_sec_closures,LOAD_TEMP(1)) && production_level == 4) ? CB_RESULT_IND_PROD_NO_CHANGE : CB_RESULT_IND_PROD_DECREMENT_BY_1;
     26..70: return CB_RESULT_IND_PROD_NO_CHANGE;
     71..100: return CB_RESULT_IND_PROD_INCREMENT_BY_1;
 }
 
 switch(FEAT_INDUSTRIES, SELF, switch_production_change_sec_normal, LOAD_TEMP(0)) {
-    0..35: return (production_level == 4) ? CB_RESULT_IND_PROD_NO_CHANGE : CB_RESULT_IND_PROD_DECREMENT_BY_1;
+    0..35: return (hasbit(param_sec_closures,LOAD_TEMP(1)) && production_level == 4) ? CB_RESULT_IND_PROD_NO_CHANGE : CB_RESULT_IND_PROD_DECREMENT_BY_1;
     36..70: return CB_RESULT_IND_PROD_NO_CHANGE;
     71..100: return CB_RESULT_IND_PROD_INCREMENT_BY_1;
 }
 
 switch(FEAT_INDUSTRIES, SELF, switch_production_change_sec_hard, LOAD_TEMP(0)) {
-    0..45: return (production_level == 4) ? CB_RESULT_IND_PROD_NO_CHANGE : CB_RESULT_IND_PROD_DECREMENT_BY_1;
+    0..45: return (hasbit(param_sec_closures,LOAD_TEMP(1)) && production_level == 4) ? CB_RESULT_IND_PROD_NO_CHANGE : CB_RESULT_IND_PROD_DECREMENT_BY_1;
     46..85: return CB_RESULT_IND_PROD_NO_CHANGE;
     86..100: return CB_RESULT_IND_PROD_INCREMENT_BY_1;
 }
@@ -1233,7 +1249,7 @@ switch(FEAT_INDUSTRIES, SELF, switch_production_display_temp_bank, [
 ]) {return string(STR_IND_SEC_TEMP_BANK_TOTAL);}
 
 // This does production changes based of primary industry rules, but with its own twist since obviously it doesn't have any reserves and is incapable of closing no matter what happens.
-switch(FEAT_INDUSTRIES, SELF, switch_production_change_temperate_bank, STORE_TEMP(transported_last_month_pct("VALU"),0)) {
+switch(FEAT_INDUSTRIES, SELF, switch_production_change_temperate_bank, [STORE_TEMP(transported_last_month_pct("VALU"),0),STORE_TEMP(bank_is_active(),1)]) {
     return ((bank_is_active() == 0) ? CB_RESULT_IND_PROD_NO_CHANGE :
     (param_prim_change_chance >= getbits(extra_callback_info2, 0, 7)) ?
     ((param_smooth_prim_growth == 1) ?
@@ -1583,7 +1599,7 @@ switch(FEAT_INDUSTRIES, SELF, switch_stop_accept_steel_mill, [steel_mill_stockpi
     8: return incoming_cargo_waiting("IORE") <= steel_mill_max_stockpile_iron()*10;
 }
 
-switch(FEAT_INDUSTRIES, SELF, switch_production_change_steel_mill, STORE_TEMP(transported_last_month_pct("STEL"),0)) {
+switch(FEAT_INDUSTRIES, SELF, switch_production_change_steel_mill, [STORE_TEMP(transported_last_month_pct("STEL"),0),STORE_TEMP(steel_mill_is_active(),1)]) {
     // Check for smooth growth and determine whether a growth event can even happen
     return (param_sec_unserviced_freeze == 3 && (steel_mill_is_active() == 0)) ? CB_RESULT_IND_PROD_NO_CHANGE :
     (param_sec_grow_prob >= getbits(extra_callback_info2, 0, 7)*(((param_sec_unserviced_freeze >= 1) && (steel_mill_is_active() == 0))+(1+(hasbit(param_sec_unserviced_freeze,1)*(steel_mill_is_active() == 0))))) ? ((param_sec_advanced == 1)
@@ -1855,7 +1871,7 @@ switch(FEAT_INDUSTRIES, SELF, switch_display_helper_temp_factory, IsSecondaryPow
     1: return switch_display_temp_factory();
 }
 
-switch(FEAT_INDUSTRIES, SELF, switch_production_change_temp_factory, STORE_TEMP(transported_last_month_pct("GOOD"),0)) {
+switch(FEAT_INDUSTRIES, SELF, switch_production_change_temp_factory, [STORE_TEMP(transported_last_month_pct("GOOD"),0),STORE_TEMP(temp_factory_is_active(),1)]) {
     // Check for smooth growth and determine whether a growth event can even happen
     return (param_sec_unserviced_freeze == 3 && (temp_factory_is_active() == 0)) ? CB_RESULT_IND_PROD_NO_CHANGE :
     (param_sec_grow_prob >= getbits(extra_callback_info2, 0, 7)*(((param_sec_unserviced_freeze >= 1) && (temp_factory_is_active() == 0))+(1+(hasbit(param_sec_unserviced_freeze,1)*(temp_factory_is_active() == 0))))) ? ((param_sec_advanced == 1)
@@ -2014,7 +2030,7 @@ switch(FEAT_INDUSTRIES, SELF, switch_production_helper_sawmill, [
     sawmill_stockpile_modifier()
 ]) {switch_production_sawmill;}
 
-switch(FEAT_INDUSTRIES, SELF, switch_production_change_sawmill, STORE_TEMP(transported_last_month_pct("LMBR"),0)) {
+switch(FEAT_INDUSTRIES, SELF, switch_production_change_sawmill, [STORE_TEMP(transported_last_month_pct("LMBR"),0),STORE_TEMP(sawmill_is_active(),1)]) {
     // Check for smooth growth and determine whether a growth event can even happen
     return (param_sec_unserviced_freeze == 3 && (sawmill_is_active() == 0)) ? CB_RESULT_IND_PROD_NO_CHANGE :
     (param_sec_grow_prob >= getbits(extra_callback_info2, 0, 7)*(((param_sec_unserviced_freeze >= 1) && (sawmill_is_active() == 0))+(1+(hasbit(param_sec_unserviced_freeze,1)*(sawmill_is_active() == 0))))) ? ((param_sec_advanced == 1)
