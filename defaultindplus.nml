@@ -1384,7 +1384,7 @@ switch(FEAT_INDUSTRIES, SELF, switch_production_display_power_plant, [
 
     STORE_TEMP(GetPowerUnits()/GetPowerUnits()*STORE_TEMP(LOAD_TEMP(1),1),259),
     STORE_TEMP(((GetPowerPlantConsumption()*100)/(param_power_cargo_req/8)),260),                                                    // Shows current consumption rate
-    STORE_TEMP(GetPowerPlantConversionEff(),261),
+    STORE_TEMP(((param_tips_enabled && GetPowerPlantConversionEff() < 100+(param_petrol_bonus/4)) ? string(STR_IND_SEC_POWER_CONT) : string(STR_IND_SEC_POWER_CON)) | GetPowerPlantConversionEff() << 16,261),
     STORE_TEMP(string(STR_IND_SEC_BONUS),256)                                                                               // String for bonus
 ]) {return string(STR_IND_SEC_POWER_TOTAL);}
 

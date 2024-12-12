@@ -238,7 +238,7 @@ STR_IND_SEC_TEMP_BANK_TOTALT:{STRING}{STRING}{}{}{BLACK}Consumption rate: {WHITE
 STR_IND_SEC_POWER_STOCK   :{}{BLACK}Units of power available: {WHITE}{SKIP}{COMMA} units
 STR_IND_SEC_POWER_CON     :{}{GOLD}Conversion Efficiency: {WHITE}{UNSIGNED_WORD}%
 STR_IND_SEC_POWER_CONT    :{}{GOLD}Conversion Efficiency: {WHITE}{UNSIGNED_WORD}%{}{YELLOW}Increase efficiency by delivering Petrol!
-STR_IND_SEC_POWER_TOTAL   :{STRING}{STRING}{}{}{BLACK}Consumption rate: {WHITE}{UNSIGNED_WORD}%{}{SKIP}{GOLD}Conversion Efficiency: {WHITE}{UNSIGNED_WORD}%
+STR_IND_SEC_POWER_TOTAL   :{STRING}{STRING}{}{}{BLACK}Consumption rate: {WHITE}{UNSIGNED_WORD}%{SKIP}{STRING}
 
 STR_IND_SEC_PROD_DISABLED :{RED}Production Disabled!{}{}{WHITE}Deliver cargo to the town's power plant to begin production!
 
