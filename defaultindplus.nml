@@ -755,6 +755,25 @@ switch(FEAT_INDUSTRIES, SELF, switch_production_display_secondary_composite, [
     return string(STR_IND_SEC_PROD_TOTAL);
 }
 
+switch(FEAT_INDUSTRIES, SELF, switch_production_display_secondary_composite_tips, [
+    // If enabled, display the power bonus and its accompanying text. If disabled, it shows a skip string which causes the string pointer to skip to the correct spot to read the next register (this goes for all optional mechanics)
+    STORE_TEMP(GetStockpileModifier(),257),
+    // If enabled, display the bank bonus and its accompanying text.
+    STORE_TEMP((hasbit(param_power_enabled,1) && hasbit(param_ind_detailed_enabled,0)) ? (param_tips_enabled && GetPowerProductionBonus() < param_power_max_bonus/4 ? string(STR_IND_SEC_PROD_POWERT) : string(STR_IND_SEC_PROD_POWER)) | GetPowerProductionBonus() << 16 : string(STR_SKIP),258),
+    // If enabled, display the town bonus and its accompanying text.
+    STORE_TEMP((hasbit(param_bank_bonus_enabled,1) && hasbit(param_ind_detailed_enabled,0)) ? (param_tips_enabled && GetBankProductionBonus() < param_bank_max_bonus/4 ? string(STR_IND_SEC_PROD_BANKT) : string(STR_IND_SEC_PROD_BANK)) | GetBankProductionBonus() << 16 : string(STR_SKIP),259),
+    // For compression's sake, register 260 both stores the primary production percentage and the necessary text for reserves, if necessary.
+    STORE_TEMP((hasbit(param_town_bonus_enabled,1) && hasbit(param_ind_detailed_enabled,0)) ? (param_tips_enabled && GetTownProductionBonus() < param_town_max_bonus/5 ? string(STR_IND_SEC_PROD_TOWNT) : string(STR_IND_SEC_PROD_TOWN)) | GetTownProductionBonus() << 16 : string(STR_SKIP),260),
+
+    STORE_TEMP(GetSecondaryProductionPerc(),261),
+    // So initial base production (normally at the top of the window) is here because register 256 is wiped when accessing town storage. This is also why it's split into two different statements.
+    STORE_PERM(GetBaseProductionPerc(),16),
+    STORE_TEMP(param_sec_advanced == 1 ? (param_tips_enabled && production_level < 32 ? string(STR_IND_SEC_PROD_BASET) : string(STR_IND_SEC_PROD_BASE)) | GetBaseProductionPerc() << 16 : string(STR_SKIP),18),
+    STORE_TEMP(LOAD_TEMP(18),256)
+    ]) {
+    return string(STR_IND_SEC_PROD_TOTALT);
+}
+
 // Determines the initial production of the coal mine.
 random_switch(FEAT_INDUSTRIES, SELF, random_initial_production) {
     1: return 4;
@@ -1576,9 +1595,14 @@ switch(FEAT_INDUSTRIES, SELF, switch_production_change_steel_mill, STORE_TEMP(tr
     : CB_RESULT_IND_PROD_NO_CHANGE;
 }
 
+switch(FEAT_INDUSTRIES, SELF, switch_display_steel_mill, param_tips_enabled && steel_mill_stockpile_modifier() < 25) {
+    0: return switch_production_display_secondary_composite();
+    1: return switch_production_display_secondary_composite_tips();
+}
+
 switch(FEAT_INDUSTRIES, SELF, switch_display_helper_steel_mill, IsSecondaryPowered()) {
     0: return string(STR_IND_SEC_PROD_DISABLED);
-    1: return switch_production_display_secondary_composite();
+    1: return switch_display_steel_mill();
 }
 
 item(FEAT_INDUSTRIES, steel_mill, INDUSTRYTYPE_STEEL_MILL) {
@@ -1743,25 +1767,92 @@ switch(FEAT_INDUSTRIES, SELF, switch_production_display_temp_factory_composite, 
     // If enabled, display the power bonus and its accompanying text. If disabled, it shows a skip string which causes the string pointer to skip to the correct spot to read the next register (this goes for all optional mechanics)
     STORE_TEMP(GetStockpileModifier(),257),
     // If enabled, display the bank bonus and its accompanying text.
-    STORE_TEMP((hasbit(param_power_enabled,1) && hasbit(param_ind_detailed_enabled,0)) ? string(STR_IND_SEC_PROD_POWER) | GetPowerProductionBonus() << 16 : string(STR_SKIP),258),
+    STORE_TEMP((hasbit(param_power_enabled,1) && hasbit(param_ind_detailed_enabled,0)) ? (param_tips_enabled && GetPowerProductionBonus() < param_power_max_bonus/4 ? string(STR_IND_SEC_PROD_POWERT) : string(STR_IND_SEC_PROD_POWER)) | GetPowerProductionBonus() << 16 : string(STR_SKIP),258),
     // If enabled, display the town bonus and its accompanying text.
-    STORE_TEMP((hasbit(param_bank_bonus_enabled,1) && hasbit(param_ind_detailed_enabled,0)) ? string(STR_IND_SEC_PROD_BANK) | GetBankProductionBonus() << 16 : string(STR_SKIP),259),
+    STORE_TEMP((hasbit(param_bank_bonus_enabled,1) && hasbit(param_ind_detailed_enabled,0)) ? (param_tips_enabled && GetBankProductionBonus() < param_bank_max_bonus/4 ? string(STR_IND_SEC_PROD_BANKT) : string(STR_IND_SEC_PROD_BANK)) | GetBankProductionBonus() << 16 : string(STR_SKIP),259),
     // For compression's sake, register 260 both stores the primary production percentage and the necessary text for reserves, if necessary.
-    STORE_TEMP((hasbit(param_town_bonus_enabled,1) && hasbit(param_ind_detailed_enabled,0)) ? string(STR_IND_SEC_PROD_TOWN) | GetTownProductionBonus() << 16 : string(STR_SKIP),260),
+    STORE_TEMP((hasbit(param_town_bonus_enabled,1) && hasbit(param_ind_detailed_enabled,0)) ? (param_tips_enabled && GetTownProductionBonus() < param_town_max_bonus/5 ? string(STR_IND_SEC_PROD_TOWNT) : string(STR_IND_SEC_PROD_TOWN)) | GetTownProductionBonus() << 16 : string(STR_SKIP),260),
 
     // Don't bother implementing tips into secondaries. huge waste of time. took hours for it to just not work. don't. seriously.
     STORE_TEMP(GetSecondaryProductionPerc() | GetTempFactoryConversionEff() << 16,261),
     // So initial base production (normally at the top of the window) is here because register 256 is wiped when accessing town storage. This is also why it's split into two different statements.
     STORE_PERM(GetBaseProductionPerc(),16),
-    STORE_TEMP(param_sec_advanced == 1 ? string(STR_IND_SEC_PROD_BASE) | GetBaseProductionPerc() << 16 : string(STR_SKIP),18),
+    STORE_TEMP(param_sec_advanced == 1 ? (param_tips_enabled && production_level < 32 ? string(STR_IND_SEC_PROD_BASET) : string(STR_IND_SEC_PROD_BASE)) | GetBaseProductionPerc() << 16 : string(STR_SKIP),18),
     STORE_TEMP(LOAD_TEMP(18),256)                                                                                                                                               
     ]) {
     return string(STR_IND_SEC_PROD_FACT);
 }
 
+switch(FEAT_INDUSTRIES, SELF, switch_production_display_temp_factory_composite_tip1, [
+    // If enabled, display the power bonus and its accompanying text. If disabled, it shows a skip string which causes the string pointer to skip to the correct spot to read the next register (this goes for all optional mechanics)
+    STORE_TEMP(GetStockpileModifier(),257),
+    // If enabled, display the bank bonus and its accompanying text.
+    STORE_TEMP((hasbit(param_power_enabled,1) && hasbit(param_ind_detailed_enabled,0)) ? (param_tips_enabled && GetPowerProductionBonus() < param_power_max_bonus/4 ? string(STR_IND_SEC_PROD_POWERT) : string(STR_IND_SEC_PROD_POWER)) | GetPowerProductionBonus() << 16 : string(STR_SKIP),258),
+    // If enabled, display the town bonus and its accompanying text.
+    STORE_TEMP((hasbit(param_bank_bonus_enabled,1) && hasbit(param_ind_detailed_enabled,0)) ? (param_tips_enabled && GetBankProductionBonus() < param_bank_max_bonus/4 ? string(STR_IND_SEC_PROD_BANKT) : string(STR_IND_SEC_PROD_BANK)) | GetBankProductionBonus() << 16 : string(STR_SKIP),259),
+    // For compression's sake, register 260 both stores the primary production percentage and the necessary text for reserves, if necessary.
+    STORE_TEMP((hasbit(param_town_bonus_enabled,1) && hasbit(param_ind_detailed_enabled,0)) ? (param_tips_enabled && GetTownProductionBonus() < param_town_max_bonus/5 ? string(STR_IND_SEC_PROD_TOWNT) : string(STR_IND_SEC_PROD_TOWN)) | GetTownProductionBonus() << 16 : string(STR_SKIP),260),
+
+    // Don't bother implementing tips into secondaries. huge waste of time. took hours for it to just not work. don't. seriously.
+    STORE_TEMP(GetSecondaryProductionPerc() | GetTempFactoryConversionEff() << 16,261),
+    // So initial base production (normally at the top of the window) is here because register 256 is wiped when accessing town storage. This is also why it's split into two different statements.
+    STORE_PERM(GetBaseProductionPerc(),16),
+    STORE_TEMP(param_sec_advanced == 1 ? (param_tips_enabled && production_level < 32 ? string(STR_IND_SEC_PROD_BASET) : string(STR_IND_SEC_PROD_BASE)) | GetBaseProductionPerc() << 16 : string(STR_SKIP),18),
+    STORE_TEMP(LOAD_TEMP(18),256)                                                                                                                                               
+    ]) {
+    return string(STR_IND_SEC_PROD_FACTT1);
+}
+
+switch(FEAT_INDUSTRIES, SELF, switch_production_display_temp_factory_composite_tip2, [
+    // If enabled, display the power bonus and its accompanying text. If disabled, it shows a skip string which causes the string pointer to skip to the correct spot to read the next register (this goes for all optional mechanics)
+    STORE_TEMP(GetStockpileModifier(),257),
+    // If enabled, display the bank bonus and its accompanying text.
+    STORE_TEMP((hasbit(param_power_enabled,1) && hasbit(param_ind_detailed_enabled,0)) ? (param_tips_enabled && GetPowerProductionBonus() < param_power_max_bonus/4 ? string(STR_IND_SEC_PROD_POWERT) : string(STR_IND_SEC_PROD_POWER)) | GetPowerProductionBonus() << 16 : string(STR_SKIP),258),
+    // If enabled, display the town bonus and its accompanying text.
+    STORE_TEMP((hasbit(param_bank_bonus_enabled,1) && hasbit(param_ind_detailed_enabled,0)) ? (param_tips_enabled && GetBankProductionBonus() < param_bank_max_bonus/4 ? string(STR_IND_SEC_PROD_BANKT) : string(STR_IND_SEC_PROD_BANK)) | GetBankProductionBonus() << 16 : string(STR_SKIP),259),
+    // For compression's sake, register 260 both stores the primary production percentage and the necessary text for reserves, if necessary.
+    STORE_TEMP((hasbit(param_town_bonus_enabled,1) && hasbit(param_ind_detailed_enabled,0)) ? (param_tips_enabled && GetTownProductionBonus() < param_town_max_bonus/5 ? string(STR_IND_SEC_PROD_TOWNT) : string(STR_IND_SEC_PROD_TOWN)) | GetTownProductionBonus() << 16 : string(STR_SKIP),260),
+
+    // Don't bother implementing tips into secondaries. huge waste of time. took hours for it to just not work. don't. seriously.
+    STORE_TEMP(GetSecondaryProductionPerc() | GetTempFactoryConversionEff() << 16,261),
+    // So initial base production (normally at the top of the window) is here because register 256 is wiped when accessing town storage. This is also why it's split into two different statements.
+    STORE_PERM(GetBaseProductionPerc(),16),
+    STORE_TEMP(param_sec_advanced == 1 ? (param_tips_enabled && production_level < 32 ? string(STR_IND_SEC_PROD_BASET) : string(STR_IND_SEC_PROD_BASE)) | GetBaseProductionPerc() << 16 : string(STR_SKIP),18),
+    STORE_TEMP(LOAD_TEMP(18),256)                                                                                                                                               
+    ]) {
+    return string(STR_IND_SEC_PROD_FACTT2);
+}
+
+switch(FEAT_INDUSTRIES, SELF, switch_production_display_temp_factory_composite_tip3, [
+    // If enabled, display the power bonus and its accompanying text. If disabled, it shows a skip string which causes the string pointer to skip to the correct spot to read the next register (this goes for all optional mechanics)
+    STORE_TEMP(GetStockpileModifier(),257),
+    // If enabled, display the bank bonus and its accompanying text.
+    STORE_TEMP((hasbit(param_power_enabled,1) && hasbit(param_ind_detailed_enabled,0)) ? (param_tips_enabled && GetPowerProductionBonus() < param_power_max_bonus/4 ? string(STR_IND_SEC_PROD_POWERT) : string(STR_IND_SEC_PROD_POWER)) | GetPowerProductionBonus() << 16 : string(STR_SKIP),258),
+    // If enabled, display the town bonus and its accompanying text.
+    STORE_TEMP((hasbit(param_bank_bonus_enabled,1) && hasbit(param_ind_detailed_enabled,0)) ? (param_tips_enabled && GetBankProductionBonus() < param_bank_max_bonus/4 ? string(STR_IND_SEC_PROD_BANKT) : string(STR_IND_SEC_PROD_BANK)) | GetBankProductionBonus() << 16 : string(STR_SKIP),259),
+    // For compression's sake, register 260 both stores the primary production percentage and the necessary text for reserves, if necessary.
+    STORE_TEMP((hasbit(param_town_bonus_enabled,1) && hasbit(param_ind_detailed_enabled,0)) ? (param_tips_enabled && GetTownProductionBonus() < param_town_max_bonus/5 ? string(STR_IND_SEC_PROD_TOWNT) : string(STR_IND_SEC_PROD_TOWN)) | GetTownProductionBonus() << 16 : string(STR_SKIP),260),
+
+    // Don't bother implementing tips into secondaries. huge waste of time. took hours for it to just not work. don't. seriously.
+    STORE_TEMP(GetSecondaryProductionPerc() | GetTempFactoryConversionEff() << 16,261),
+    // So initial base production (normally at the top of the window) is here because register 256 is wiped when accessing town storage. This is also why it's split into two different statements.
+    STORE_PERM(GetBaseProductionPerc(),16),
+    STORE_TEMP(param_sec_advanced == 1 ? (param_tips_enabled && production_level < 32 ? string(STR_IND_SEC_PROD_BASET) : string(STR_IND_SEC_PROD_BASE)) | GetBaseProductionPerc() << 16 : string(STR_SKIP),18),
+    STORE_TEMP(LOAD_TEMP(18),256)                                                                                                                                               
+    ]) {
+    return string(STR_IND_SEC_PROD_FACTT3);
+}
+
+switch(FEAT_INDUSTRIES, SELF, switch_display_temp_factory, (param_tips_enabled && GetTempFactoryConversionEff() < 100+(param_lubricant_bonus/4)) | (param_tips_enabled && temp_factory_stockpile_modifier() < 10) << 1) {
+    0: return switch_production_display_temp_factory_composite();
+    1: return switch_production_display_temp_factory_composite_tip1();
+    2: return switch_production_display_temp_factory_composite_tip2();
+    3: return switch_production_display_temp_factory_composite_tip3();
+}
+
 switch(FEAT_INDUSTRIES, SELF, switch_display_helper_temp_factory, IsSecondaryPowered()) {
     0: return string(STR_IND_SEC_PROD_DISABLED);
-    1: return switch_production_display_temp_factory_composite();
+    1: return switch_display_temp_factory();
 }
 
 switch(FEAT_INDUSTRIES, SELF, switch_production_change_temp_factory, STORE_TEMP(transported_last_month_pct("GOOD"),0)) {
@@ -1843,11 +1934,6 @@ switch(FEAT_INDUSTRIES, SELF, switch_production_helper_oil_refinery, [
     oil_refinery_stockpile_modifier()
 ]) {switch_production_oil_refinery;}
 
-switch(FEAT_INDUSTRIES, SELF, switch_display_helper_oil_refinery, IsSecondaryPowered()) {
-    0: return string(STR_IND_SEC_PROD_DISABLED);
-    1: return switch_production_display_secondary_composite();
-}
-
 switch(FEAT_INDUSTRIES, SELF, switch_production_change_oil_refinery, STORE_TEMP(transported_last_month_pct("GOOD"),0)) {
     // Check for smooth growth and determine whether a growth event can even happen
     return (param_sec_unserviced_freeze == 3 && (oil_refinery_is_active() == 0)) ? CB_RESULT_IND_PROD_NO_CHANGE :
@@ -1862,6 +1948,16 @@ switch(FEAT_INDUSTRIES, SELF, switch_production_change_oil_refinery, STORE_TEMP(
 
 switch(FEAT_INDUSTRIES, SELF, switch_stop_accept_oil_refinery, [oil_refinery_stockpile_modifier(),getbits(extra_callback_info2, 0, 8)]) {
     3: return incoming_cargo_waiting("OIL_") <= oil_refinery_max_stockpile()*10;
+}
+
+switch(FEAT_INDUSTRIES, SELF, switch_display_oil_refinery, param_tips_enabled && oil_refinery_stockpile_modifier() < 25) {
+    0: return switch_production_display_secondary_composite();
+    1: return switch_production_display_secondary_composite_tips();
+}
+
+switch(FEAT_INDUSTRIES, SELF, switch_display_helper_oil_refinery, IsSecondaryPowered()) {
+    0: return string(STR_IND_SEC_PROD_DISABLED);
+    1: return switch_display_oil_refinery();
 }
 
 item(FEAT_INDUSTRIES, oil_refinery, INDUSTRYTYPE_OIL_REFINERY) {
@@ -1918,11 +2014,6 @@ switch(FEAT_INDUSTRIES, SELF, switch_production_helper_sawmill, [
     sawmill_stockpile_modifier()
 ]) {switch_production_sawmill;}
 
-switch(FEAT_INDUSTRIES, SELF, switch_display_helper_sawmill, IsSecondaryPowered()) {
-    0: return string(STR_IND_SEC_PROD_DISABLED);
-    1: return switch_production_display_secondary_composite();
-}
-
 switch(FEAT_INDUSTRIES, SELF, switch_production_change_sawmill, STORE_TEMP(transported_last_month_pct("LMBR"),0)) {
     // Check for smooth growth and determine whether a growth event can even happen
     return (param_sec_unserviced_freeze == 3 && (sawmill_is_active() == 0)) ? CB_RESULT_IND_PROD_NO_CHANGE :
@@ -1937,6 +2028,16 @@ switch(FEAT_INDUSTRIES, SELF, switch_production_change_sawmill, STORE_TEMP(trans
 
 switch(FEAT_INDUSTRIES, SELF, switch_stop_accept_sawmill, [sawmill_stockpile_modifier(),getbits(extra_callback_info2, 0, 8)]) {
     7: return incoming_cargo_waiting("WOOD") <= sawmill_max_stockpile()*10;
+}
+
+switch(FEAT_INDUSTRIES, SELF, switch_display_sawmill, param_tips_enabled && sawmill_stockpile_modifier() < 25) {
+    0: return switch_production_display_secondary_composite();
+    1: return switch_production_display_secondary_composite_tips();
+}
+
+switch(FEAT_INDUSTRIES, SELF, switch_display_helper_sawmill, IsSecondaryPowered()) {
+    0: return string(STR_IND_SEC_PROD_DISABLED);
+    1: return switch_display_sawmill();
 }
 
 item(FEAT_INDUSTRIES, sawmill, INDUSTRYTYPE_SAWMILL) {
