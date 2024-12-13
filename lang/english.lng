@@ -3,7 +3,7 @@
 
 #GRF name and description
 STR_GRF_NAME                  :{TITLE} {VERSION}
-STR_GRF_DESCRIPTION           :{GOLD}{TITLE}{}{BLACK}By {ORANGE}embrr{RED}Flare{}{}{BLACK}Adds various modular and highly customizable mechanics to the default industry set.{}Supports the {GREEN}temperate{BLACK}, {LTBLUE}sub-arctic{BLACK}, and {YELLOW}sub-tropical{BLACK} climate types.{}{GOLD}{TINYFONT}A spiritual expansion of BSPI
+STR_GRF_DESCRIPTION           :{GOLD}{TITLE}{}{BLACK}By {ORANGE}embrr{RED}Flare{}{}{BLACK}Adds various modular and highly customizable mechanics to the default industry set.{}Supports the {GREEN}temperate{BLACK} climate type.{}{}{GOLD}{TINYFONT}A spiritual expansion of BSPI
 
 #Param name and description
 
@@ -11,16 +11,16 @@ STR_GRF_DESCRIPTION           :{GOLD}{TITLE}{}{BLACK}By {ORANGE}embrr{RED}Flare{
 
 STR_PARAM_EXT_SEPERATE     :{ORANGE}--| ADDITIONAL MECHANICS |--
 
-STR_PARAM_PETROL_BOOST_NAME:{PUSH_COLOUR}{GREEN}Temperate{POP_COLOUR}/{PUSH_COLOUR}{BLUE}Sub-arctic{POP_COLOUR}: Petrol Efficiency Bonus (%)
+STR_PARAM_PETROL_BOOST_NAME:Petrol Efficiency Bonus (%)
 STR_PARAM_PETROL_BOOST_DESC:Determines the efficiency bonus that petrol gives to the power plant.{}"Efficiency" refers to conversion ratio, so a 50% boost changes the conversion ratio from 1 input to 1 power to 1 input to 1.5 power.
 
-STR_PARAM_PETROL_CONS_NAME :{PUSH_COLOUR}{GREEN}Temperate{POP_COLOUR}/{PUSH_COLOUR}{BLUE}Sub-arctic{POP_COLOUR}: Petrol Consumption Rate (%)
+STR_PARAM_PETROL_CONS_NAME :Petrol Consumption Rate (%)
 STR_PARAM_PETROL_CONS_DESC :Determines the consumption rate of petrol at the power plant, relative to coal consumption.
 
-STR_PARAM_LUBR_BOOST_NAME :{PUSH_COLOUR}{GREEN}Temperate{POP_COLOUR}/{PUSH_COLOUR}{YELLOW}Sub-tropic{POP_COLOUR}: Lubricant Efficiency Bonus (%)
+STR_PARAM_LUBR_BOOST_NAME :Lubricant Efficiency Bonus (%)
 STR_PARAM_LUBR_BOOST_DESC :Determines the efficiency bonus that lubricants give to the factory.{}"Efficiency" refers to conversion ratio, so a 50% boost changes the conversion ratio from 1 input to 1 output to 1 input to 1.5 output.
 
-STR_PARAM_LUBR_CONS_NAME  :{PUSH_COLOUR}{GREEN}Temperate{POP_COLOUR}/{PUSH_COLOUR}{YELLOW}Sub-tropic{POP_COLOUR}: Lubricant Consumption Rate (%)
+STR_PARAM_LUBR_CONS_NAME  :Lubricant Consumption Rate (%)
 STR_PARAM_LUBR_CONS_DESC  :Determines the consumption rate of lubricants at the factory, relative to cargo consumption. This consumption rate is not affected by bonuses like the town or power bonus, so it will never be increased by those bonuses.
 
 #Bonus Mechanics
@@ -32,7 +32,7 @@ STR_PARAM_BONUS_PRIM      :Primary industries only
 STR_PARAM_BONUS_SEC       :Secondary industries only
 STR_PARAM_BONUS_BOTH      :Primary and secondary industries
 
-STR_PARAM_POWER_NAME      :{PUSH_COLOUR}{GREEN}Temperate{POP_COLOUR}/{PUSH_COLOUR}{BLUE}sub-arctic{POP_COLOUR}: Enable Power Plant Bonus
+STR_PARAM_POWER_NAME      :Enable Power Plant Bonus
 STR_PARAM_POWER_DESC      :When enabled, power plants boost the production of industries in the same town, as long as cargo is delivered each month.
 
 STR_PARAM_POWERADV_NAME   :Advanced Power Mechanics
@@ -85,8 +85,8 @@ STR_PARAM_TOWNREQ_DESC    :The minimum population needed for a town to reach its
 STR_PARAM_TOWNEFF_NAME    :Maximum Town Bonus (%)
 STR_PARAM_TOWNEFF_DESC    :The maximum bonus a town can provide to industries in the same town.
 
-STR_PARAM_BANKMULT_NAME   :{PUSH_COLOUR}{GREEN}Temperate{POP_COLOUR}: Town Bonus Multiplier For Banks (%)
-STR_PARAM_BANKMULT_DESC   :The effectiveness of the town production bonus on {GREEN}temperate{BLACK} banks. This makes growing the town much more relevant to getting the maximum bank bonus, as well as making valuables more relevant.
+STR_PARAM_BANKMULT_NAME   :Town Bonus Multiplier For Banks (%)
+STR_PARAM_BANKMULT_DESC   :The effectiveness of the town production bonus on banks. This makes growing the town much more relevant to getting the maximum bank bonus, as well as making valuables more relevant.
 
 
 STR_PARAM_BONUS_MULT_NAME :Multiplicative Bonuses
@@ -166,7 +166,7 @@ STR_PARAM_GROW_SEC_DESC   :Determines the difficulty of increasing base conversi
 STR_PARAM_SECGROWPROB_NAME:{PUSH_COLOUR}{RED}Advanced Secondaries Only{POP_COLOUR}: Secondary Production Growth Chance
 STR_PARAM_SECGROWPROB_DESC:This number determines the probability of a production change event occuring for secondary industries each month. Each step of this value changes the production change probability by 1/128 or ~0.7%, so a value of 6 is around 4.7% per month, roughly equal to the vanilla rate of 4.5% per month.
 
-STR_PARAM_POWERREQ_NAME   :{PUSH_COLOUR}{GREEN}Temperate{POP_COLOUR}/{PUSH_COLOUR}{BLUE}Sub-arctic{POP_COLOUR}: Secondaries Require Power
+STR_PARAM_POWERREQ_NAME   :Secondaries Require Power
 STR_PARAM_POWERREQ_DESC   :If enabled, secondaries require power from a power plant in order to operate.{}A town is considered to have power as long as the power plant either has more than a quarter of its stockpile of either cargo or power units.
 
 STR_PARAM_SECINDCONS_NAME :Secondary Conversion Rate (%)

@@ -369,7 +369,7 @@ grf {
             type: int;
             min_value: 1;
             max_value: 128;
-            def_value: 6;
+            def_value: 16;
         }
     }
     param {
@@ -977,13 +977,13 @@ item(FEAT_INDUSTRIES, iron_mine, INDUSTRYTYPE_IRON_ORE_MINE) {
 /* FOREST */
 
 /* If iron mine isn't active, it won't consume funding or power. */
-switch(FEAT_INDUSTRIES, SELF, forest_is_active, (last_month_transported("IORE") > 0)) {return;}
+switch(FEAT_INDUSTRIES, SELF, forest_is_active, (last_month_transported("WOOD") > 0)) {return;}
 
 // Determines the initial production of the iron mine, adding reserves if eligible
 switch(FEAT_INDUSTRIES, SELF, rand_init_forest, param_organic_reserves == 1 ? STORE_PERM(STORE_PERM((128+getbits(random_bits, 0, 7))*2048*param_reserve_size/100,1),2) : 0x00) {random_initial_production;}
 
 /* Production change logic. */
-switch(FEAT_INDUSTRIES, SELF, switch_production_change_forest, [STORE_TEMP(transported_last_month_pct("IORE"),0),STORE_TEMP(forest_is_active(),1)]) {
+switch(FEAT_INDUSTRIES, SELF, switch_production_change_forest, [STORE_TEMP(transported_last_month_pct("WOOD"),0),STORE_TEMP(forest_is_active(),1)]) {
     // Check for smooth growth and determine whether a growth event can even happen
     return (param_prim_unserviced_freeze == 3 && (forest_is_active() == 0)) ? CB_RESULT_IND_PROD_NO_CHANGE :
     (param_prim_change_chance >= getbits(extra_callback_info2, 0, 7)*(((param_prim_unserviced_freeze >= 1) && (forest_is_active() == 0))+(1+(hasbit(param_prim_unserviced_freeze,1)*(forest_is_active() == 0))))) ? ((param_smooth_prim_growth == 1)
@@ -1034,13 +1034,13 @@ item(FEAT_INDUSTRIES, forest, INDUSTRYTYPE_FOREST) {
 /* OIL WELLS */
 
 /* If iron mine isn't active, it won't consume funding or power. */
-switch(FEAT_INDUSTRIES, SELF, oil_wells_is_active, (last_month_transported("IORE") > 0)) {return;}
+switch(FEAT_INDUSTRIES, SELF, oil_wells_is_active, (last_month_transported("OIL_") > 0)) {return;}
 
 // Determines the initial production of the iron mine, adding reserves if eligible
 switch(FEAT_INDUSTRIES, SELF, rand_init_oil_wells, param_extract_reserves == 1 ? STORE_PERM(STORE_PERM((128+getbits(random_bits, 0, 7))*2048*param_reserve_size/100,1),2) : 0x00) {random_initial_production;}
 
 /* Production change logic. */
-switch(FEAT_INDUSTRIES, SELF, switch_production_change_oil_wells, [STORE_TEMP(transported_last_month_pct("IORE"),0),STORE_TEMP(oil_wells_is_active(),1)]) {
+switch(FEAT_INDUSTRIES, SELF, switch_production_change_oil_wells, [STORE_TEMP(transported_last_month_pct("OIL_"),0),STORE_TEMP(oil_wells_is_active(),1)]) {
     // Check for smooth growth and determine whether a growth event can even happen
     return (param_prim_unserviced_freeze == 3 && (oil_wells_is_active() == 0)) ? CB_RESULT_IND_PROD_NO_CHANGE :
     (param_prim_change_chance >= getbits(extra_callback_info2, 0, 7)*(((param_prim_unserviced_freeze >= 1) && (oil_wells_is_active() == 0))+(1+(hasbit(param_prim_unserviced_freeze,1)*(oil_wells_is_active() == 0))))) ? ((param_smooth_prim_growth == 1)
@@ -1091,13 +1091,13 @@ item(FEAT_INDUSTRIES, oil_wells, INDUSTRYTYPE_OIL_WELLS) {
 /* FARM */
 
 /* If iron mine isn't active, it won't consume funding or power. */
-switch(FEAT_INDUSTRIES, SELF, farm_is_active, (last_month_transported("IORE") > 0)) {return;}
+switch(FEAT_INDUSTRIES, SELF, farm_is_active, (last_month_transported("LVST") > 0)) {return;}
 
 // Determines the initial production of the iron mine, adding reserves if eligible
 switch(FEAT_INDUSTRIES, SELF, rand_init_farm, param_organic_reserves == 1 ? STORE_PERM(STORE_PERM((128+getbits(random_bits, 0, 7))*2048*param_reserve_size/100,1),2) : 0x00) {random_initial_production;}
 
 /* Production change logic. */
-switch(FEAT_INDUSTRIES, SELF, switch_production_change_farm, [STORE_TEMP(transported_last_month_pct("IORE"),0),STORE_TEMP(farm_is_active(),1)]) {
+switch(FEAT_INDUSTRIES, SELF, switch_production_change_farm, [STORE_TEMP(transported_last_month_pct("LVST"),0),STORE_TEMP(farm_is_active(),1)]) {
     // Check for smooth growth and determine whether a growth event can even happen
     return (param_prim_unserviced_freeze == 3 && (farm_is_active() == 0)) ? CB_RESULT_IND_PROD_NO_CHANGE :
     (param_prim_change_chance >= getbits(extra_callback_info2, 0, 7)*(((param_prim_unserviced_freeze >= 1) && (farm_is_active() == 0))+(1+(hasbit(param_prim_unserviced_freeze,1)*(farm_is_active() == 0))))) ? ((param_smooth_prim_growth == 1)
@@ -1150,13 +1150,13 @@ item(FEAT_INDUSTRIES, farm, INDUSTRYTYPE_TEMPERATE_ARCTIC_FARM) {
 // Pax/mail production is clamped between 8 units per tick (64/72 per month) and 32 units per tick (256/288 per month). Based partly on base production, but not exact.
 
 /* If iron mine isn't active, it won't consume funding or power. */
-switch(FEAT_INDUSTRIES, SELF, oil_rig_is_active, (last_month_transported("IORE") > 0)) {return;}
+switch(FEAT_INDUSTRIES, SELF, oil_rig_is_active, (last_month_transported("OIL_") > 0)) {return;}
 
 // Determines the initial production of the iron mine, adding reserves if eligible
 switch(FEAT_INDUSTRIES, SELF, rand_init_oil_rig, param_extract_reserves == 1 ? STORE_PERM(STORE_PERM((128+getbits(random_bits, 0, 7))*2048*param_reserve_size/100,1),2) : 0x00) {random_initial_production;}
 
 /* Production change logic. */
-switch(FEAT_INDUSTRIES, SELF, switch_production_change_oil_rig, [STORE_TEMP(transported_last_month_pct("IORE"),0),STORE_TEMP(oil_rig_is_active(),1)]) {
+switch(FEAT_INDUSTRIES, SELF, switch_production_change_oil_rig, [STORE_TEMP(transported_last_month_pct("OIL_"),0),STORE_TEMP(oil_rig_is_active(),1)]) {
     // Check for smooth growth and determine whether a growth event can even happen
     return (param_prim_unserviced_freeze == 3 && (oil_rig_is_active() == 0)) ? CB_RESULT_IND_PROD_NO_CHANGE :
     (param_prim_change_chance >= getbits(extra_callback_info2, 0, 7)*(((param_prim_unserviced_freeze >= 1) && (oil_rig_is_active() == 0))+(1+(hasbit(param_prim_unserviced_freeze,1)*(oil_rig_is_active() == 0))))) ? ((param_smooth_prim_growth == 1)
@@ -1639,7 +1639,7 @@ item(FEAT_INDUSTRIES, steel_mill, INDUSTRYTYPE_STEEL_MILL) {
         random_prod_change: CB_RESULT_IND_PROD_NO_CHANGE;
         monthly_prod_change: switch_production_change_steel_mill;
 	stop_accept_cargo: switch_stop_accept_steel_mill;
-        build_prod_change: 32;
+        build_prod_change: random_initial_production;
     }
 }
 
@@ -1914,7 +1914,7 @@ item(FEAT_INDUSTRIES, temperate_factory, INDUSTRYTYPE_TEMPERATE_FACTORY) {
         monthly_prod_change: switch_production_change_temp_factory;
 	stop_accept_cargo: switch_stop_accept_temp_factory;
 	cargo_subtype_display: CB_RESULT_NO_TEXT;
-        build_prod_change: 32;
+        build_prod_change: random_initial_production;
     }
 }
 
@@ -1995,7 +1995,7 @@ item(FEAT_INDUSTRIES, oil_refinery, INDUSTRYTYPE_OIL_REFINERY) {
         random_prod_change: CB_RESULT_IND_PROD_NO_CHANGE;
         monthly_prod_change: switch_production_change_oil_refinery;
 	stop_accept_cargo: switch_stop_accept_oil_refinery;
-        build_prod_change: 32;
+        build_prod_change: random_initial_production;
     }
 }
 
@@ -2073,6 +2073,6 @@ item(FEAT_INDUSTRIES, sawmill, INDUSTRYTYPE_SAWMILL) {
         random_prod_change: CB_RESULT_IND_PROD_NO_CHANGE;
         monthly_prod_change: switch_production_change_sawmill;
 	stop_accept_cargo: switch_stop_accept_sawmill;
-        build_prod_change: 32;
+        build_prod_change: random_initial_production;
     }
 }
