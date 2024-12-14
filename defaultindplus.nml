@@ -34,7 +34,7 @@ grf {
 	    type: int;
 	    min_value: 1;
 	    max_value: 500;
-	    def_value: 35;
+	    def_value: 20;
 	}
     }
     param {
@@ -56,7 +56,7 @@ grf {
 	    type: int;
 	    min_value: 1;
 	    max_value: 500;
-	    def_value: 30;
+	    def_value: 15;
 	}
     }
 
@@ -114,7 +114,7 @@ grf {
             type: int;
             min_value: 10;
             max_value: 2500;
-            def_value: 100;
+            def_value: 150;
         }
     }
     param {
@@ -191,7 +191,7 @@ grf {
             name: string(STR_PARAM_FUNDINGCONS_NAME);
             desc: string(STR_PARAM_FUNDINGCONS_DESC);
             type: int;
-            def_value: 100;
+            def_value: 70;
             min_value: 10;
             max_value: 10000;
         }
@@ -255,7 +255,7 @@ grf {
             type: int;
             min_value: 1200;
             max_value: 32000;
-            def_value: 10000;
+            def_value: 15000;
         }
     }
     param {
@@ -352,7 +352,7 @@ grf {
 	    type: int;
 	    min_value: 0;
 	    max_value: 3;
-	    def_value: 3;
+	    def_value: 2;
 	    names: {
 		0: string(STR_PARAM_PRIM_FREEZE_DIS);
 		1: string(STR_PARAM_PRIM_FREEZE_VAN);
@@ -369,7 +369,7 @@ grf {
             type: int;
             min_value: 1;
             max_value: 128;
-            def_value: 16;
+            def_value: 14;
         }
     }
     param {
@@ -472,7 +472,7 @@ grf {
 	    type: int;
 	    min_value: 0;
 	    max_value: 3;
-	    def_value: 3;
+	    def_value: 2;
 	    names:
 	    {
 		0: string(STR_PARAM_SEC_FREEZE_DIS);
@@ -490,7 +490,7 @@ grf {
 		type: int;
 		min_value: 0;
 		max_value: 128;
-		def_value: 6;
+		def_value: 10;
 	}
 }
     param {
