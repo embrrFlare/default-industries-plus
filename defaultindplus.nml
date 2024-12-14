@@ -1091,13 +1091,13 @@ item(FEAT_INDUSTRIES, oil_wells, INDUSTRYTYPE_OIL_WELLS) {
 /* FARM */
 
 /* If iron mine isn't active, it won't consume funding or power. */
-switch(FEAT_INDUSTRIES, SELF, farm_is_active, (last_month_transported("LVST") > 0)) {return;}
+switch(FEAT_INDUSTRIES, SELF, farm_is_active, (last_month_transported("LVST") + last_month_transported("GRAI") > 0)) {return;}
 
 // Determines the initial production of the iron mine, adding reserves if eligible
 switch(FEAT_INDUSTRIES, SELF, rand_init_farm, param_organic_reserves == 1 ? STORE_PERM(STORE_PERM((128+getbits(random_bits, 0, 7))*2048*param_reserve_size/100,1),2) : 0x00) {random_initial_production;}
 
 /* Production change logic. */
-switch(FEAT_INDUSTRIES, SELF, switch_production_change_farm, [STORE_TEMP(transported_last_month_pct("LVST"),0),STORE_TEMP(farm_is_active(),1)]) {
+switch(FEAT_INDUSTRIES, SELF, switch_production_change_farm, [STORE_TEMP((transported_last_month_pct("LVST")/2)+(transported_last_month_pct("GRAI")/2),0),STORE_TEMP(farm_is_active(),1)]) {
     // Check for smooth growth and determine whether a growth event can even happen
     return (param_prim_unserviced_freeze == 3 && (farm_is_active() == 0)) ? CB_RESULT_IND_PROD_NO_CHANGE :
     (param_prim_change_chance >= getbits(extra_callback_info2, 0, 7)*(((param_prim_unserviced_freeze >= 1) && (farm_is_active() == 0))+(1+(hasbit(param_prim_unserviced_freeze,1)*(farm_is_active() == 0))))) ? ((param_smooth_prim_growth == 1)
@@ -1395,7 +1395,7 @@ switch(FEAT_INDUSTRIES, SELF, GetPowerPlantCoalStockpile, (param_power_cargo_req
 switch(FEAT_INDUSTRIES, SELF, GetPowerPlantPetrolStockpile, (param_power_cargo_req*param_petrol_cons*param_power_stockpile_mult)/10000) {return;}
 
 // Petrol consumption
-switch(FEAT_INDUSTRIES, SELF, GetPowerPlantPetrolCons, ((GetPowerPlantConsumption()*param_petrol_cons)/100)+(incoming_cargo_waiting("PETR") > 0)) {return;}
+switch(FEAT_INDUSTRIES, SELF, GetPowerPlantPetrolCons, ((GetPowerPlantConsumption()*param_petrol_cons)/100)) {return;}
 
 // Conversion Efficiency
 switch(FEAT_INDUSTRIES, SELF, GetPowerPlantConversionEff, 100+min((((incoming_cargo_waiting("PETR")*100)/GetPowerPlantPetrolStockpile())*param_petrol_bonus)/100,param_petrol_bonus)) {return;}
@@ -1739,7 +1739,7 @@ switch(FEAT_INDUSTRIES, SELF, temp_factory_is_active, (last_month_transported("G
 switch(FEAT_INDUSTRIES, SELF, GetTempFactoryLubricantStockpile, (temp_factory_max_stockpile()*param_lubricant_cons)/100) {return;}
 
 // Petrol consumption
-switch(FEAT_INDUSTRIES, SELF, GetTempFactoryLubricantCons, (((GetBaseConversion()*temp_factory_stockpile_modifier())/100*param_lubricant_cons)/100)+(incoming_cargo_waiting("LUBR") > 0)) {return;}
+switch(FEAT_INDUSTRIES, SELF, GetTempFactoryLubricantCons, ((((GetBaseConversion()*temp_factory_stockpile_modifier())/100*param_lubricant_cons)/100))) {return;}
 
 // Conversion Efficiency
 switch(FEAT_INDUSTRIES, SELF, GetTempFactoryConversionEff, 100+min((((incoming_cargo_waiting("LUBR")*100)/GetTempFactoryLubricantStockpile())*param_lubricant_bonus)/100,param_lubricant_bonus)) {return;}
@@ -1775,7 +1775,7 @@ switch(FEAT_INDUSTRIES, SELF, switch_production_helper_temp_factory, [
     STORE_PERM(temp_factory_stockpile_modifier_lumber(),0),
     STORE_TEMP((min(GetTotalSecondaryProduction(),incoming_cargo_waiting("LMBR"))+(incoming_cargo_waiting("LMBR")>0))*IsSecondaryPowered(),3),
     // LUBRICANTS
-    STORE_TEMP((min(GetTempFactoryLubricantCons(),incoming_cargo_waiting("LUBR"))+(incoming_cargo_waiting("LUBR")>1))*IsSecondaryPowered(),4),
+    STORE_TEMP((min(GetTempFactoryLubricantCons(),incoming_cargo_waiting("LUBR")))*IsSecondaryPowered(),4),
     temp_factory_stockpile_modifier()
 ]) {switch_production_temp_factory;}
 
