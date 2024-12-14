@@ -1932,7 +1932,7 @@ switch(FEAT_INDUSTRIES, SELF, oil_refinery_max_stockpile, min((GetMaxSecondaryPr
 
 switch(FEAT_INDUSTRIES, SELF, oil_refinery_stockpile_modifier, STORE_PERM(min((incoming_cargo_waiting("OIL_")*100)/oil_refinery_max_stockpile(),100),0)) {return;}
 
-switch(FEAT_INDUSTRIES, SELF, oil_refinery_is_active, last_month_transported("GOOD") > 0) {return;}
+switch(FEAT_INDUSTRIES, SELF, oil_refinery_is_active, last_month_transported("GOOD")+last_month_transported("LUBR")+last_month_transported("PETR") > 0) {return;}
 
 // Because the factory is cargo agnostic, each input cargo may be consumed at a different rate, according to its stockpile modifier.
 switch(FEAT_INDUSTRIES, PARENT, switch_production_oil_refinery,
@@ -1950,7 +1950,7 @@ switch(FEAT_INDUSTRIES, SELF, switch_production_helper_oil_refinery, [
     oil_refinery_stockpile_modifier()
 ]) {switch_production_oil_refinery;}
 
-switch(FEAT_INDUSTRIES, SELF, switch_production_change_oil_refinery, STORE_TEMP(transported_last_month_pct("GOOD"),0)) {
+switch(FEAT_INDUSTRIES, SELF, switch_production_change_oil_refinery, STORE_TEMP(((transported_last_month_pct("GOOD")/2)+(transported_last_month_pct("PETR")/4)+(transported_last_month_pct("LUBR")/4)),0)) {
     // Check for smooth growth and determine whether a growth event can even happen
     return (param_sec_unserviced_freeze == 3 && (oil_refinery_is_active() == 0)) ? CB_RESULT_IND_PROD_NO_CHANGE :
     (param_sec_grow_prob >= getbits(extra_callback_info2, 0, 7)*(((param_sec_unserviced_freeze >= 1) && (oil_refinery_is_active() == 0))+(1+(hasbit(param_sec_unserviced_freeze,1)*(oil_refinery_is_active() == 0))))) ? ((param_sec_advanced == 1)
