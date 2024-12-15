@@ -1739,7 +1739,7 @@ switch(FEAT_INDUSTRIES, SELF, temp_factory_is_active, (last_month_transported("G
 switch(FEAT_INDUSTRIES, SELF, GetTempFactoryLubricantStockpile, (temp_factory_max_stockpile()*param_lubricant_cons)/100) {return;}
 
 // Petrol consumption
-switch(FEAT_INDUSTRIES, SELF, GetTempFactoryLubricantCons, (max((((GetBaseConversion()*temp_factory_stockpile_modifier())/100*param_lubricant_cons)/100),1)*(temp_factory_stockpile_modifier() > 0))) {return;}
+switch(FEAT_INDUSTRIES, SELF, GetTempFactoryLubricantCons, ((((GetBaseConversion()*temp_factory_stockpile_modifier())/100*param_lubricant_cons)/100)+(incoming_cargo_waiting("LUBR") > 0)*(temp_factory_stockpile_modifier() > 0))) {return;}
 
 // Conversion Efficiency
 switch(FEAT_INDUSTRIES, SELF, GetTempFactoryConversionEff, 100+min((((incoming_cargo_waiting("LUBR")*100)/GetTempFactoryLubricantStockpile())*param_lubricant_bonus)/100,param_lubricant_bonus)) {return;}
