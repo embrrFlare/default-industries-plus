@@ -16,26 +16,26 @@ grf {
     }
 
     param {
-	// TEMPERATE / SUB-ARCTIC: Petroleum efficiency bonus
-	param_petrol_bonus {
-	    name: string(STR_PARAM_PETROL_BOOST_NAME);
-  	    desc: string(STR_PARAM_PETROL_BOOST_DESC);
-	    type: int;
-	    min_value: 0;
-	    max_value: 1000;
-	    def_value: 50;
-	}
+    // TEMPERATE / SUB-ARCTIC: Petroleum efficiency bonus
+    param_petrol_bonus {
+    name: string(STR_PARAM_PETROL_BOOST_NAME);
+    desc: string(STR_PARAM_PETROL_BOOST_DESC);
+    type: int;
+    min_value: 0;
+    max_value: 1000;
+    def_value: 50;
+    }
     }
     param {
-	// TEMPERATE / SUB-ARCTIC: Petrol consumption rate
-	param_petrol_cons {
-	    name: string(STR_PARAM_PETROL_CONS_NAME);
-	    desc: string(STR_PARAM_PETROL_CONS_DESC);
-	    type: int;
-	    min_value: 1;
-	    max_value: 500;
-	    def_value: 20;
-	}
+    // TEMPERATE / SUB-ARCTIC: Petrol consumption rate
+    param_petrol_cons {
+        name: string(STR_PARAM_PETROL_CONS_NAME);
+        desc: string(STR_PARAM_PETROL_CONS_DESC);
+        type: int;
+        min_value: 1;
+        max_value: 500;
+        def_value: 20;
+    }
     }
     param {
         // TEMPERATE / SUB-TROPIC: Lubricant efficiency bonus
@@ -49,15 +49,15 @@ grf {
         }
     }
     param {
-	// TEMPERATE / SUB_TROPIC: Lubricant consumption rate
-	param_lubricant_cons {
-	    name: string(STR_PARAM_LUBR_CONS_NAME);
-	    desc: string(STR_PARAM_LUBR_CONS_DESC);
-	    type: int;
-	    min_value: 1;
-	    max_value: 500;
-	    def_value: 15;
-	}
+    // TEMPERATE / SUB_TROPIC: Lubricant consumption rate
+    param_lubricant_cons {
+        name: string(STR_PARAM_LUBR_CONS_NAME);
+        desc: string(STR_PARAM_LUBR_CONS_DESC);
+        type: int;
+        min_value: 1;
+        max_value: 500;
+        def_value: 15;
+    }
     }
 
     param {
@@ -149,8 +149,8 @@ grf {
             max_value: 1000;
             def_value: 100;
         }
-	}
-	param {
+    }
+    param {
         // Banks give a production bonus to industries.
         param_bank_bonus_enabled {
             name: string(STR_PARAM_BANK_NAME);
@@ -308,15 +308,15 @@ grf {
             name: string(STR_PARAM_PRIM_CLOSE_NAME);
             desc: string(STR_PARAM_PRIM_CLOSE_DESC);
             type: int;
-	    min_value: 0;
-	    max_value: 3;
+        min_value: 0;
+        max_value: 3;
             def_value: 3;
-	    names: {
-		0: string(STR_PARAM_PRIM_CLOSE_ALL);
-		1: string(STR_PARAM_PRIM_CLOSE_SER);
-		2: string(STR_PARAM_PRIM_CLOSE_UNSER);
-		3: string(STR_PARAM_PRIM_CLOSE_NONE);
-	    };
+        names: {
+        0: string(STR_PARAM_PRIM_CLOSE_ALL);
+        1: string(STR_PARAM_PRIM_CLOSE_SER);
+        2: string(STR_PARAM_PRIM_CLOSE_UNSER);
+        3: string(STR_PARAM_PRIM_CLOSE_NONE);
+        };
         }
     }
     param {
@@ -345,21 +345,21 @@ grf {
         }
     }
     param {
-	// Unserviced industry freezing
-	param_prim_unserviced_freeze {
-	    name: string(STR_PARAM_PRIM_FREEZE_NAME);
-	    desc: string(STR_PARAM_PRIM_FREEZE_DESC);
-	    type: int;
-	    min_value: 0;
-	    max_value: 3;
-	    def_value: 2;
-	    names: {
-		0: string(STR_PARAM_PRIM_FREEZE_DIS);
-		1: string(STR_PARAM_PRIM_FREEZE_VAN);
-		2: string(STR_PARAM_PRIM_FREEZE_LOW);
-		3: string(STR_PARAM_PRIM_FREEZE_NONE);
-	    };
-	}
+    // Unserviced industry freezing
+    param_prim_unserviced_freeze {
+        name: string(STR_PARAM_PRIM_FREEZE_NAME);
+        desc: string(STR_PARAM_PRIM_FREEZE_DESC);
+        type: int;
+        min_value: 0;
+        max_value: 3;
+        def_value: 2;
+        names: {
+        0: string(STR_PARAM_PRIM_FREEZE_DIS);
+        1: string(STR_PARAM_PRIM_FREEZE_VAN);
+        2: string(STR_PARAM_PRIM_FREEZE_LOW);
+        3: string(STR_PARAM_PRIM_FREEZE_NONE);
+        };
+    }
     }
     param {
         // Probability that primaries will increase
@@ -402,15 +402,15 @@ grf {
         }
     }
     param {
-	// Primary production rate
-	param_prim_prod_rate {
-	    name: string(STR_PARAM_TOTAL_PROD_NAME);
-	    desc: string(STR_PARAM_TOTAL_PROD_DESC);
-	    type: int;
-	    min_value: 10;
-	    max_value: 10000;
-	    def_value: 100;
-	}
+    // Primary production rate
+    param_prim_prod_rate {
+        name: string(STR_PARAM_TOTAL_PROD_NAME);
+        desc: string(STR_PARAM_TOTAL_PROD_DESC);
+        type: int;
+        min_value: 10;
+        max_value: 10000;
+        def_value: 100;
+    }
     }
 
     param {
@@ -424,30 +424,30 @@ grf {
         }
     }
     param {
-	param_sec_closures {
-	    name: string(STR_PARAM_SEC_CLOSE_NAME);
-	    desc: string(STR_PARAM_SEC_CLOSE_DESC);
-	    type: int;
-	    min_value: 0;
-	    max_value: 3;
-	    def_value: 2;
-	    names: {
-		0: string(STR_PARAM_SEC_CLOSE_ALL);
-		1: string(STR_PARAM_SEC_CLOSE_SER);
-		2: string(STR_PARAM_SEC_CLOSE_UNSER);
-		3: string(STR_PARAM_SEC_CLOSE_NONE);
-	    };
-	}
+    param_sec_closures {
+        name: string(STR_PARAM_SEC_CLOSE_NAME);
+        desc: string(STR_PARAM_SEC_CLOSE_DESC);
+        type: int;
+        min_value: 0;
+        max_value: 3;
+        def_value: 2;
+        names: {
+        0: string(STR_PARAM_SEC_CLOSE_ALL);
+        1: string(STR_PARAM_SEC_CLOSE_SER);
+        2: string(STR_PARAM_SEC_CLOSE_UNSER);
+        3: string(STR_PARAM_SEC_CLOSE_NONE);
+        };
+    }
     }
     param {
-	// Advanced secondary mechanics?
-	param_sec_advanced {
-	    name: string(STR_PARAM_ADV_SEC_NAME);
-	    desc: string(STR_PARAM_ADV_SEC_DESC);
-	    type: bool;
-	    def_value: 1;
-	}
-	}
+    // Advanced secondary mechanics?
+    param_sec_advanced {
+        name: string(STR_PARAM_ADV_SEC_NAME);
+        desc: string(STR_PARAM_ADV_SEC_DESC);
+        type: bool;
+        def_value: 1;
+    }
+    }
     param {
         // Secondary growth difficulty
         param_sec_growth_diff {
@@ -457,41 +457,41 @@ grf {
             min_value: 0;
             max_value: 2;
             def_value: 1;
-	    names:
-	    {
-	    	0: string(STR_PARAM_DIFF_EASY);
-		1: string(STR_PARAM_DIFF_NORM);
-		2: string(STR_PARAM_DIFF_HARD);
-	    };
+        names:
+        {
+            0: string(STR_PARAM_DIFF_EASY);
+        1: string(STR_PARAM_DIFF_NORM);
+        2: string(STR_PARAM_DIFF_HARD);
+        };
         }
     }
     param {
-	param_sec_unserviced_freeze {
-	    name: string(STR_PARAM_FREEZE_SEC_NAME);
-	    desc: string(STR_PARAM_FREEZE_SEC_DESC);
-	    type: int;
-	    min_value: 0;
-	    max_value: 3;
-	    def_value: 2;
-	    names:
-	    {
-		0: string(STR_PARAM_SEC_FREEZE_DIS);
-		1: string(STR_PARAM_SEC_FREEZE_VAN);
-		2: string(STR_PARAM_SEC_FREEZE_LOW);
-		3: string(STR_PARAM_SEC_FREEZE_NONE);
-	    };
-	}
+    param_sec_unserviced_freeze {
+        name: string(STR_PARAM_FREEZE_SEC_NAME);
+        desc: string(STR_PARAM_FREEZE_SEC_DESC);
+        type: int;
+        min_value: 0;
+        max_value: 3;
+        def_value: 2;
+        names:
+        {
+        0: string(STR_PARAM_SEC_FREEZE_DIS);
+        1: string(STR_PARAM_SEC_FREEZE_VAN);
+        2: string(STR_PARAM_SEC_FREEZE_LOW);
+        3: string(STR_PARAM_SEC_FREEZE_NONE);
+        };
+    }
     }
     param {
-    	// Secondary growth probability
-	param_sec_grow_prob {
-		name: string(STR_PARAM_SECGROWPROB_NAME);
-		desc: string(STR_PARAM_SECGROWPROB_DESC);
-		type: int;
-		min_value: 0;
-		max_value: 128;
-		def_value: 10;
-	}
+        // Secondary growth probability
+    param_sec_grow_prob {
+        name: string(STR_PARAM_SECGROWPROB_NAME);
+        desc: string(STR_PARAM_SECGROWPROB_DESC);
+        type: int;
+        min_value: 0;
+        max_value: 128;
+        def_value: 10;
+    }
 }
     param {
         // Secondaries need power?
@@ -502,7 +502,7 @@ grf {
             def_value: 0;
         }
     }
-	param {
+    param {
         // Maximum secondary industry consumption %.
         param_sec_max_consumption {
             name: string(STR_PARAM_SECINDCONS_NAME);
@@ -553,13 +553,13 @@ grf {
         }
     }
     param {
-	// Tips enabled?
-	param_tips_enabled {
-	    name: string(STR_PARAM_TIPS_NAME);
-	    desc: string(STR_PARAM_TIPS_DESC);
-	    type: bool;
-	    def_value: 1;
-	}
+    // Tips enabled?
+    param_tips_enabled {
+        name: string(STR_PARAM_TIPS_NAME);
+        desc: string(STR_PARAM_TIPS_DESC);
+        type: bool;
+        def_value: 1;
+    }
     }
 }
 
@@ -571,73 +571,73 @@ cargotable {
 
 item(FEAT_CARGOS, cargo_lumber, 22) {
     property {
-	number: 22;
-	type_name: string(STR_LUMBER_NAME);
-	unit_name: string(STR_LUMBER_NAME);
-	units_of_cargo: TTD_STR_TONS;
-	items_of_cargo: string(STR_LUMBER_LONG);
-	type_abbreviation: string(STR_LUMBER_ABBREV);
-	sprite: 4307;
-	weight: 1;
-	is_freight: 1;
-	cargo_classes: bitmask(CC_PIECE_GOODS);
-	cargo_label: "LMBR";
-	town_growth_effect: TOWNGROWTH_NONE;
-	town_growth_multiplier: 1.0;
-	penalty_lowerbound: 18;
-	single_penalty_length: 255;
-	station_list_colour: 58;
-	cargo_payment_list_colour: 58;
-	price_factor: 123;
-	capacity_multiplier: 1;
+    number: 22;
+    type_name: string(STR_LUMBER_NAME);
+    unit_name: string(STR_LUMBER_NAME);
+    units_of_cargo: TTD_STR_TONS;
+    items_of_cargo: string(STR_LUMBER_LONG);
+    type_abbreviation: string(STR_LUMBER_ABBREV);
+    sprite: 4307;
+    weight: 1;
+    is_freight: 1;
+    cargo_classes: bitmask(CC_PIECE_GOODS);
+    cargo_label: "LMBR";
+    town_growth_effect: TOWNGROWTH_NONE;
+    town_growth_multiplier: 1.0;
+    penalty_lowerbound: 18;
+    single_penalty_length: 255;
+    station_list_colour: 58;
+    cargo_payment_list_colour: 58;
+    price_factor: 123;
+    capacity_multiplier: 1;
     }
 }
 
 item(FEAT_CARGOS, cargo_lubricant, 23) {
     property {
-    	number: 23;
-	type_name: string(STR_LUBRICANT_NAME);
-	unit_name: string(STR_LUBRICANT_NAME);
-	units_of_cargo: TTD_STR_LITERS;
-	items_of_cargo: string(STR_LUBRICANT_LONG);
-	type_abbreviation: string(STR_LUBRICANT_ABBREV);
-	sprite: 4300;
-	weight: 1;
-	is_freight: 1;
-	cargo_classes: bitmask(CC_LIQUID);
-	cargo_label: "LUBR";
-	town_growth_effect: TOWNGROWTH_NONE;
-	town_growth_multiplier: 1.0;
-	penalty_lowerbound: 18;
-	single_penalty_length: 255;
-	station_list_colour: 140;
-	cargo_payment_list_colour: 140;
-	price_factor: 97;
-	capacity_multiplier: 1;
+        number: 23;
+    type_name: string(STR_LUBRICANT_NAME);
+    unit_name: string(STR_LUBRICANT_NAME);
+    units_of_cargo: TTD_STR_LITERS;
+    items_of_cargo: string(STR_LUBRICANT_LONG);
+    type_abbreviation: string(STR_LUBRICANT_ABBREV);
+    sprite: 4300;
+    weight: 1;
+    is_freight: 1;
+    cargo_classes: bitmask(CC_LIQUID);
+    cargo_label: "LUBR";
+    town_growth_effect: TOWNGROWTH_NONE;
+    town_growth_multiplier: 1.0;
+    penalty_lowerbound: 18;
+    single_penalty_length: 255;
+    station_list_colour: 140;
+    cargo_payment_list_colour: 140;
+    price_factor: 97;
+    capacity_multiplier: 1;
     }
 }
 
 item(FEAT_CARGOS, cargo_petrol, 24) {
     property {
-	number: 24;
-	type_name: string(STR_PETROL_NAME);
-	unit_name: string(STR_PETROL_NAME);
-	units_of_cargo: TTD_STR_LITERS;
-	items_of_cargo: string(STR_PETROL_LONG);
-	type_abbreviation: string(STR_PETROL_ABBREV);
-	sprite: 4300;
-	weight: 1;
-	is_freight: 1;
-	cargo_classes: bitmask(CC_LIQUID);
-	cargo_label: "PETR";
-	town_growth_effect: TOWNGROWTH_NONE;
-	town_growth_multiplier: 1.0;
-	penalty_lowerbound: 18;
-	single_penalty_length: 255;
-	station_list_colour: 182;
-	cargo_payment_list_colour: 182;
-	price_factor: 127;
-	capacity_multiplier: 1;
+    number: 24;
+    type_name: string(STR_PETROL_NAME);
+    unit_name: string(STR_PETROL_NAME);
+    units_of_cargo: TTD_STR_LITERS;
+    items_of_cargo: string(STR_PETROL_LONG);
+    type_abbreviation: string(STR_PETROL_ABBREV);
+    sprite: 4300;
+    weight: 1;
+    is_freight: 1;
+    cargo_classes: bitmask(CC_LIQUID);
+    cargo_label: "PETR";
+    town_growth_effect: TOWNGROWTH_NONE;
+    town_growth_multiplier: 1.0;
+    penalty_lowerbound: 18;
+    single_penalty_length: 255;
+    station_list_colour: 182;
+    cargo_payment_list_colour: 182;
+    price_factor: 127;
+    capacity_multiplier: 1;
     }
 }
 
@@ -1133,7 +1133,7 @@ item(FEAT_INDUSTRIES, farm, INDUSTRYTYPE_TEMPERATE_ARCTIC_FARM) {
         override: INDUSTRYTYPE_TEMPERATE_ARCTIC_FARM;
         cargo_types: [
             produce_cargo("LVST", 0),
-	    produce_cargo("GRAI", 0)
+        produce_cargo("GRAI", 0)
         ];
     }
 
@@ -1193,15 +1193,15 @@ item(FEAT_INDUSTRIES, oil_rig, INDUSTRYTYPE_OIL_RIG) {
         override: INDUSTRYTYPE_OIL_RIG;
         cargo_types: [
             produce_cargo("IORE", 0),
-	    produce_cargo("PASS", 0),
-	    produce_cargo("MAIL", 0),
-	    accept_cargo("PASS"),
-	    accept_cargo("MAIL")
+        produce_cargo("PASS", 0),
+        produce_cargo("MAIL", 0),
+        accept_cargo("PASS"),
+        accept_cargo("MAIL")
         ];
     }
 
     graphics {
-	cargo_subtype_display: CB_RESULT_IND_NO_TEXT_NO_AMOUNT;
+    cargo_subtype_display: CB_RESULT_IND_NO_TEXT_NO_AMOUNT;
         extra_text_industry: switch_production_display_primary_composite;
         produce_256_ticks: switch_production_oil_rig;
         random_prod_change: CB_RESULT_IND_PROD_NO_CHANGE;
@@ -1291,7 +1291,7 @@ item(FEAT_INDUSTRIES, temperate_bank, INDUSTRYTYPE_TEMPERATE_BANK) {
         produce_256_ticks: switch_produce_temperate_bank;
         monthly_prod_change: switch_production_change_temperate_bank;
         random_prod_change: CB_RESULT_IND_PROD_NO_CHANGE;
-	stop_accept_cargo: switch_stop_accept_temperate_bank;
+    stop_accept_cargo: switch_stop_accept_temperate_bank;
         build_prod_change: 16;
     }
 }
@@ -1324,7 +1324,7 @@ spritelayout spr_layout_power_plant_4 {
 item(FEAT_INDUSTRYTILES, ind_tile_power_plant_1) {
     property {
         substitute: 08;
-	special_flags: bitmask(INDTILE_FLAG_ACCEPT_ALL);
+    special_flags: bitmask(INDTILE_FLAG_ACCEPT_ALL);
     }
     graphics {
         default: spr_layout_power_plant_1;
@@ -1334,7 +1334,7 @@ item(FEAT_INDUSTRYTILES, ind_tile_power_plant_1) {
 item(FEAT_INDUSTRYTILES, ind_tile_power_plant_2) {
     property {
         substitute: 09;
-	special_flags: bitmask(INDTILE_FLAG_ACCEPT_ALL);
+    special_flags: bitmask(INDTILE_FLAG_ACCEPT_ALL);
     }
     graphics {
         default: spr_layout_power_plant_2;
@@ -1344,7 +1344,7 @@ item(FEAT_INDUSTRYTILES, ind_tile_power_plant_2) {
 item(FEAT_INDUSTRYTILES, ind_tile_power_plant_3) {
     property {
         substitute: 10;
-	special_flags: bitmask(INDTILE_FLAG_ACCEPT_ALL);
+    special_flags: bitmask(INDTILE_FLAG_ACCEPT_ALL);
     }
     graphics {
         default: spr_layout_power_plant_3;
@@ -1354,7 +1354,7 @@ item(FEAT_INDUSTRYTILES, ind_tile_power_plant_3) {
 item(FEAT_INDUSTRYTILES, ind_tile_power_plant_4) {
     property {
         substitute: 07;
-	special_flags: bitmask(INDTILE_FLAG_ACCEPT_ALL);
+    special_flags: bitmask(INDTILE_FLAG_ACCEPT_ALL);
     }
     graphics {
         default: spr_layout_power_plant_4;
@@ -1381,9 +1381,9 @@ tilelayout industry_layout_power_plant_3 {
 }
 
 produce (produce_power_plant,
-	[COAL: LOAD_TEMP(0); PETR: LOAD_TEMP(6);],
-	[],
-	0
+    [COAL: LOAD_TEMP(0); PETR: LOAD_TEMP(6);],
+    [],
+    0
 )
 
 // Power plant consumption, based on waiting cargo.
@@ -1443,13 +1443,13 @@ item(FEAT_INDUSTRIES, power_plant, INDUSTRYTYPE_POWER_PLANT) {
         override: INDUSTRYTYPE_POWER_PLANT;
         cargo_types: [
             accept_cargo("COAL"),
-	    accept_cargo("PETR")
+        accept_cargo("PETR")
         ];
-	layouts: [
+    layouts: [
             industry_layout_power_plant_1,
-	    industry_layout_power_plant_2,
-	    industry_layout_power_plant_3
-	];
+        industry_layout_power_plant_2,
+        industry_layout_power_plant_3
+    ];
     }
 
     graphics {
@@ -1458,7 +1458,7 @@ item(FEAT_INDUSTRIES, power_plant, INDUSTRYTYPE_POWER_PLANT) {
         produce_256_ticks: switch_produce_power_plant;
         monthly_prod_change: CB_RESULT_IND_PROD_NO_CHANGE;
         random_prod_change: CB_RESULT_IND_PROD_NO_CHANGE;
-	stop_accept_cargo: switch_stop_accept_power_plant;
+    stop_accept_cargo: switch_stop_accept_power_plant;
         build_prod_change: 16;
     }
 }
@@ -1501,24 +1501,24 @@ spritelayout spr_layout_steel_mill_2_W {
 
 item (FEAT_INDUSTRYTILES, ind_tile_steel_mill_1_N) {
     property {
-    	substitute: 02;
-	special_flags: bitmask(INDTILE_FLAG_ACCEPT_ALL);
+        substitute: 02;
+    special_flags: bitmask(INDTILE_FLAG_ACCEPT_ALL);
     }
     graphics { default: spr_layout_steel_mill_1_N;}
 }
 
 item (FEAT_INDUSTRYTILES, ind_tile_steel_mill_1_E) {
     property {
-    	substitute: 02;
-	special_flags: bitmask(INDTILE_FLAG_ACCEPT_ALL);
+        substitute: 02;
+    special_flags: bitmask(INDTILE_FLAG_ACCEPT_ALL);
     }
     graphics { default: spr_layout_steel_mill_1_E;}
 }
 
 item (FEAT_INDUSTRYTILES, ind_tile_steel_mill_1_W) {
     property {
-    	substitute: 02;
-	special_flags: bitmask(INDTILE_FLAG_ACCEPT_ALL);
+        substitute: 02;
+    special_flags: bitmask(INDTILE_FLAG_ACCEPT_ALL);
     }
     graphics { default: spr_layout_steel_mill_1_W;}
 }
@@ -1526,24 +1526,24 @@ item (FEAT_INDUSTRYTILES, ind_tile_steel_mill_1_W) {
 item (FEAT_INDUSTRYTILES, ind_tile_steel_mill_1_S) {
     property {
 
-    	substitute: 02;
-	special_flags: bitmask(INDTILE_FLAG_ACCEPT_ALL);
+        substitute: 02;
+    special_flags: bitmask(INDTILE_FLAG_ACCEPT_ALL);
     }
     graphics { default: spr_layout_steel_mill_1_S;}
 }
 
 item (FEAT_INDUSTRYTILES, ind_tile_steel_mill_2_N) {
     property {
-    	substitute: 02;
-	special_flags: bitmask(INDTILE_FLAG_ACCEPT_ALL);
+        substitute: 02;
+    special_flags: bitmask(INDTILE_FLAG_ACCEPT_ALL);
     }
     graphics { default: spr_layout_steel_mill_2_N;}
 }
 
 item (FEAT_INDUSTRYTILES, ind_tile_steel_mill_2_W) {
     property {
-    	substitute: 02;
-	special_flags: bitmask(INDTILE_FLAG_ACCEPT_ALL);
+        substitute: 02;
+    special_flags: bitmask(INDTILE_FLAG_ACCEPT_ALL);
     }
     graphics { default: spr_layout_steel_mill_2_W;}
 }
@@ -1627,10 +1627,10 @@ item(FEAT_INDUSTRIES, steel_mill, INDUSTRYTYPE_STEEL_MILL) {
         override: INDUSTRYTYPE_STEEL_MILL;
         cargo_types: [
             produce_cargo("STEL", 0),
-	    accept_cargo("COAL"),
-	    accept_cargo("IORE")
+        accept_cargo("COAL"),
+        accept_cargo("IORE")
         ];
-	layouts: [industry_layout_steel_mill_1, industry_layout_steel_mill_2];
+    layouts: [industry_layout_steel_mill_1, industry_layout_steel_mill_2];
     }
 
     graphics {
@@ -1638,7 +1638,7 @@ item(FEAT_INDUSTRIES, steel_mill, INDUSTRYTYPE_STEEL_MILL) {
         produce_256_ticks: switch_production_helper_steel_mill;
         random_prod_change: CB_RESULT_IND_PROD_NO_CHANGE;
         monthly_prod_change: switch_production_change_steel_mill;
-	stop_accept_cargo: switch_stop_accept_steel_mill;
+    stop_accept_cargo: switch_stop_accept_steel_mill;
         build_prod_change: random_initial_production;
     }
 }
@@ -1671,7 +1671,7 @@ spritelayout sprite_layout_factory_1_S {
 item(FEAT_INDUSTRYTILES, ind_tile_factory_1_N) {
     property {
         substitute: 02;
-	special_flags: bitmask(INDTILE_FLAG_ACCEPT_ALL);
+    special_flags: bitmask(INDTILE_FLAG_ACCEPT_ALL);
     }
     graphics {
         default: sprite_layout_factory_1_N;
@@ -1681,7 +1681,7 @@ item(FEAT_INDUSTRYTILES, ind_tile_factory_1_N) {
 item(FEAT_INDUSTRYTILES, ind_tile_factory_1_E) {
     property {
         substitute: 02;
-	special_flags: bitmask(INDTILE_FLAG_ACCEPT_ALL);
+    special_flags: bitmask(INDTILE_FLAG_ACCEPT_ALL);
     }
     graphics {
         default: sprite_layout_factory_1_E;
@@ -1691,7 +1691,7 @@ item(FEAT_INDUSTRYTILES, ind_tile_factory_1_E) {
 item(FEAT_INDUSTRYTILES, ind_tile_factory_1_W) {
     property {
         substitute: 02;
-	special_flags: bitmask(INDTILE_FLAG_ACCEPT_ALL);
+    special_flags: bitmask(INDTILE_FLAG_ACCEPT_ALL);
     }
     graphics {
         default: sprite_layout_factory_1_W;
@@ -1701,7 +1701,7 @@ item(FEAT_INDUSTRYTILES, ind_tile_factory_1_W) {
 item(FEAT_INDUSTRYTILES, ind_tile_factory_1_S) {
     property {
         substitute: 02;
-	special_flags: bitmask(INDTILE_FLAG_ACCEPT_ALL);
+    special_flags: bitmask(INDTILE_FLAG_ACCEPT_ALL);
     }
     graphics {
         default: sprite_layout_factory_1_S;
@@ -1895,16 +1895,16 @@ item(FEAT_INDUSTRIES, temperate_factory, INDUSTRYTYPE_TEMPERATE_FACTORY) {
     property {
         substitute: INDUSTRYTYPE_TEMPERATE_FACTORY;
         override: INDUSTRYTYPE_TEMPERATE_FACTORY;
-	spec_flags: bitmask(IND_FLAG_LONG_CARGO_TYPE_LISTS);
+    spec_flags: bitmask(IND_FLAG_LONG_CARGO_TYPE_LISTS);
         cargo_types: [
             produce_cargo("GOOD", 0),
-	    accept_cargo("STEL"),
-	    accept_cargo("LVST"),
-	    accept_cargo("GRAI"),
-	    accept_cargo("LMBR"),
-	    accept_cargo("LUBR")
+        accept_cargo("STEL"),
+        accept_cargo("LVST"),
+        accept_cargo("GRAI"),
+        accept_cargo("LMBR"),
+        accept_cargo("LUBR")
         ];
-	layouts: [industry_layout_temp_factory_1, industry_layout_temp_factory_2];
+    layouts: [industry_layout_temp_factory_1, industry_layout_temp_factory_2];
     }
 
     graphics {
@@ -1912,8 +1912,8 @@ item(FEAT_INDUSTRIES, temperate_factory, INDUSTRYTYPE_TEMPERATE_FACTORY) {
         produce_256_ticks: switch_production_helper_temp_factory;
         random_prod_change: CB_RESULT_IND_PROD_NO_CHANGE;
         monthly_prod_change: switch_production_change_temp_factory;
-	stop_accept_cargo: switch_stop_accept_temp_factory;
-	cargo_subtype_display: CB_RESULT_NO_TEXT;
+    stop_accept_cargo: switch_stop_accept_temp_factory;
+    cargo_subtype_display: CB_RESULT_NO_TEXT;
         build_prod_change: random_initial_production;
     }
 }
@@ -1982,11 +1982,11 @@ item(FEAT_INDUSTRIES, oil_refinery, INDUSTRYTYPE_OIL_REFINERY) {
         override: INDUSTRYTYPE_OIL_REFINERY;
         cargo_types: [
             produce_cargo("GOOD", 0),
-	    produce_cargo("PETR", 0),
-	    produce_cargo("LUBR",0),
-	    accept_cargo("OIL_")
+        produce_cargo("PETR", 0),
+        produce_cargo("LUBR",0),
+        accept_cargo("OIL_")
         ];
-	// layouts: [industry_layout_temp_factory_1];
+    // layouts: [industry_layout_temp_factory_1];
     }
 
     graphics {
@@ -1994,7 +1994,7 @@ item(FEAT_INDUSTRIES, oil_refinery, INDUSTRYTYPE_OIL_REFINERY) {
         produce_256_ticks: switch_production_helper_oil_refinery;
         random_prod_change: CB_RESULT_IND_PROD_NO_CHANGE;
         monthly_prod_change: switch_production_change_oil_refinery;
-	stop_accept_cargo: switch_stop_accept_oil_refinery;
+    stop_accept_cargo: switch_stop_accept_oil_refinery;
         build_prod_change: random_initial_production;
     }
 }
@@ -2062,9 +2062,9 @@ item(FEAT_INDUSTRIES, sawmill, INDUSTRYTYPE_SAWMILL) {
         override: INDUSTRYTYPE_SAWMILL;
         cargo_types: [
             produce_cargo("LMBR", 0),
-	    accept_cargo("WOOD")
+        accept_cargo("WOOD")
         ];
-	// layouts: [industry_layout_temp_factory_1];
+    // layouts: [industry_layout_temp_factory_1];
     }
 
     graphics {
@@ -2072,7 +2072,7 @@ item(FEAT_INDUSTRIES, sawmill, INDUSTRYTYPE_SAWMILL) {
         produce_256_ticks: switch_production_helper_sawmill;
         random_prod_change: CB_RESULT_IND_PROD_NO_CHANGE;
         monthly_prod_change: switch_production_change_sawmill;
-	stop_accept_cargo: switch_stop_accept_sawmill;
+    stop_accept_cargo: switch_stop_accept_sawmill;
         build_prod_change: random_initial_production;
     }
 }
