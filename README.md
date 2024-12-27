@@ -16,7 +16,7 @@ Main features:
 5. Activate it by scrolling through the bottom panel and clicking "Add".
 6. Your next game will have the NewGRF active!
 
-##### Do NOT load in during an active save or combine with a different industry set (such as FIRS) or your save will break!
+### Do NOT load in during an active save or combine with a different industry set (such as FIRS) or your save will break!
 
 ### Manual Installation
 1. Find your NewGRF folder.
