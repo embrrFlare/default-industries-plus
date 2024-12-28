@@ -18,7 +18,7 @@ Main features:
 #### Do NOT load in during an active save or combine with a different industry set (such as FIRS) or your save will break!
 
 ### Manual Installation
-1. Find your NewGRF folder.
+1. Find your NewGRF folder.  
    Windows/Mac: Documents/OpenTTD/newgrf  
    Linux: ~/.openttd/newgrf OR ~/.local/share/openttd/newgrf
 2. Download the latest release and place the .grf file into the folder (Exclude other files)
