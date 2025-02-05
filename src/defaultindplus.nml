@@ -1946,7 +1946,7 @@ switch(FEAT_INDUSTRIES, PARENT, switch_production_oil_refinery,
 
 switch(FEAT_INDUSTRIES, SELF, switch_production_helper_oil_refinery, [
     STORE_PERM(oil_refinery_stockpile_modifier(),0),
-    STORE_TEMP((min(GetTotalSecondaryProduction(),incoming_cargo_waiting("OIL_"))+(incoming_cargo_waiting("OIL_")>0))*IsSecondaryPowered(),0),
+    STORE_TEMP((min(GetTotalSecondaryProduction(),incoming_cargo_waiting("OIL_"))+((incoming_cargo_waiting("OIL_")>0)*4))*IsSecondaryPowered(),0),
     oil_refinery_stockpile_modifier()
 ]) {switch_production_oil_refinery;}
 
