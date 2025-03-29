@@ -52,10 +52,10 @@ Bonus mechanics:
 - Bonuses can either be additive or multiplicative with each other based on preferenc.
 
 Industry Closure / Freezing Rules:
-- Industries are considered "serviced" if at least one of their output cargoes is being delivered. This means secondaries require their cargo to be delivered to be serviced.
+- Industries are considered "serviced" if at least one of their output cargoes are being serviced (primary industries) or if they are able to produce cargo (secondaries).
 - An industry being serviced or unserviced only has an effect on its closure or freezing rules.
 - If closure is turned off, the industry can lower to its minimum production but will not close.
-- If freezing is turned on, the industry will either have slowed production changes or completely stopped changes. This prevents unserviced industries with closures disabled to lose all their production and require a lengthy amount of time to recover.
+- If freezing is turned on, the industry will either have slowed production changes or completely stopped changes. This prevents unserviced industries with closures disabled to lose all their initial production and require a lengthy amount of time to recover.
 
 Production Changes:
 - If "Smooth Primary Industry Growth" is on, production changes have a much smaller impact and are much smoother over time.
