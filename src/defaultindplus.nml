@@ -2,7 +2,7 @@ grf {
     grfid: "eF\01\01";
     name: string(STR_GRF_NAME);
     desc: string(STR_GRF_DESCRIPTION);
-    version: 2;
+    version: 3;
     min_compatible_version: 1;
     param {
         // ADDITIONAL MECHANICS SEPERATOR
@@ -352,7 +352,7 @@ grf {
         type: int;
         min_value: 0;
         max_value: 3;
-        def_value: 2;
+        def_value: 3;
         names: {
         0: string(STR_PARAM_PRIM_FREEZE_DIS);
         1: string(STR_PARAM_PRIM_FREEZE_VAN);
@@ -472,7 +472,7 @@ grf {
         type: int;
         min_value: 0;
         max_value: 3;
-        def_value: 2;
+        def_value: 3;
         names:
         {
         0: string(STR_PARAM_SEC_FREEZE_DIS);
@@ -1568,14 +1568,14 @@ produce(produce_steel_mill,
     0
 )
 
-switch(FEAT_INDUSTRIES, SELF, steel_mill_is_active, (last_month_transported("STEL") > 0)) {return;}
-
 switch(FEAT_INDUSTRIES, SELF, steel_mill_max_stockpile_iron, min((GetMaxSecondaryProduction()*8*param_sec_max_stockpile_perc)/100,50000))  {return;}
 
 // Divided by 2 since we consume coal at half the rate and thus is half as big for stockpile
 switch(FEAT_INDUSTRIES, SELF, steel_mill_max_stockpile_coal, min((GetMaxSecondaryProduction()*4*param_sec_max_stockpile_perc)/100,50000)) {return;}
 
 switch(FEAT_INDUSTRIES, SELF, steel_mill_stockpile_modifier, STORE_PERM(min(min((incoming_cargo_waiting("IORE")*100)/steel_mill_max_stockpile_iron(),(incoming_cargo_waiting("COAL")*100)/steel_mill_max_stockpile_coal()),100),0)) {return;}
+
+switch(FEAT_INDUSTRIES, SELF, steel_mill_is_active, (steel_mill_stockpile_modifier() > 0)) {return;}
 
 switch(FEAT_INDUSTRIES, PARENT, switch_production_steel_mill,
     // Consume funding if enabled and the industry benefits from it.
@@ -1734,7 +1734,7 @@ switch(FEAT_INDUSTRIES, SELF, temp_factory_stockpile_modifier_lumber, min((incom
 
 switch(FEAT_INDUSTRIES, SELF, temp_factory_stockpile_modifier, STORE_PERM(min(temp_factory_stockpile_modifier_steel()/4+temp_factory_stockpile_modifier_livestock()/4+temp_factory_stockpile_modifier_grain()/4+temp_factory_stockpile_modifier_lumber()/4,100),0)) {return;}
 
-switch(FEAT_INDUSTRIES, SELF, temp_factory_is_active, (last_month_transported("GOOD") > 0)) {return;}
+switch(FEAT_INDUSTRIES, SELF, temp_factory_is_active, (temp_factory_stockpile_modifier() > 0)) {return;}
 
 switch(FEAT_INDUSTRIES, SELF, GetTempFactoryLubricantStockpile, (temp_factory_max_stockpile()*param_lubricant_cons)/100) {return;}
 
@@ -1932,7 +1932,7 @@ switch(FEAT_INDUSTRIES, SELF, oil_refinery_max_stockpile, min((GetMaxSecondaryPr
 
 switch(FEAT_INDUSTRIES, SELF, oil_refinery_stockpile_modifier, STORE_PERM(min((incoming_cargo_waiting("OIL_")*100)/oil_refinery_max_stockpile(),100),0)) {return;}
 
-switch(FEAT_INDUSTRIES, SELF, oil_refinery_is_active, last_month_transported("GOOD")+last_month_transported("LUBR")+last_month_transported("PETR") > 0) {return;}
+switch(FEAT_INDUSTRIES, SELF, oil_refinery_is_active, oil_refinery_stockpile_modifier() > 0) {return;}
 
 // Because the factory is cargo agnostic, each input cargo may be consumed at a different rate, according to its stockpile modifier.
 switch(FEAT_INDUSTRIES, PARENT, switch_production_oil_refinery,
@@ -2013,7 +2013,7 @@ switch(FEAT_INDUSTRIES, SELF, sawmill_max_stockpile, min((GetMaxSecondaryProduct
 
 switch(FEAT_INDUSTRIES, SELF, sawmill_stockpile_modifier, STORE_PERM(min((incoming_cargo_waiting("WOOD")*100)/oil_refinery_max_stockpile(),100),0)) {return;}
 
-switch(FEAT_INDUSTRIES, SELF, sawmill_is_active, last_month_transported("LMBR") > 0) {return;}
+switch(FEAT_INDUSTRIES, SELF, sawmill_is_active, sawmill_stockpile_modifier() > 0) {return;}
 
 switch(FEAT_INDUSTRIES, PARENT, switch_production_sawmill,
     // Consume funding if enabled and the industry benefits from it.
