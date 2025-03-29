@@ -1192,7 +1192,7 @@ item(FEAT_INDUSTRIES, oil_rig, INDUSTRYTYPE_OIL_RIG) {
         substitute: INDUSTRYTYPE_OIL_RIG;
         override: INDUSTRYTYPE_OIL_RIG;
         cargo_types: [
-            produce_cargo("IORE", 0),
+            produce_cargo("OIL_", 0),
         produce_cargo("PASS", 0),
         produce_cargo("MAIL", 0),
         accept_cargo("PASS"),
