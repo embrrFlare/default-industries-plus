@@ -1,0 +1,271 @@
+##grflangid 0x03
+# French language file
+
+#GRF name and description
+STR_GRF_NAME                  :{TITLE} {VERSION}
+STR_GRF_DESCRIPTION           :{GOLD}{TITLE}{}{BLACK}Par {ORANGE}embrr{RED}Flare{}{}{BLACK}Ajoute plusieurs mécaniques modulables aux industries par défaut.{}Compatible avec le climat {GREEN}tempéré{BLACK}.{}{}{GOLD}{TINYFONT}Une continuation spirituelle de BSPI
+
+#Param name and description
+
+#Extra Mechanics
+
+STR_PARAM_EXT_SEPERATE     :{ORANGE}--| MÉCANIQUES ADDITIONNELLES |--
+
+STR_PARAM_PETROL_BOOST_NAME:Bonus d’efficacité de l’essence (%)
+STR_PARAM_PETROL_BOOST_DESC:Détermine le bonus d’efficacité procuré par l’essence sur la centrale électrique.{}« Efficacité » se rapporte au taux de conversion, un bonus de 50% augmentera le ratio de 1 puissance pour 1 apport à 1,5 puissance pour 1 apport.
+
+STR_PARAM_PETROL_CONS_NAME :Taux de consommation de l’essence (%)
+STR_PARAM_PETROL_CONS_DESC :Détermine le taux de consommation de l’essence par la centrale électrique, relativement à la consommation de charbon.
+
+STR_PARAM_LUBR_BOOST_NAME :Bonus d’efficacité du lubrifiant (%)
+STR_PARAM_LUBR_BOOST_DESC :Détermine le bonus d’efficacité procuré par le lubrifiant sur l’usine.{}« Efficacité » se rapporte au taux de conversion, un bonus de 50% augmentera le ratio de 1 production pour 1 apport à 1,5 production pour 1 apport.
+
+STR_PARAM_LUBR_CONS_NAME  :Taux de consommation du lubrifiant (%)
+STR_PARAM_LUBR_CONS_DESC  :Détermine le taux de consommation du lubrifiant à l’usine par rapport à la consommation de marchandises. Ce taux de consommation n’est pas affecté par les bonus tels que les bonus de population ou de puissance.
+
+#Bonus Mechanics
+
+STR_PARAM_BON_SEPERATE    :{YELLOW}--| MÉCANIQUES DE BONUS |--
+
+STR_PARAM_BONUS_DISABLE   :Désactivé
+STR_PARAM_BONUS_PRIM      :Industries primaires uniquement
+STR_PARAM_BONUS_SEC       :Industries secondaires uniquement
+STR_PARAM_BONUS_BOTH      :Industries primaires et secondaires
+
+STR_PARAM_POWER_NAME      :Bonus de centrale électrique
+STR_PARAM_POWER_DESC      :Quand activé, les centrales électriques augmentent la production des industries dans la même ville tant que des marchandises sont livrées chaque mois.
+
+STR_PARAM_POWERADV_NAME   :Mécaniques avancées de puissance
+STR_PARAM_POWERADV_DESC   :Quand activé, les centrales électriques transforment le charbon en unités de puissance, consommées par les industries actives éligibles. Au lieu d’un objectif fixe à atteindre chaque mois, les besoins en puissance évoluent avec la taille du réseau, et peuvent même requérir plus d’une centrale électrique par ville.
+
+STR_PARAM_POWERSOFT_NAME  :{PUSH_COLOUR}{RED}Mécaniques avancées de puissance uniquement{POP_COLOUR} : Limiter le bonus de puissance
+STR_PARAM_POWERSOFT_DESC  :Quand activé en même temps que les mécaniques avancées de puissance, les financements supplémentaires au-delà de la réserve augmentent toujours le bonus de puissance, mais à un rythme drastiquement réduit.
+
+STR_PARAM_POWERCONS_NAME  :{PUSH_COLOUR}{RED}Mécaniques avancées de puissance uniquement{POP_COLOUR} : Taux de consommation de puissance (%)
+STR_PARAM_POWERCONS_DESC  :Détermine la puissance consommée par les industries.
+
+STR_PARAM_POWERCARGO_NAME :Consommation mensuelle de marchandises
+STR_PARAM_POWERCARGO_DESC :Quantité d’unités de marchandise transformée par une centrale électrique chaque mois. Cela détermine la quantité de marchandises nécessaires pour un bonus total (mécaniques simples de puissance) ou la quantité de marchandises pouvant être transformée en unités de puissance chaque mois (mécaniques avancées de puissance).
+
+STR_PARAM_POWER_STOCK_NAME:Multiplicateur de réserve de centrale électrique (%)
+STR_PARAM_POWER_STOCK_DESC:Quantité de marchandises/unités de puissance en réserve requise pour atteindre la consommation maximale. Cela fonctionne comme un multiplicateur de la consommation mensuelle : à 200%, si une centrale électrique peut transformer 1000 unités de marchandise par mois, la réserve de marchandises requise sera de 2000 unités pour atteindre la consommation maximale, et donc le bonus maximal.
+
+STR_PARAM_POWEREFF_NAME   :Bonus de puissance maximum (%)
+STR_PARAM_POWEREFF_DESC   :Le bonus de production maximum fourni par une centrale électrique aux industries de sa ville.
+
+
+STR_PARAM_BANK_NAME       :Bonus de banque
+STR_PARAM_BANK_DESC       :Quand activé, les banques fournissent un bonus de production aux industries de la même ville tant que des marchandises sont livrées chaque mois.
+
+STR_PARAM_BANKADV_NAME    :Mécaniques avancées de banque
+STR_PARAM_BANKADV_DESC    :Quand activé, les banques convertissent les objets de valeur/or/diamants en unités de subvention, consommées par les industries éligibles. Au lieu d’un objectif fixe à atteindre chaque mois, les besoins de subventions évoluent avec la taille du réseau, et peuvent même requérir plus d’une banque par ville.
+
+STR_PARAM_FUNDSOFT_NAME   :{PUSH_COLOUR}{RED}Mécaniques avancées de banque uniquement{POP_COLOUR} : Limiter le bonus de banque
+STR_PARAM_FUNDSOFT_DESC   :Quand activé en même temps que les mécaniques avancées de banque, les financements supplémentaires au-delà de la réserve augmentent toujours le bonus de banque, mais à un rythme drastiquement réduit.
+
+STR_PARAM_FUNDINGCONS_NAME:{PUSH_COLOUR}{RED}Mécaniques avancées de banque{POP_COLOUR} : Taux de consommation des subventions (%)
+STR_PARAM_FUNDINGCONS_DESC:Détermine la quantité de subventions consommée par les industries.
+
+STR_PARAM_BANKCARGO_NAME  :Consommation mensuelle de marchandises
+STR_PARAM_BANKCARGO_DESC  :Quantité d’unités de marchandise consommée par une banque chaque mois. Cela détermine la quantité de marchandises nécessaires en réserve pour un bonus total (mécaniques simples de banque) ou la quantité de marchandises pouvant être transformées en unités de subvention chaque mois (mécaniques avancées de banque).
+
+STR_PARAM_BANK_STOCK_NAME :Multiplicateur de réserve de banque (%)
+STR_PARAM_BANK_STOCK_DESC :Quantité de marchandises/unités de subvention en réserve requise pour atteindre la consommation maximale. Cela fonctionne comme un multiplicateur de la consommation mensuelle : à 200%, si une banque peut transformer 1000 unités de marchandise par mois, la réserve de marchandises requise sera de 2000 unités pour atteindre la consommation maximale, et donc le bonus maximal.
+
+STR_PARAM_BANKEFF_NAME    :Bonus de banque maximum (%)
+STR_PARAM_BANKEFF_DESC    :Le bonus de production maximum fourni par une banque aux industries de sa ville.
+
+
+STR_PARAM_TOWN_NAME       :Bonus de population
+STR_PARAM_TOWN_DESC       :Quand activé, les villes fournissent à leurs industries un bonus de production selon leur population.
+
+STR_PARAM_TOWNREQ_NAME    :Population requise
+STR_PARAM_TOWNREQ_DESC    :La population à atteindre pour qu’une ville octroie le bonus maximum.
+
+STR_PARAM_TOWNEFF_NAME    :Bonus de population maximum (%)
+STR_PARAM_TOWNEFF_DESC    :Le bonus maximum fourni par une ville à ses industries.
+
+STR_PARAM_BANKMULT_NAME   :Multiplicateur du bonus de population pour les banques (%)
+STR_PARAM_BANKMULT_DESC   :L’efficacité du bonus de population sur le bonus de production des banques. Cela rend la croissance des villes importante pour avoir le bonus de banque maximum, et rend les objets de valeur plus pertinents.
+
+
+STR_PARAM_BONUS_MULT_NAME :Bonus multiplicatifs
+STR_PARAM_BONUS_MULT_DESC :Quand activé, les bonus de puissance, de banque et de population se multiplient au lieu de s’additionner. La multiplication donne de plus grands bonus, particulièrement s’il y en a plusieurs.
+
+# Primary specific parameters
+
+STR_PARAM_PRIM_SEPERATE   :{GREEN}--| OPTIONS DES INDUSTRIES PRIMAIRES |--
+
+STR_PARAM_PRIM_CLOSE_ALL  :Toutes les industries primaires
+STR_PARAM_PRIM_CLOSE_UNSER:Fermeture des industries non-desservies uniquement
+STR_PARAM_PRIM_CLOSE_SER  :Fermeture des industries desservies uniquement
+STR_PARAM_PRIM_CLOSE_NONE :Pas de fermetures d’industries primaires
+
+STR_PARAM_PRIM_CLOSE_NAME :Règles de fermeture des industries primaires
+STR_PARAM_PRIM_CLOSE_DESC :Détermine si les industries primaires peuvent fermer ou non.
+
+STR_PARAM_GROW_NAME       :Croissance lissée des industries primaires
+STR_PARAM_GROW_DESC       :Quand activé, les changements de production des industries primaire n’ont plus de composante aléatoire, mais sont entièrement déterminés par le service de la gare.
+
+STR_PARAM_GROW_DIFF_NAME  :{PUSH_COLOUR}{RED}Croissance lissée des industries primaires uniquement{POP_COLOUR} : Difficulté de la croissance des industries primaires
+STR_PARAM_GROW_DIFF_DESC  :Détermine la difficulté à augmenter la production de base des industries primaires.{}Magnanime : {RED}0-25%{BLACK} pour diminuer, {YELLOW}26-60%{BLACK} pour stabiliser, {GREEN}61%+{BLACK} pour augmenter.{}Moyen : {RED}0-35%{BLACK} pour diminuer, {YELLOW}36-70%{BLACK} pour stabiliser, {GREEN}71%+{BLACK} pour augmenter.{}Ardu : {RED}0-50%{BLACK} pour diminuer, {YELLOW}50-85%{BLACK} pour stabiliser, {GREEN}86%+{BLACK} pour augmenter.
+
+STR_PARAM_PRIM_FREEZE_DIS :Changements de production habituels
+STR_PARAM_PRIM_FREEZE_VAN :Changements de production lents (moitié du taux normal)
+STR_PARAM_PRIM_FREEZE_LOW :Changements de production très lents (quart du taux normal)
+STR_PARAM_PRIM_FREEZE_NONE:Pas de changements de production
+
+STR_PARAM_PRIM_FREEZE_NAME:Geler les changements de production de base des industries primaires non-desservies
+STR_PARAM_PRIM_FREEZE_DESC:Quand activé, les industries primaires non-desservies ont un taux de changement plus faible, ou gelé, de leur production.
+
+STR_PARAM_DIFF_EASY       :Magnanime
+STR_PARAM_DIFF_NORM       :Moyen
+STR_PARAM_DIFF_HARD       :Ardu
+
+STR_PARAM_PRIM_PROB_NAME  :Chance de croissance de production des industries primaires
+STR_PARAM_PRIM_PROB_DESC  :Détermine la probabilité d’un événement de changement de production de survenir pour les industries primaires chaque mois. Chaque unité de cette valeur modifie la probabilité de changement de production de 1/128, soit ~0,7%, une valeur de 6 correspond donc environ à 4,7% par mois.
+
+STR_PARAM_EXRESERVES_NAME :Réserve des industries primaires extractives
+STR_PARAM_EXRESERVES_DESC :Quand activé, les industries extractives (comme les mines ou les puits de pétrole) ont des réserves limitées et fermeront une fois épuisées.
+
+STR_PARAM_ORRESERVES_NAME :Réserve des industries primaires agricoles
+STR_PARAM_ORRESERVES_DESC :Quand activé, les industries agricoles (comme les forêts ou les fermes) ont des réserves limitées et fermeront une fois épuisées.
+
+STR_PARAM_RESERVESIZE_NAME:Taille des réserves des industries primaires (%)
+STR_PARAM_RESERVESIZE_DESC:Détermine la taille des réserves des industries primaires.
+
+STR_PARAM_TOTAL_PROD_NAME :Taux de production des industries primaires (%)
+STR_PARAM_TOTAL_PROD_DESC :Détermine le taux général de production de toutes les industries primaires.
+
+# Secondary specific parameters
+
+STR_PARAM_SEC_SEPERATE    :{PURPLE}--| OPTIONS DES INDUSTRIES SECONDAIRES |--
+
+STR_PARAM_SEC_CLOSE_ALL   :Toutes les industries secondaires
+STR_PARAM_SEC_CLOSE_UNSER :Fermeture des industries non-desservies uniquement
+STR_PARAM_SEC_CLOSE_SER   :Fermeture des industries desservies uniquement
+STR_PARAM_SEC_CLOSE_NONE  :Pas de fermetures d’industries secondaires
+
+STR_PARAM_SEC_CLOSE_NAME  :Règles de fermeture des industries secondaires
+STR_PARAM_SEC_CLOSE_DESC  :Détermine si les industries secondaires peuvent fermer ou non.
+
+STR_PARAM_ADV_SEC_NAME    :Mécaniques avancées des industries secondaires
+STR_PARAM_ADV_SEC_DESC    :Quand activé, les industries ont un taux de conversion de base, comme les industries primaires. Pour obtenir le taux de transformation maximal, des réserves de marchandises et un excellent service seront nécessaires.
+
+STR_PARAM_SEC_FREEZE_DIS :Changements de taux de transformation de base habituels
+STR_PARAM_SEC_FREEZE_VAN :Changements de taux de transformation de base lents (moitié du taux normal)
+STR_PARAM_SEC_FREEZE_LOW :Changements de taux de transformation de base très lents (quart du taux normal)
+STR_PARAM_SEC_FREEZE_NONE:Pas de changements de taux de transformation de base
+
+STR_PARAM_FREEZE_SEC_NAME :{PUSH_COLOUR}{RED}Mécaniques avancées des industries secondaires uniquement{POP_COLOUR} : Geler les changements de production de base des industries secondaires non-desservies
+STR_PARAM_FREEZE_SEC_DESC :Quand activé, les industries secondaires non-desservies ont un taux de changement plus faible, ou gelé, de leur production.
+
+STR_PARAM_GROW_SEC_NAME   :{PUSH_COLOUR}{RED}Mécaniques avancées des industries secondaires uniquement{POP_COLOUR} : Difficulté de la croissance des industries secondaires
+STR_PARAM_GROW_SEC_DESC   :Détermine la difficulté à augmenter la production de base des industries secondaires.{}Magnanime : {RED}0-25%{BLACK} pour diminuer, {YELLOW}26-60%{BLACK} pour stabiliser, {GREEN}61%+{BLACK} pour augmenter.{}Moyen : {RED}0-35%{BLACK} pour diminuer, {YELLOW}36-70%{BLACK} pour stabiliser, {GREEN}71%+{BLACK} pour augmenter.{}Ardu : {RED}0-50%{BLACK} pour diminuer, {YELLOW}50-85%{BLACK} pour stabiliser, {GREEN}86%+{BLACK} pour augmenter.
+
+STR_PARAM_SECGROWPROB_NAME:{PUSH_COLOUR}{RED}Mécaniques avancées des industries secondaires uniquement{POP_COLOUR} : Chance de croissance de production des industries secondaires
+STR_PARAM_SECGROWPROB_DESC:Détermine la probabilité d’un événement de changement de production de survenir pour les industries secondaires chaque mois. Chaque unité de cette valeur modifie la probabilité de changement de production de 1/128, soit ~0,7%, une valeur de 6 correspond donc environ à 4,7% par mois, à peu près équivalent à la valeur de 4,5% par mois du jeu original.
+
+STR_PARAM_POWERREQ_NAME   :Puissance requise pour les industries secondaires
+STR_PARAM_POWERREQ_DESC   :Quand activé, les industries secondaires ont besoin de puissance d’une centrale électrique pour opérer.{}Une ville est alimentée tant que la centrale électrique possède soit plus d’un quart de sa réserve en marchandises soit des unités de puissance.
+
+STR_PARAM_SECINDCONS_NAME :Taux de transformation des industries secondaires (%)
+STR_PARAM_SECINDCONS_DESC :Contrôle le taux de transformation général des industries secondaires. Plus il est élevé, plus les industries secondaires transformeront de marchandises chaque mois. Pratique pour les personnes préférant un ratio primaire/secondaire spécifique pour jouer.
+
+STR_PARAM_STOCKMULT_NAME  :Modificateur de réserve des industries secondaires (%)
+STR_PARAM_STOCKMULT_DESC  :Quantité de marchandises en réserve requise pour que les industries secondaires atteignent leur réserve maximale.{}Fonctionne comme un multiplicateur de leur taux de transformation maximal de marchandises : si une industrie secondaire consomme au plus 100 unités par mois, et que ce réglage est à 200%, l’industrie secondaire a besoin de 200 unités de marchandise en attente pour atteindre son taux de transformation maximal, et stockera 2000 unités de marchandise (dix fois le multiplicateur, équivalent à 10 mois de taux de transformation maximal) avant de refuser toute nouvelle livraison.
+
+# Minor things, mostly accessibility and qol
+
+STR_PARAM_QOL_SEPERATE    :{BLUE}--| OPTIONS VISUELLES |--
+
+STR_PARAM_DETAILED_NONE   :Ne pas afficher d’informations détaillées
+STR_PARAM_DETAILED_RES    :Afficher les informations de réserve détaillées
+STR_PARAM_DETAILED_BONUS  :Afficher les informations de bonus détaillées
+STR_PARAM_DETAILED_BOTH   :Afficher toutes les informations détaillées
+
+STR_PARAM_DETAILED_NAME   :Afficher les informations détaillées des industries
+STR_PARAM_DETAILED_DESC   :Détermine le niveau de détails des fenêtres des industries.{}Les informations de réserve détaillées indiquent le montant exact restant dans les réserves de l’industrie primaire.{}Les informations de bonus détaillées indiquent l’ensemble de tous les bonus d’industrie, comme les bonus de population ou de puissance.
+
+STR_PARAM_TIPS_NAME       :Afficher les astuces d’industrie
+STR_PARAM_TIPS_DESC       :Affiche des astuces permettant d’augmenter la production des industries.
+
+#Cargo Strings
+
+STR_LUMBER_NAME           :Bois d’œuvre
+STR_LUMBER_LONG           :{WEIGHT} de bois d’œuvre
+STR_LUMBER_ABBREV         :{TINYFONT}BO
+
+STR_LUBRICANT_NAME        :Lubrifiant
+STR_LUBRICANT_LONG        :{VOLUME} de lubrifiant
+STR_LUBRICANT_ABBREV      :{TINYFONT}LB
+
+STR_PETROL_NAME           :Essence
+STR_PETROL_LONG           :{VOLUME} d’essence
+STR_PETROL_ABBREV         :{TINYFONT}ES
+
+#Global Strings
+STR_EMPTY                 :
+STR_SKIP                  :{SKIP}
+STR_SKIP3                 :{SKIP}{SKIP}{SKIP}
+
+STR_TEST1                 :Test1
+STR_TEST2                 :Test2
+STR_TEST3                 :Test3
+
+#Industry Production Text
+
+STR_IND_RESERVES_8        :{GREEN}Ça déborde !
+STR_IND_RESERVES_7        :{GREEN}Abondantes
+STR_IND_RESERVES_6        :{YELLOW}Hautes
+STR_IND_RESERVES_5        :{YELLOW}Moyennes
+STR_IND_RESERVES_4        :{ORANGE}Réduites
+STR_IND_RESERVES_3        :{ORANGE}Basses
+STR_IND_RESERVES_2        :{RED}Dérisoires
+STR_IND_RESERVES_1        :{RED}À sec...
+
+STR_IND_PRIM_PROD_BASE    :{BLACK}Production de base : {WHITE}{UNSIGNED_WORD}%{}
+STR_IND_PRIM_PROD_BASET   :{BLACK}Production de base : {WHITE}{UNSIGNED_WORD}%{}{YELLOW}Améliorez le service pour augmenter la production !{}
+STR_IND_PRIM_PROD_BANK    :{BLACK}Bonus de la banque locale : {WHITE}+{UNSIGNED_WORD}%{}
+STR_IND_PRIM_PROD_BANKT   :{BLACK}Bonus de la banque locale : {WHITE}+{UNSIGNED_WORD}%{}{YELLOW}Livrez la banque locale pour augmenter la production !{}
+STR_IND_PRIM_PROD_TOWN    :{BLACK}Bonus de population : {WHITE}+{UNSIGNED_WORD}%{}
+STR_IND_PRIM_PROD_TOWNT   :{BLACK}Bonus de population : {WHITE}+{UNSIGNED_WORD}%{}{YELLOW}Augmentez la population de la ville pour augmenter la production !{}
+STR_IND_PRIM_PROD_POWER   :{BLACK}Bonus de la centrale électrique : {WHITE}+{UNSIGNED_WORD}%{}
+STR_IND_PRIM_PROD_POWERT  :{BLACK}Bonus de la centrale électrique : {WHITE}+{UNSIGNED_WORD}%{}{YELLOW}Livrez la centrale électrique locale pour augmenter la production !{}
+STR_IND_PRIM_PROD_RESERVE1:{}{}{GOLD}Réserves restantes : {WHITE}{UNSIGNED_WORD}%
+STR_IND_PRIM_PROD_RESERVE2:{}{}{GOLD}Réserves restantes : {STRING}
+STR_IND_PRIM_PROD_TOTAL   :{STRING}{STRING}{STRING}{STRING}{GOLD}Taux de production : {WHITE}{UNSIGNED_WORD}%{STRING}{STRING}
+
+STR_IND_SEC_BONUS_PRIM    :primaires
+STR_IND_SEC_BONUS_SEC     :secondaires
+
+STR_IND_SEC_BONUS         :{GOLD}Bonus de {WHITE}+{SKIP}{UNSIGNED_WORD}%{GOLD} de production pour les industries {STRING} de la ville
+
+STR_IND_SEC_BANK_STOCK    :{}{BLACK}Unités de subvention disponibles : {WHITE}{SKIP}{COMMA} unités
+STR_IND_SEC_BANK_BONUS    :{}{BLACK}Bonus de population : {WHITE}+{UNSIGNED_WORD}%
+STR_IND_SEC_BANK_BONUST   :{}{YELLOW}Améliorez le service pour augmenter la production !{}{BLACK}Bonus de population : {WHITE}+{UNSIGNED_WORD}%
+STR_IND_SEC_TEMP_BANK_TOTAL:{STRING}{STRING}{}{}{BLACK}Taux de consommation : {WHITE}{UNSIGNED_WORD}%{}{BLACK}Taux de production : {WHITE}{UNSIGNED_WORD}%{STRING}
+STR_IND_SEC_TEMP_BANK_TOTALT:{STRING}{STRING}{}{}{BLACK}Taux de consommation : {WHITE}{UNSIGNED_WORD}%{}{BLACK}Taux de production : {WHITE}{UNSIGNED_WORD}%{STRING}
+
+STR_IND_SEC_POWER_STOCK   :{}{BLACK}Unités de puissance disponibles : {WHITE}{SKIP}{COMMA} unités
+STR_IND_SEC_POWER_CON     :{}{GOLD}Efficacité de transformation : {WHITE}{UNSIGNED_WORD}%
+STR_IND_SEC_POWER_CONT    :{}{GOLD}Efficacité de transformation : {WHITE}{UNSIGNED_WORD}%{}{YELLOW}Livrez de l’essence pour améliorer l’efficacité !
+STR_IND_SEC_POWER_TOTAL   :{STRING}{STRING}{}{}{BLACK}Taux de consommation : {WHITE}{UNSIGNED_WORD}%{SKIP}{STRING}
+
+STR_IND_SEC_PROD_DISABLED :{RED}Pas de production !{}{}{WHITE}Livrez la centrale électrique locale pour commencer la production !
+
+STR_IND_SEC_PROD_BASE     :{BLACK}Transformation de base : {WHITE}{UNSIGNED_WORD}%{}
+STR_IND_SEC_PROD_BASET    :{BLACK}Transformation de base : {WHITE}{UNSIGNED_WORD}%{}{YELLOW}Améliorez le service pour augmenter la production !{}
+STR_IND_SEC_PROD_BANK     :{BLACK}Bonus de la banque locale : {WHITE}+{UNSIGNED_WORD}%{}
+STR_IND_SEC_PROD_BANKT    :{BLACK}Bonus de la banque locale : {WHITE}+{UNSIGNED_WORD}%{}{YELLOW}Livrez la banque locale pour augmenter la production !{}
+STR_IND_SEC_PROD_TOWN     :{BLACK}Bonus de population : {WHITE}+{UNSIGNED_WORD}%{}
+STR_IND_SEC_PROD_TOWNT    :{BLACK}Bonus de population : {WHITE}+{UNSIGNED_WORD}%{}{YELLOW}Augmentez la population de la ville pour augmenter la production !{}
+STR_IND_SEC_PROD_POWER    :{BLACK}Bonus de la centrale électrique : {WHITE}+{UNSIGNED_WORD}%{}
+STR_IND_SEC_PROD_POWERT   :{BLACK}Bonus de la centrale électrique : {WHITE}+{UNSIGNED_WORD}%{}{YELLOW}Livrez la centrale électrique locale pour augmenter la production !{}
+STR_IND_SEC_PROD_TOTAL    :{STRING}{BLACK}Réserve de marchandises : {WHITE}{UNSIGNED_WORD}%{}{SKIP}{STRING}{STRING}{STRING}{}{GOLD}Taux de transformation : {WHITE}{UNSIGNED_WORD}%
+STR_IND_SEC_PROD_TOTALT   :{STRING}{BLACK}Réserve de marchandises : {WHITE}{UNSIGNED_WORD}%{}{YELLOW}Livrez plus de marchandises pour augmenter la production !{}{SKIP}{STRING}{STRING}{STRING}{}{GOLD}Taux de transformation : {WHITE}{UNSIGNED_WORD}%
+
+STR_IND_SEC_PROD_FACT     :{STRING}{BLACK}Réserve de marchandises : {WHITE}{UNSIGNED_WORD}%{}{SKIP}{STRING}{STRING}{STRING}{}{GOLD}Taux de transformation : {WHITE}{UNSIGNED_WORD}%{}{GOLD}Efficacité de transformation : {WHITE}{UNSIGNED_WORD}%
+STR_IND_SEC_PROD_FACTT1   :{STRING}{BLACK}Réserve de marchandises : {WHITE}{UNSIGNED_WORD}%{}{SKIP}{STRING}{STRING}{STRING}{}{GOLD}Taux de transformation : {WHITE}{UNSIGNED_WORD}%{}{GOLD}Efficacité de transformation : {WHITE}{UNSIGNED_WORD}%{}{YELLOW}Livrez plus de lubrifiant pour augmenter la production !
+STR_IND_SEC_PROD_FACTT2   :{STRING}{BLACK}Réserve de marchandises : {WHITE}{UNSIGNED_WORD}%{}{YELLOW}Livrez plus de marchandises pour augmenter la production !{}{SKIP}{STRING}{STRING}{STRING}{}{GOLD}Taux de transformation : {WHITE}{UNSIGNED_WORD}%{}{GOLD}Efficacité de transformation : {WHITE}{UNSIGNED_WORD}%
+STR_IND_SEC_PROD_FACTT3   :{STRING}{BLACK}Réserve de marchandises : {WHITE}{UNSIGNED_WORD}%{}{YELLOW}Livrez plus de marchandises pour augmenter la production !{}{SKIP}{STRING}{STRING}{STRING}{}{GOLD}Taux de transformation : {WHITE}{UNSIGNED_WORD}%{}{GOLD}Efficacité de transformation : {WHITE}{UNSIGNED_WORD}%{}{YELLOW}Livrez plus de lubrifiant pour augmenter la production !
