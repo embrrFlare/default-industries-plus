@@ -110,7 +110,7 @@ STR_PARAM_GROW_DESC       :If enabled, primary industries no longer have a rando
 STR_PARAM_GROW_DIFF_NAME  :{PUSH_COLOUR}{RED}Smooth Primary Growth Only{POP_COLOUR}: Primary Growth Difficulty
 STR_PARAM_GROW_DIFF_DESC  :Sets the difficulty of growing the base production of primary industries.{}Lenient: {RED}0-25%{BLACK} to decrease, {YELLOW}26-60%{BLACK}to stabilize, {GREEN}61%+{BLACK} to increase.{}Average: {RED}0-35%{BLACK} to decrease, {YELLOW}36-70%{BLACK} to stabilize, {GREEN}71%+{BLACK} to increase.{}Challenging: {RED}0-50%{BLACK} to decrease, {YELLOW}50-85%{BLACK}to stabilize, {GREEN}86%+{BLACK} to increase.
 
-STR_PARAM_PRIM_FREEZE_DIS :Unchanged production changes
+STR_PARAM_PRIM_FREEZE_DIS :Regular production changes
 STR_PARAM_PRIM_FREEZE_VAN :Slow production changes (1/2 normal rate)
 STR_PARAM_PRIM_FREEZE_LOW :Very slow production changes (1/4 normal rate)
 STR_PARAM_PRIM_FREEZE_NONE:No production changes
@@ -152,7 +152,7 @@ STR_PARAM_SEC_CLOSE_DESC  :Determines whether (un)serviced secondary industries 
 STR_PARAM_ADV_SEC_NAME    :Advanced Secondary Mechanics
 STR_PARAM_ADV_SEC_DESC    :If enabled, secondaries will have an innate base conversion rate just like primaries. In order to get maximum secondary conversion rate, you will both have to stockpile cargo and deliver excellent service.
 
-STR_PARAM_SEC_FREEZE_DIS :Unchanged base conversion changes
+STR_PARAM_SEC_FREEZE_DIS :Regular base conversion changes
 STR_PARAM_SEC_FREEZE_VAN :Slow base conversion changes (1/2 normal rate)
 STR_PARAM_SEC_FREEZE_LOW :Very slow base conversion changes (1/4 normal rate)
 STR_PARAM_SEC_FREEZE_NONE:No base conversion changes
