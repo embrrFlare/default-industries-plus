@@ -1,4 +1,7 @@
 DefaultIndustriesPlus ~ by embrrFlare
+Alongside help from contributors!
+- rmnvgr (French Translation)
+
 (View source code at https://github.com/embrrFlare/default-industries-plus)
 
 (Many mechanic ideas inspired by Borg's Stockpiling Industries [BSPI])
